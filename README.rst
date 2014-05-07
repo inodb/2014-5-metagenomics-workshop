@@ -67,10 +67,13 @@ The website is hosted on `GitHub Pages`. It works by having a branch called
 brantfaircloth's `sphinx_to_github.sh`_ script to set it up. Basically it sets
 up a ``gh-pages`` branch in the ``build/html`` folder of the repository, so
 everytime you run ``make html`` it changes the files in that branch. You then
-simply cd to the ``build/html`` forder commit the new HTML files and push them
-to the ``gh-pages`` branch. After that the result can be viewed at:
+``cd build/html``, commit the new HTML files and push them to the ``gh-pages``
+branch. After that the result can be viewed at:
 
 http://yourusername.github.io/reponame/
+
+I'll update the branch ``gh-pages`` myself after your pull request with the
+changed ``*.rst`` files on the ``master`` branch was accepted.
 
 
 .. _sphinx: http://sphinx-doc.org/
