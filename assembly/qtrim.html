@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quality trimming Illumina paired-end reads &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Assembly Workshop" href="index.html" />
+    <link rel="next" title="Assembling reads with Velvet" href="assembly.html" />
+    <link rel="prev" title="Checking required software" href="reqs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="assembly.html" title="Assembling reads with Velvet"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Assembly Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quality-trimming-illumina-paired-end-reads">
+<h1>Quality trimming Illumina paired-end reads<a class="headerlink" href="#quality-trimming-illumina-paired-end-reads" title="Permalink to this headline">¶</a></h1>
+<p>In this excercise you will learn how to quality trim Illumina paired-end reads.
+The most common Next Generation Sequencing (NGS) technology for metagenomics.</p>
+<div class="section" id="sickle">
+<h2>Sickle<a class="headerlink" href="#sickle" title="Permalink to this headline">¶</a></h2>
+<p>For quality trimming Illumina paired end reads we use the library sickle which
+trims reads from 3&#8217; end to 5&#8217; end using a sliding window. If the mean quality
+drops below a specified number remaining part of the read will be trimmed.</p>
+</div>
+<div class="section" id="downloading-a-test-set">
+<h2>Downloading a test set<a class="headerlink" href="#downloading-a-test-set" title="Permalink to this headline">¶</a></h2>
+<p>Today we&#8217;ll be working on a small metagenomic data set from the anterior nares
+(<a class="reference external" href="http://en.wikipedia.org/wiki/Anterior_nares">http://en.wikipedia.org/wiki/Anterior_nares</a>).</p>
+<img alt="https://raw.github.com/inodb/2013-metagenomics-workshop-gbg/master/images/nostril.jpg" src="https://raw.github.com/inodb/2013-metagenomics-workshop-gbg/master/images/nostril.jpg" />
+<p>So get ready for your first smell of metagenomic assembly - pun intended. Run
+all these commands in your shell:</p>
+<div class="highlight-python"><div class="highlight"><pre># Download the reads and extract them
+mkdir -p ~/asm-workshop
+mkdir -p ~/asm-workshop/data
+cd ~/asm-workshop/data
+wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
+tar -xjf SRS018585.tar.bz2
+</pre></div>
+</div>
+<p>If successfull you should have the files:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -lh ~/asm-workshop/data/SRS018585/
+-rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq
+-rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+</pre></div>
+</div>
+<p>If not, try to find out if one of the previous commands gave an error.</p>
+</div>
+<div class="section" id="running-sickle-on-a-paired-end-library">
+<h2>Running sickle on a paired end library<a class="headerlink" href="#running-sickle-on-a-paired-end-library" title="Permalink to this headline">¶</a></h2>
+<p>I like to create directories for specific parts I&#8217;m working on and creating
+symbolic links (shortcuts in windows) to the input files. One can use the
+command <tt class="docutils literal"><span class="pre">ln</span></tt> for creating links. The difference between a symbolic link and a
+hard link can be found here:
+<a class="reference external" href="http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link">http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link</a>.
+In this case I use symbolic links so I know what path the original reads have,
+which can help one remember what those reads were:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/asm-workshop/sickle
+cd ~/asm-workshop/sickle
+ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq pair1.fastq
+ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq pair2.fastq
+</pre></div>
+</div>
+<p>Now run sickle:</p>
+<div class="highlight-python"><div class="highlight"><pre># check if sickle is in your PATH
+which sickle
+# Run sickle
+sickle pe \
+    -f pair1.fastq \
+    -r pair2.fastq \
+    -t sanger \
+    -o qtrim1.fastq \
+    -p qtrim2.fastq \
+    -s qtrim.unpaired.fastq
+# Check what files have been generated
+ls
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quality trimming Illumina paired-end reads</a><ul>
+<li><a class="reference internal" href="#sickle">Sickle</a></li>
+<li><a class="reference internal" href="#downloading-a-test-set">Downloading a test set</a></li>
+<li><a class="reference internal" href="#running-sickle-on-a-paired-end-library">Running sickle on a paired end library</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="reqs.html"
+                        title="previous chapter">Checking required software</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="assembly.html"
+                        title="next chapter">Assembling reads with Velvet</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/assembly/qtrim.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="assembly.html" title="Assembling reads with Velvet"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Assembly Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

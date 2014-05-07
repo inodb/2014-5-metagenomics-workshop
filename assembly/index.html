@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Metagenomic Assembly Workshop &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Checking required software" href="reqs.html" />
+    <link rel="prev" title="Welcome to the Metagenomics Workshop at SciLifeLab, Stockholm" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to the Metagenomics Workshop at SciLifeLab, Stockholm"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="metagenomic-assembly-workshop">
+<h1>Metagenomic Assembly Workshop<a class="headerlink" href="#metagenomic-assembly-workshop" title="Permalink to this headline">¶</a></h1>
+<p>In this metagenomics workshop we will learn how to:</p>
+<ul class="simple">
+<li>Quality trim reads with sickle</li>
+<li>Perform assemblies with velvet</li>
+<li>Map back reads to assemblies with bowtie2</li>
+</ul>
+<p>The workshop has the following exercises:</p>
+<ol class="arabic simple">
+<li>ReqsExercise</li>
+<li>QtrimExercise</li>
+<li>VelvetExercise</li>
+<li>Bowtie2Exercise</li>
+</ol>
+<p>At least a basic knowledge of how to work with the command line is required
+otherwise it will be very difficult to follow some of the examples. Have
+fun!</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reqs.html">Checking required software</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reqs.html#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reqs.html#using-which-to-locate-a-program">Using which to locate a program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reqs.html#check-all-programs-in-one-go-with-which">Check all programs in one go with which</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reqs.html#optional-excercise-install-sickle-by-yourself">(Optional excercise) Install sickle by yourself</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="qtrim.html">Quality trimming Illumina paired-end reads</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qtrim.html#sickle">Sickle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qtrim.html#downloading-a-test-set">Downloading a test set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qtrim.html#running-sickle-on-a-paired-end-library">Running sickle on a paired end library</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">Assembling reads with Velvet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#pick-a-kmer">Pick a kmer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#velveth">velveth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#velvetg">velvetg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#assemstats">assemstats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#optional-exercise-ray">(Optional exercise) Ray</a></li>
+<li class="toctree-l2"><a class="reference internal" href="assembly.html#optional-exercise-velvetoptimiser">(Optional exercise) VelvetOptimiser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="map.html">Mapping reads back to the assembly</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="map.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="map.html#mapping-reads-with-bowtie2">Mapping reads with bowtie2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="map.html#some-general-statistics-from-the-sam-bam-file">Some general statistics from the SAM/BAM file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="map.html#optional-coverage-information-from-bedtools">(Optional) Coverage information from BEDTools</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to the Metagenomics Workshop at SciLifeLab, Stockholm</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reqs.html"
+                        title="next chapter">Checking required software</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/assembly/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reqs.html" title="Checking required software"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to the Metagenomics Workshop at SciLifeLab, Stockholm"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
