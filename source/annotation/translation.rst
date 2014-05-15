@@ -30,7 +30,7 @@ it encounters a stop codon. This will occasionally cause HMMER to choke, so we
 want stop codons to instead be translated into X characters that HMMER can handle.
 The following excerpt form the `HMMER creator's blog <http://selab.janelia.org/people/eddys/blog/?p=424>`_
 on this subject is one of my personal all-time favorites in terms of computer
-software documentation::
+software documentation:
 
     There’s two ways people do six-frame translation. You can translate each
     frame into separate ORFs, or you can translate the read into exactly six
