@@ -5,7 +5,7 @@ The first step before we can annotate the contigs with Pfam domains using
 HMMER will be to translate the reads into amino acid sequences. This is
 necessary because HMMER (still) does not translate nucleotide sequnces
 into protein space on the fly (like,for example, BLAST). For completing
-this task we will use ``transeq``, part of the `EMBOSS <http://emboss.sourceforge.net>`
+this task we will use ``transeq``, part of the `EMBOSS <http://emboss.sourceforge.net>`_
 package.
     
 Running ``transeq`` on the sequence data sets
@@ -28,8 +28,8 @@ and three, as well as those on the reverse-complementary strand. Second,
 the software will add stop characters in the form of asterixes ``*`` whenever
 it encounters a stop codon. This will occasionally cause HMMER to choke, so we
 want stop codons to instead be translated into X characters that HMMER can handle.
-The following excerpt form the `HMMER creator's blog <http://selab.janelia.org/people/eddys/blog/?p=424>
-`_ on this subject is one of my personal all-time favorites in terms of computer
+The following excerpt form the `HMMER creator's blog <http://selab.janelia.org/people/eddys/blog/?p=424>`_
+on this subject is one of my personal all-time favorites in terms of computer
 software documentation::
 
     There’s two ways people do six-frame translation. You can translate each
