@@ -2,99 +2,55 @@
 Translating nucleotide sequences into amino acid sequences
 ==========================================================
 The first step before we can annotate the contigs with Pfam domains using
-HMMER will be to translate the contigs into 
-
-Programs used in this workshop
-==============================
-The following programs are used in this workshop:
-
-    - Bowtie2_
-    - `EMBOSS (transeq)`__
-    - HMMER_
-    - Optionally: Metaxa2_
-
-.. _Bowtie2: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
-.. __: http://emboss.sourceforge.net
-.. _HMMER: http://hmmer.janelia.org
-.. _Metaxa2: http://microbiology.se/software/metaxa2/
-
-All programs but Metaxa2 are already installed, all you have to do is load
-the virtual environment for this workshop. Once you are logged in to the
-server run::
-
-    source /proj/g2013206/metagenomics/virt_env/mg-workshop/bin/activate
-
-You deactivate the virtual environment with::
+HMMER will be to translate the reads into amino acid sequences. This is
+necessary because HMMER (still) does not translate nucleotide sequnces
+into protein space on the fly (like,for example, BLAST). For completing
+this task we will use ``transeq``, part of the `EMBOSS <http://emboss.sourceforge.net>`
+package.
     
-    deactivate
+Running ``transeq`` on the sequence data sets
+=============================================
+To run ``transeq``, take a look at its available options::
 
-NOTE: This is a python virtual environment. The binary folder of the virtual
-environment has symbolic links to all programs used in this workshop so you
-should be able to run those without problems.
-
-
-Check all programs in one go with which
-==================================================
-To check whether you have all programs installed in one go, you can use ``which``
-to test for the following programs::
-
-    bowtie2
-    bowtie2-build
-    hmmsearch
-    transeq
-    blastall
+    transeq -h
     
-Data and databases used in this workshop
-========================================
-In this workshop, we are (due to time constraints) going to use a simplified version
-of the `Pfam <http://pfam.xfam.org/>`__ database, including only protein families
-related to plasmid replication and maintenance. This database is pre-compiled and can
-be downloaded from http://microbiology.se/teach/scilife2014/pfam.tar.gz
-Download it using the following commands::
+A few options are important in this context. First of all, we need to
+supply an input file, using the (somewhat bulky) option ``-sequence``.
+Second, we also need to specify an output file, otherwise transeq will
+simply write its output to the screen. This is specified using the
+``-outseq`` option.
 
-    mkdir -p ~/Pfam
-    cd ~/Pfam
-    wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
-    tar -xzvf pfam.tar.gz
+However, if we just run ``transeq`` like this we will
+run into two additional problems. First, ``transeq`` by default just
+translate the reading frame beginning at the first base in the input sequnece,
+and will ignore any bases in the reading frames beginning with base two
+and three, as well as those on the reverse-complementary strand. Second,
+the software will add stop characters in the form of asterixes ``*`` whenever
+it encounters a stop codon. This will occasionally cause HMMER to choke, so we
+want stop codons to instead be translated into X characters that HMMER can handle.
+The following excerpt form the `HMMER creator's blog <http://selab.janelia.org/people/eddys/blog/?p=424>
+`_ on this subject is one of my personal all-time favorites in terms of computer
+software documentation::
+
+    There’s two ways people do six-frame translation. You can translate each
+    frame into separate ORFs, or you can translate the read into exactly six
+    “ORFs”, one per frame, with * chararacters marking stop codons. HMMER
+    prefers that you do the former. Technically, * chararacters aren’t legal
+    amino acid residue codes, and the author of HMMER3 is a pedantic nitpicker,
+    passive-aggressive, yet also a pragmatist: so while HMMER3 pragmatically
+    accepts * chararacters in input “protein” sequences just fine, it pedantically
+    relegates them to somewhat suboptimal status, and it passively-aggressively
+    figures that any suboptimal performance on *-containing ORFs is your own
+    fault for using *’s in the first place.
     
-In addition, you will need to obtain the following data sets for the workshop::
+To avoid making Sean Eddy angry and causing other problems for our HMMER runs,
+we will use the ``-frame 6`` option to ``transeq`` in order to get translations
+of all six reading frames, and the ``-clean`` option to convert stop codons to X
+instead of *.
 
-    XXX
-    YYY
-    ZZZ
+That should give us the command:
+
+    transeq -sequence <input file> -outseq <output file> -frame 6 -clean
     
-HOW DO WE COPY THESE!!!??!?
-
-
-(Optional excercise) Install Metaxa2 by yourself
-===============================================
-Follow these steps only if you want to install ``Metaxa2`` by yourself.
-The code for Metaxa2 is available from http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
-You can install Metaxa2 as follows::
-
-    # Create a src and a bin directory
-    mkdir -p ~/src
-    mkdir -p ~/bin 
-
-    # Go to the source directory and download the Metaxa2 tarball
-    cd ~/src
-    wget http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
-    tar -xzvf Metaxa2_2.0rc3.tar.gz
-    cd Metaxa2_2.0rc3
-
-    # Run the installation script
-    ./install_metaxa2
-    
-    # Try to run Metaxa2 (this should bring up the main options for the software)
-    metaxa2 -h
-
-If this did not work, you can try this manual approach::
-
-    cd ~/src/Metaxa2_2.0rc3
-    cp -r metaxa2* ~/bin/
-    
-    # Then try to run Metaxa2 again
-    metaxa2 -h
-    
-If this brings up the help message, you are all set!
-    
+Now run this command on all X input files that we just have downloaded. When the
+command has finished for all files, we can move on to the actual annotation.
