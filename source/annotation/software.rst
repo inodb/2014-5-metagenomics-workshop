@@ -11,12 +11,12 @@ Programs used in this workshop
 The following programs are used in this workshop:
 
     - Bowtie2_
-    - EMBOSS (transeq)_
+    - "EMBOSS (transeq)"_
     - HMMER_
     - Optionally: Metaxa2_
 
 .. _Bowtie2: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
-.. _EMBOSS (transeq): http://emboss.sourceforge.net
+.. _"EMBOSS (transeq)": http://emboss.sourceforge.net
 .. _HMMER: http://hmmer.janelia.org
 .. _Metaxa2: http://microbiology.se/software/metaxa2/
 
@@ -37,7 +37,7 @@ should be able to run those without problems.
 
 Check all programs in one go with which
 ==================================================
-To check whether you have all programs installed in one go, you can use ``which``.
+To check whether you have all programs installed in one go, you can use ``which``::
 
     bowtie2
     bowtie2-build
