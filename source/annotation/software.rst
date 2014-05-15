@@ -45,6 +45,27 @@ to test for the following programs::
     hmmsearch
     transeq
     blastall
+    
+Data and databases used in this workshop
+========================================
+In this workshop, we are (due to time constraints) going to use a simplified version
+of the `Pfam <http://pfam.xfam.org/>`__ database, including only protein families
+related to plasmid replication and maintenance. This database is pre-compiled and can
+be downloaded from http://microbiology.se/teach/scilife2014/pfam.tar.gz
+Download it using the following commands::
+
+    mkdir -p ~/Pfam
+    cd ~/Pfam
+    wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
+    tar -xzvf pfam.tar.gz
+    
+In addition, you will need to obtain the following data sets for the workshop::
+
+    XXX
+    YYY
+    ZZZ
+    
+HOW DO WE COPY THESE!!!??!?
 
 
 (Optional excercise) Install Metaxa2 by yourself
