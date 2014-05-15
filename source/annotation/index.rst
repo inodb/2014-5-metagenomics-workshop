@@ -25,7 +25,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   reqs
-   qtrim
-   assembly
-   map
+   software
+   translation
+   hmmer
+   mapping
+   normalization
+   differential
