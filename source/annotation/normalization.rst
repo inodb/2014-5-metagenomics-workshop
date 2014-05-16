@@ -9,10 +9,28 @@ philosphical considerations. Let's start with a bit of theory.
 
 Why is normalization important?
 ===============================
+Generally, sequencing data sets are not of the same size. In addition,
+different genes and genomes come in different sizes, which means that
+*at equal coverage, the number of mapped reads to a certain gene or
+region will be directly dependent on the length of that region*.
+Luckily, the latter scenario is not a huge issue for Pfam families
+(although it exists), and we will not care about it more today. We
+will however care about the size of the sequencing libraries. To make
+relatively fair comparisons between sets, we need to normalize the
+gene counts to something. Let's begin with checking how unequal the
+librairies are. You can do that by counting the number of sequences
+in the FASTA files, by checking for the number of ">" characters in
+each file, using ``grep``::
 
+    grep -c ">" <input file>
+    
+As you will see, there are quite substantial differences in the
+number of reads in each library. How do we account for that?
 
 What normalization methods are possible?
 ========================================
+
+
 
 
 Which method should we use?
