@@ -144,3 +144,46 @@ Visualizing differences in gene abundance
 
 One neat way of visualizing metagenomic count data is through heatmaps. R has a built-in
 heatmap function, that can be called using the (surprise...) ``heatmap`` command.
+However, you will quickly notice that this function is rather limited, and we will
+therefore install a package containing a better one - the ``gplots`` package. You can do
+this by typing the following command::
+
+    install.packages("gplots")
+    
+Just answer "yes" to the questions, and the package will be installed locally for your
+user. After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
+for example, this command on the data::
+
+    heatmap.2(norm1, trace = "none", col = colorpanel(255,"black","red","yellow"), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+    
+The trace, margin, cexCol and cexRow options are just there to make the plot look better
+(play around with them if you wish). The ``col = colorpanel(255,"black","red","yellow")``
+option creates a scale from black to yellow where yellow means highly abundant and black
+lowly abundant. To make more clear which genes that are not even detected, let's add a
+grey color to that for genes with zero count::
+
+    heatmap.2(norm1, trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+
+You will now notice that it is hard to see the differences for the lowly abundant genes.
+To aid in this, we can add a variance-stabilizing transform (fancy name for squareroot)
+to the data::
+
+    norm1_sqrt = sqrt(norm1)
+
+You can then re-run the ``heatmap.2`` command on the newly created ``norm1_sqrt``
+variable.
+
+Sometimes, it makes more sense to apply a logarithmic transform to the data instead of
+the squareroot. This, however, is a bit more tricky since we have zeros in the data.
+For fun's sake, we can try::
+
+    norm1_log10 = log10(norm1)
+    heatmap.2(norm1_log10, trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+
+This should give you an error message. The easiest way to solve this problem is to add
+some small number to the matrix before the ``log10`` command. Since we will display this
+number with grey color anyway, it will in this case, and for this application, matter
+much exactly what number you add. You can, for example, choose 1::
+
+    norm1_log10 = log10(norm1 + 1)
+    heatmap.2(norm1_log10, trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,10), cexCol = 1, cexRow = 0.7)
