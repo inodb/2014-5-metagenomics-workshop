@@ -12,10 +12,12 @@ The following programs are used in this workshop:
 
     - `EMBOSS (transeq)`__
     - HMMER_
+    - R_
     - Optionally: Metaxa2_
 
 .. __: http://emboss.sourceforge.net
 .. _HMMER: http://hmmer.janelia.org
+.. _R: http://www.r-project.org
 .. _Metaxa2: http://microbiology.se/software/metaxa2/
 
 All programs but Metaxa2 are already installed, all you have to do is load
@@ -40,6 +42,7 @@ to test for the following programs::
 
     hmmsearch
     transeq
+    R
     blastall
     
 Data and databases used in this workshop
