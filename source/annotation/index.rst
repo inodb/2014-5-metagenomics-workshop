@@ -9,10 +9,11 @@ In this part of the metagenomics workshop we will:
 
 The workshop has the following exercises:
 
-1. TranslationExercise
-2. HMMERExercise
-3. NormalizationExercise
-4. DifferentialExercise
+1. Translation Exercise
+2. HMMER Exercise
+3. Normalization Exercise
+4. Differential Exercise
+5. BonusExercise: Metaxa2
 
 At least a basic knowledge of how to work with the command line is required
 otherwise it will be very difficult to follow some of the examples. Have
@@ -28,3 +29,4 @@ Contents:
    annotation
    normalization
    differential
+   metaxa2
