@@ -52,5 +52,6 @@ That should give us the command:
 
     transeq -sequence <input file> -outseq <output file> -frame 6 -clean
     
-Now run this command on all X input files that we just have downloaded. When the
-command has finished for all files, we can move on to the actual annotation.
+Now run this command on all four input files that we have created links to.
+When the command has finished for all files, we can move on to the actual
+annotation.
