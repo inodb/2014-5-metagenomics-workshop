@@ -74,4 +74,65 @@ visualzied using the following command::
     barplot(colSums(norm1))
 
 We can then repeat the normalization procedure, by instead normalizing to
-the number of 16S rRNA counts in each library.
+the number of 16S rRNA counts in each library. This can be done similarly
+to the division by total number of reads above::
+
+    b1_norm2 = b1_counts / 21
+    
+This time, we won't multiply by a million, as that would make numbers
+much larger (and harder to interpret).
+
+Follow the above procedure for all the data sets, and finally store the
+end result from ``merge_four`` into a variable, for example called ``norm2``.
+
+Finally, we will do the same for the third type of normalization, the
+division by the mapped number of reads. This can, once more, be done as
+above::
+
+    b1_norm3 = b1_counts / 22
+    
+Follow the above procedure for all the data sets, and store the final
+result from ``merge_four`` into a variable, for example called ``norm3``.
+
+Comparing normalizations
+========================
+
+Let us now quickly compare the three normalization methods. As a quick
+overview, we can just make three colorful barplots next to each other,
+each representing one normalization method::
+
+    layout(matrix(1:3,1,3))
+    barplot(norm1, col = 1:nrow(norm1), main = "Counts per million reads")
+    barplot(norm2, col = 1:nrow(norm2), main = "Counts per 16S rRNA")
+    barplot(norm3, col = 1:nrow(norm3), main = "Relative abundance")
+    
+As you can see, each of these plots will tell a slightly different story.
+Let's take a closer look at how normalization affect the behavior of some
+genes. First, we can see if there are any genes that are present in all
+samples. This is easily investigated by the following command, which takes
+counts if a value is larger than zero, counts the number of occurences per
+per row (rowSums), and finally outputs all the rows from ``norm1`` where
+this sum is exactly four::
+
+    norm1[rowSums(norm1 > 0) == 4,]
+
+That shoudn't have given you much luck. Let's see if we can find any genes
+that occur in at least three samples::
+
+    norm1[rowSums(norm1 > 0) >= 3,]
+
+Better! Select one of those and find out its row number in the count table.
+Hint: ``row.names(norm1)`` will help you here! Now lets make boxplots for
+that row only::
+
+    x = <insert your selected row number here>
+    layout(matrix(1:3,1,3))
+    barplot(norm1[x,], main = paste(row.names(norm1)[x], "- Counts per million reads"))
+    barplot(norm2[x,], main = paste(row.names(norm2)[x], "- Counts per 16S rRNA"))
+    barplot(norm3[x,], main = paste(row.names(norm3)[x], "- Relative abundance"))
+    
+You can now try this for a number of other genes (by changing the value of
+``x``) and see how normalization affects your story.
+
+**Question: Which normalization method would be most suitable to use in this case?**
+
