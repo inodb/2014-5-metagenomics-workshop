@@ -25,6 +25,6 @@ Contents:
 
    software
    translation
-   hmmer
+   annotation
    normalization
    differential
