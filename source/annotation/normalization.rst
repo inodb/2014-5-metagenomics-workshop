@@ -87,8 +87,8 @@ library sizes. As you remember, those numbers can be generated using
     
 To get the number of 16S rRNA sequences, we will use Metaxa2. If you
 did not install it, you can "cheat" by getting the numbers from this
-file: metaxa2_16S_rRNA_counts.txt
-If you installed it previosly, you can test it out using the following
+file: ``/proj/g2014113/metagenomics/annotation/metaxa2_16S_rRNA_counts.txt``. 
+If you installed it previously, you can test it out using the following
 command::
 
     metaxa2 -i <input file> -o <output file> --cpu 4 --align none
