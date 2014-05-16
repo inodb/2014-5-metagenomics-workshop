@@ -58,15 +58,20 @@ function for merging four data sets. Copy and paste it into the R console::
     m3 = m3[,2:5]
     m3[is.na(m3)] = 0
     colnames(m3) = c(names[4], names[3], names[1], names[2])
-    return(m3)
+    return(as.matrix(m3))
     }
     
 You can then try it by running this command on the raw counts::
     
-    merge_four(b1_counts,b2_counts,swe_counts,ind_counts,c("Baltic 1","Baltic 2","India", "Sweden"))
+    merge_four(b1_counts,b2_counts,swe_counts,ind_counts,c("Baltic 1","Baltic 2","Sweden", "India"))
 
 You should then see a matrix containing all counts from the four data
 sets, with each row corresponding to a Pfam family. Next, run the same
-command on the normalized data and store the output into a variable.
+command on the normalized data and store the output into a variable, called
+for example ``norm1``. The total abundance of mobility domains can then be
+visualzied using the following command::
 
+    barplot(colSums(norm1))
 
+We can then repeat the normalization procedure, by instead normalizing to
+the number of 16S rRNA counts in each library.
