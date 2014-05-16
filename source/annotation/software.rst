@@ -60,11 +60,16 @@ Download it using the following commands::
     
 In addition, you will need to obtain the following data sets for the workshop::
 
-    XXX
-    YYY
-    ZZZ
+    /proj/g2014113/metagenomics/annotation/baltic1.fna
+    /proj/g2014113/metagenomics/annotation/baltic2.fna                                                                                                                                                               
+    /proj/g2014113/metagenomics/annotation/indian_lake.fna
+    /proj/g2014113/metagenomics/annotation/swedish_lake.fna
     
-HOW DO WE COPY THESE!!!??!?
+We are going to use two data sets from the Baltic Sea, one from a Swedish lake and one
+from an Indian lake contaminated with wastewater from pharmaceutical production. For
+the same of time, I have reduced the data sets in size dramatically prior to this
+workshop. You can create links to the above files using the ``ln -s <path>`` command.
+Use it on all the four data sets.
 
 
 (Optional excercise) Install Metaxa2 by yourself
