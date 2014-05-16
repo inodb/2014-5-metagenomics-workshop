@@ -1,20 +1,15 @@
-================================================================
-Search amino acid sequences with HMMER against the Pfam database
-================================================================
-It is time to do the actual Pfam annotation of our metagenomes!
-
+======================================================================
+Estimating differentially abundant protein families in the metagenomes
+======================================================================
+Finally, we are about to do some real analysis of the data, and look
+at the results! To do this, we will use the R statistical program.
+You start the program by typing::
     
-Running ``hmmsearch`` on the translated sequence data sets
-==========================================================
-Before we run ``hmmsearch``, we will look at its available options::
-
-    hmmsearch -h
+    R
     
-As you will see, the program takes a substantial amount of arguments.
-In this workshop we will work with the table output from HMMER, which
-you get by specifying the ``--tblout`` option together with a file
-name. We also want to make sure that we only got statistically
-relevant matches, which we can do using the E-value option. The
-E-value (Expect-value) is an estimation of how often we would expect
-to find a similar hit by chance, given the size of the database. To
-avoid getting a lot of noise
+You get out by typing::
+
+    q()
+    
+You will need to quit it at once, because before we start using R,
+we need to re-format the count table.
