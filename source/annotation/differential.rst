@@ -63,7 +63,7 @@ function for merging four data sets. Copy and paste it into the R console::
     
 You can then try it by running this command on the raw counts::
     
-    merge_four(b1_counts,b2_counts,swe_counts,ind_counts,c("Baltic 1","Baltic 2","Sweden", "India"))
+    norm0 = merge_four(b1_counts,b2_counts,swe_counts,ind_counts,c("Baltic 1","Baltic 2","Sweden", "India"))
 
 You should then see a matrix containing all counts from the four data
 sets, with each row corresponding to a Pfam family. Next, run the same
@@ -101,7 +101,8 @@ Let us now quickly compare the three normalization methods. As a quick
 overview, we can just make three colorful barplots next to each other,
 each representing one normalization method::
 
-    layout(matrix(1:3,1,3))
+    layout(matrix(c(1,3,2,4),2,2))
+    barplot(norm0, col = 1:nrow(norm1), main = "Raw gene counts")
     barplot(norm1, col = 1:nrow(norm1), main = "Counts per million reads")
     barplot(norm2, col = 1:nrow(norm2), main = "Counts per 16S rRNA")
     barplot(norm3, col = 1:nrow(norm3), main = "Relative abundance")
@@ -126,7 +127,8 @@ Hint: ``row.names(norm1)`` will help you here! Now lets make boxplots for
 that row only::
 
     x = <insert your selected row number here>
-    layout(matrix(1:3,1,3))
+    layout(matrix(c(1,3,2,4),2,2))
+    barplot(norm0[x,], main = paste(row.names(norm1)[x], "- Raw gene counts"))
     barplot(norm1[x,], main = paste(row.names(norm1)[x], "- Counts per million reads"))
     barplot(norm2[x,], main = paste(row.names(norm2)[x], "- Counts per 16S rRNA"))
     barplot(norm3[x,], main = paste(row.names(norm3)[x], "- Relative abundance"))
@@ -134,5 +136,11 @@ that row only::
 You can now try this for a number of other genes (by changing the value of
 ``x``) and see how normalization affects your story.
 
-**Question: Which normalization method would be most suitable to use in this case?**
+**Question: Which normalization method would be most suitable to use in this case? Why?**
 
+
+Visualizing differences in gene abundance
+========================================
+
+One neat way of visualizing metagenomic count data is through heatmaps. R has a built-in
+heatmap function, that can be called using the (surprise...) ``heatmap`` command.
