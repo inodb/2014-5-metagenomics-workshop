@@ -22,7 +22,7 @@ All programs but Metaxa2 are already installed, all you have to do is load
 the virtual environment for this workshop. Once you are logged in to the
 server run::
 
-    source /proj/g2013206/metagenomics/virt_env/mg-workshop/bin/activate
+    source /proj/g2014113/metagenomics/virt-env/bin/activate
 
 You deactivate the virtual environment with::
     
