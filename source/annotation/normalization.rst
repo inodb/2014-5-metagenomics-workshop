@@ -78,7 +78,33 @@ microbial community can be studied, and the rest is ignored.
     
 Trying out some normalization methods
 =====================================
-We are now ready to try out these methods on our data.
+We are now ready to try out these methods on our data. Let's begin
+generating the numbers we need for normalization. We begin with the
+library sizes. As you remember, those numbers can be generated using
+``grep``::
 
-Which method should we settle with?
-===================================
+    grep -c ">" <input file>
+    
+To get the number of 16S rRNA sequences, we will use Metaxa2. If you
+did not install it, you can "cheat" by getting the numbers from this
+file: metaxa2_16S_rRNA_counts.txt
+If you installed it previosly, you can test it out using the following
+command::
+
+    metaxa2 -i <input file> -o <output file> --cpu 4 --align none
+    
+Metaxa2 will take a few minutes to run. You will then be able to
+get the number of bacterial 16S rRNA sequences from the file ending
+with .summary.txt.
+
+Finally, we would like to get the number of reads mapping to *any*
+Pfam family in the database. To get that number, we can again use
+``grep``. This time however, we will use it to *remove* the entries
+that we are not interested in, and counting the rest. This can be
+done by::
+
+    grep -c -v "^#" <hmmer output file>
+    
+That will remove all lines beginning with a ``#`` character, and
+count all remaining lines. Write all the numbers down that you have
+got during this exercize, we will use them in the next step!
