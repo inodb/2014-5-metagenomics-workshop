@@ -1,9 +1,9 @@
 ==========================================================
 Translating nucleotide sequences into amino acid sequences
 ==========================================================
-The first step before we can annotate the contigs with Pfam domains using
-HMMER will be to translate the reads into amino acid sequences. This is
-necessary because HMMER (still) does not translate nucleotide sequnces
+The first step before we can annotate the metagenomes with Pfam domains
+using HMMER will be to translate the reads into amino acid sequences. This
+is necessary because HMMER (still) does not translate nucleotide sequnces
 into protein space on the fly (like,for example, BLAST). For completing
 this task we will use ``transeq``, part of the `EMBOSS <http://emboss.sourceforge.net>`_
 package.
