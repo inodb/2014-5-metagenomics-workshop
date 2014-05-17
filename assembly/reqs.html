@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
     <link rel="up" title="Metagenomic Assembly Workshop" href="index.html" />
+    <link rel="next" title="Quality trimming Illumina paired-end reads" href="qtrim.html" />
     <link rel="prev" title="Metagenomic Assembly Workshop" href="index.html" /> 
   </head>
   <body>
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Metagenomic Assembly Workshop"
              accesskey="P">previous</a> |</li>
@@ -84,8 +88,7 @@ should be able to run those without problems.</p>
 <h2>Using which to locate a program<a class="headerlink" href="#using-which-to-locate-a-program" title="Permalink to this headline">¶</a></h2>
 <p>An easy way to determine whether you have have a certain program installed is
 by typing:</p>
-<div class="highlight-python"><div class="highlight"><pre>which programname
-</pre></div>
+<div class="highlight-python"><pre>which programname</pre>
 </div>
 <p>where <tt class="docutils literal"><span class="pre">programname</span></tt> is the name of the program you want to use. The program
 <tt class="docutils literal"><span class="pre">which</span></tt> searches all directories in <tt class="docutils literal"><span class="pre">$PATH</span></tt> for the executable file
@@ -93,8 +96,7 @@ by typing:</p>
 what happens when you would just type <tt class="docutils literal"><span class="pre">programname</span></tt> on the command line, but
 then <tt class="docutils literal"><span class="pre">programname</span></tt> is also executed. To see what your <tt class="docutils literal"><span class="pre">$PATH</span></tt> looks like,
 simply <tt class="docutils literal"><span class="pre">echo</span></tt> it:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo $PATH
-</pre></div>
+<div class="highlight-python"><pre>echo $PATH</pre>
 </div>
 </div>
 <div class="section" id="check-all-programs-in-one-go-with-which">
@@ -109,7 +111,7 @@ shuffleSequences_fastq.pl
 parallel
 samtools</div></blockquote>
 <p>Iterate over the programs calling <tt class="docutils literal"><span class="pre">which</span></tt> on each of them:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ req_progs=&quot;bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl&quot;
+<div class="highlight-python"><pre>$ req_progs="bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl"
 $ echo $req_progs
 bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl
 $ for p in $req_progs; do which $p || echo $p not in PATH; done
@@ -118,8 +120,7 @@ $ for p in $req_progs; do which $p || echo $p not in PATH; done
 /home/idb/downloaded_software/velvet_1.2.03/velveth
 /home/idb/downloaded_software/velvet_1.2.03/velvetg
 /usr/local/bin/parallel
-/home/idb/bin/samtools
-</pre></div>
+/home/idb/bin/samtools</pre>
 </div>
 <p>As you can see all programs are found, except tablet in this case. If any of
 the installed programs is missing, try to install them yourself or ask. If you
@@ -136,7 +137,7 @@ Download the code, <em>compile</em> it and copy the binary to a location in your
 prefer <em>compiling</em> my programs in <tt class="docutils literal"><span class="pre">~/src</span></tt> and then copying the resulting
 program to my <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory, which is in my <tt class="docutils literal"><span class="pre">$PATH</span></tt>. This should get
 you a long way:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/src
+<div class="highlight-python"><pre>mkdir -p ~/src
 
 # Go to the source directory and clone the sickle repository
 cd ~/src
@@ -148,8 +149,7 @@ make
 
 # Create a bin directory
 mkdir -p ~/bin
-cp sickle ~/bin
-</pre></div>
+cp sickle ~/bin</pre>
 </div>
 </div>
 </div>
@@ -174,6 +174,9 @@ cp sickle ~/bin
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Metagenomic Assembly Workshop</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="qtrim.html"
+                        title="next chapter">Quality trimming Illumina paired-end reads</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/assembly/reqs.txt"
@@ -203,6 +206,9 @@ cp sickle ~/bin
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="qtrim.html" title="Quality trimming Illumina paired-end reads"
+             >next</a> |</li>
+        <li class="right" >
           <a href="index.html" title="Metagenomic Assembly Workshop"
              >previous</a> |</li>
         <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
@@ -211,7 +217,7 @@ cp sickle ~/bin
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>

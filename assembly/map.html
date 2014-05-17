@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
     <link rel="up" title="Metagenomic Assembly Workshop" href="index.html" />
+    <link rel="next" title="Metagenomic Annotation Workshop" href="../annotation/index.html" />
     <link rel="prev" title="Assembling reads with Velvet" href="assembly.html" /> 
   </head>
   <body>
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../annotation/index.html" title="Metagenomic Annotation Workshop"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="assembly.html" title="Assembling reads with Velvet"
              accesskey="P">previous</a> |</li>
@@ -64,16 +68,15 @@ be reads that come from a PCR duplicate (<a class="reference external" href="htt
 coverage statistics.</p>
 <p>There is a script available that does it all at once. Read it and try to
 understand what happens in each step:</p>
-<div class="highlight-python"><div class="highlight"><pre>less `which map-bowtie2-markduplicates.sh`
-map-bowtie2-markduplicates.sh -h
-</pre></div>
+<div class="highlight-python"><pre>less `which map-bowtie2-markduplicates.sh`
+map-bowtie2-markduplicates.sh -h</pre>
 </div>
 </div>
 <div class="section" id="mapping-reads-with-bowtie2">
 <h2>Mapping reads with bowtie2<a class="headerlink" href="#mapping-reads-with-bowtie2" title="Permalink to this headline">¶</a></h2>
 <p>Take an assembly and try to map the reads back using bowtie2. Do this on an
 interactive node again, and remember to change the &#8216;out_21&#8217; part to the actual output directory that you generated:</p>
-<div class="highlight-python"><div class="highlight"><pre># Create a new directory and link files
+<div class="highlight-python"><pre># Create a new directory and link files
 mkdir -p ~/asm-workshop/bowtie2
 cd ~/asm-workshop/bowtie2
 ln -s ../velvet/out_21/contigs.fa contigs.fa
@@ -81,20 +84,18 @@ ln -s ../sickle/pair1.fastq pair1.fastq
 ln -s ../sickle/pair2.fastq pair2.fastq
 
 # Run the everything in one go script.
-map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map
-</pre></div>
+map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map</pre>
 </div>
 </div>
 <div class="section" id="some-general-statistics-from-the-sam-bam-file">
 <h2>Some general statistics from the SAM/BAM file<a class="headerlink" href="#some-general-statistics-from-the-sam-bam-file" title="Permalink to this headline">¶</a></h2>
 <p>A good way to assess the quality of an assembly is by mapping the reads back
 and determining what proportion was mapped. Use for instance:</p>
-<div class="highlight-python"><div class="highlight"><pre># Mapped reads only
+<div class="highlight-python"><pre># Mapped reads only
 samtools view -c -F 4 map/contigs_pair-smds.bam
 
 # Unmapped reads only
-samtools view -c -f 4 map/contigs_pair-smds.bam
-</pre></div>
+samtools view -c -f 4 map/contigs_pair-smds.bam</pre>
 </div>
 <p>From:
 <a class="reference external" href="http://left.subtree.org/2012/04/13/counting-the-number-of-reads-in-a-bam-file/">http://left.subtree.org/2012/04/13/counting-the-number-of-reads-in-a-bam-file/</a>.
@@ -106,8 +107,7 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
 <div class="section" id="optional-coverage-information-from-bedtools">
 <h2>(Optional) Coverage information from BEDTools<a class="headerlink" href="#optional-coverage-information-from-bedtools" title="Permalink to this headline">¶</a></h2>
 <p>Look at the output from BEDTools:</p>
-<div class="highlight-python"><div class="highlight"><pre>less map/contigs_pair-smds.coverage
-</pre></div>
+<div class="highlight-python"><pre>less map/contigs_pair-smds.coverage</pre>
 </div>
 </div>
 </div>
@@ -132,6 +132,9 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
   <h4>Previous topic</h4>
   <p class="topless"><a href="assembly.html"
                         title="previous chapter">Assembling reads with Velvet</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../annotation/index.html"
+                        title="next chapter">Metagenomic Annotation Workshop</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/assembly/map.txt"
@@ -161,6 +164,9 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="../annotation/index.html" title="Metagenomic Annotation Workshop"
+             >next</a> |</li>
+        <li class="right" >
           <a href="assembly.html" title="Assembling reads with Velvet"
              >previous</a> |</li>
         <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
@@ -169,7 +175,7 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>

@@ -12,7 +12,9 @@ Contents:
    :maxdepth: 2
 
    assembly/index
+   annotation/index
 
+Enjoy!
 
 Indices and tables
 ==================

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Normalization of count data from the metagenomic data sets &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Annotation Workshop" href="index.html" />
+    <link rel="next" title="Estimating differentially abundant protein families in the metagenomes" href="differential.html" />
+    <link rel="prev" title="Search amino acid sequences with HMMER against the Pfam database" href="annotation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="differential.html" title="Estimating differentially abundant protein families in the metagenomes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="annotation.html" title="Search amino acid sequences with HMMER against the Pfam database"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="normalization-of-count-data-from-the-metagenomic-data-sets">
+<h1>Normalization of count data from the metagenomic data sets<a class="headerlink" href="#normalization-of-count-data-from-the-metagenomic-data-sets" title="Permalink to this headline">¶</a></h1>
+<p>An important aspects of working with metagenomics is to apply proper
+normalization procedures to the retrieved counts. There are several
+ways to do this, and in part the method of choice is dependent on
+the research question investigated, but in part also based on more
+philosphical considerations. Let&#8217;s start with a bit of theory.</p>
+<div class="section" id="why-is-normalization-important">
+<h2>Why is normalization important?<a class="headerlink" href="#why-is-normalization-important" title="Permalink to this headline">¶</a></h2>
+<p>Generally, sequencing data sets are not of the same size. In addition,
+different genes and genomes come in different sizes, which means that
+<em>at equal coverage, the number of mapped reads to a certain gene or
+region will be directly dependent on the length of that region</em>.
+Luckily, the latter scenario is not a huge issue for Pfam families
+(although it exists), and we will not care about it more today. We
+will however care about the size of the sequencing libraries. To make
+relatively fair comparisons between sets, we need to normalize the
+gene counts to something. Let&#8217;s begin with checking how unequal the
+librairies are. You can do that by counting the number of sequences
+in the FASTA files, by checking for the number of &#8220;&gt;&#8221; characters in
+each file, using <tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
+<div class="highlight-python"><pre>grep -c "&gt;" &lt;input file&gt;</pre>
+</div>
+<p>As you will see, there are quite substantial differences in the
+number of reads in each library. How do we account for that?</p>
+</div>
+<div class="section" id="what-normalization-methods-are-possible">
+<h2>What normalization methods are possible?<a class="headerlink" href="#what-normalization-methods-are-possible" title="Permalink to this headline">¶</a></h2>
+<p>The choice of normalization method will depend on what research
+question we want to ask. An easy way of removing the technical
+bias related to different sequencing effort in different libraries
+is to simply divide each gene count with the total library size.
+That will yield a relative proportion of counts to that gene. To
+make that number easier to interpret, we can multiply it by
+1,000,000 to get <em>the number of reads corresponding to that gene
+or feature per million reads</em>.</p>
+<blockquote>
+<div>(counts of gene X / total number of reads) * 1000000</div></blockquote>
+<p>This is a quick way of normalizing, but it does not consider
+the composition of the sample. Say that you are interested in
+studying bacterial gene content within e.g. different plant hosts.
+Then the interesting changes in bacterial composition might be
+drowned by genetic material from the host plant. That will then
+have a huge impact on the gene abundances of the bacteria, even if
+those abundances are actually the same. The same applies to complex
+microbial communities with both bacteria, single-cell eukaryotes
+and viruses. In such cases, it might be better to consider a
+normalization to the number of bacteria in the sample (or eukaryotes
+if that is what you want to study). One way of doing that is to
+count the number of reads mapping to the 16S rRNA gene in each
+sample. You can then divide each gene count with the number of
+16S rRNA counts, to yield a genes per 16S proportion.</p>
+<blockquote>
+<div>(counts of gene X / counts of 16S rRNA gene)</div></blockquote>
+<p>There is a few problems with using the 16S rRNA gene in this way.
+The most prominient one is that the gene exists in a single copy in
+some bacteria, but in multiple (sometimes &gt;10) copies in other
+species. That means that this number will not truly be a per-genome
+estimate. Other genetic markers, such as the <em>rpoB</em> gene has been
+suggested for this, but has not yet taken off.</p>
+<p>Finally, we could imagine a scenario in which you are only
+interested in the proportion of different annotated features in
+your sample. One can then instead divide to the total number of
+reads mapped to <em>something</em> in the database used. That will give
+relative proportions, and will remove a lot of &#8220;noise&#8221;, but will
+have the limitation that only the well-defined part of the
+microbial community can be studied, and the rest is ignored.</p>
+<blockquote>
+<div>(counts of gene X / total number of mapped reads)</div></blockquote>
+</div>
+<div class="section" id="trying-out-some-normalization-methods">
+<h2>Trying out some normalization methods<a class="headerlink" href="#trying-out-some-normalization-methods" title="Permalink to this headline">¶</a></h2>
+<p>We are now ready to try out these methods on our data. Let&#8217;s begin
+generating the numbers we need for normalization. We begin with the
+library sizes. As you remember, those numbers can be generated using
+<tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
+<div class="highlight-python"><pre>grep -c "&gt;" &lt;input file&gt;</pre>
+</div>
+<p>To get the number of 16S rRNA sequences, we will use Metaxa2. If you
+did not install it, you can &#8220;cheat&#8221; by getting the numbers from this
+file: <tt class="docutils literal"><span class="pre">/proj/g2014113/metagenomics/annotation/metaxa2_16S_rRNA_counts.txt</span></tt>.
+If you installed it previously, you can test it out using the following
+command:</p>
+<div class="highlight-python"><pre>metaxa2 -i &lt;input file&gt; -o &lt;output file&gt; --cpu 4 --align none</pre>
+</div>
+<p>Metaxa2 will take a few minutes to run. You will then be able to
+get the number of bacterial 16S rRNA sequences from the file ending
+with .summary.txt.</p>
+<p>Finally, we would like to get the number of reads mapping to <em>any</em>
+Pfam family in the database. To get that number, we can again use
+<tt class="docutils literal"><span class="pre">grep</span></tt>. This time however, we will use it to <em>remove</em> the entries
+that we are not interested in, and counting the rest. This can be
+done by:</p>
+<div class="highlight-python"><pre>grep -c -v "^#" &lt;hmmer output file&gt;</pre>
+</div>
+<p>That will remove all lines beginning with a <tt class="docutils literal"><span class="pre">#</span></tt> character, and
+count all remaining lines. Write all the numbers down that you have
+got during this exercize, we will use them in the next step!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Normalization of count data from the metagenomic data sets</a><ul>
+<li><a class="reference internal" href="#why-is-normalization-important">Why is normalization important?</a></li>
+<li><a class="reference internal" href="#what-normalization-methods-are-possible">What normalization methods are possible?</a></li>
+<li><a class="reference internal" href="#trying-out-some-normalization-methods">Trying out some normalization methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="annotation.html"
+                        title="previous chapter">Search amino acid sequences with HMMER against the Pfam database</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="differential.html"
+                        title="next chapter">Estimating differentially abundant protein families in the metagenomes</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/annotation/normalization.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="differential.html" title="Estimating differentially abundant protein families in the metagenomes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="annotation.html" title="Search amino acid sequences with HMMER against the Pfam database"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </body>
+</html>

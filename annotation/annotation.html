@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Search amino acid sequences with HMMER against the Pfam database &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Annotation Workshop" href="index.html" />
+    <link rel="next" title="Normalization of count data from the metagenomic data sets" href="normalization.html" />
+    <link rel="prev" title="Translating nucleotide sequences into amino acid sequences" href="translation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="translation.html" title="Translating nucleotide sequences into amino acid sequences"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="search-amino-acid-sequences-with-hmmer-against-the-pfam-database">
+<h1>Search amino acid sequences with HMMER against the Pfam database<a class="headerlink" href="#search-amino-acid-sequences-with-hmmer-against-the-pfam-database" title="Permalink to this headline">¶</a></h1>
+<p>It is time to do the actual Pfam annotation of our metagenomes!</p>
+<div class="section" id="running-hmmsearch-on-the-translated-sequence-data-sets">
+<h2>Running <tt class="docutils literal"><span class="pre">hmmsearch</span></tt> on the translated sequence data sets<a class="headerlink" href="#running-hmmsearch-on-the-translated-sequence-data-sets" title="Permalink to this headline">¶</a></h2>
+<p>Before we run <tt class="docutils literal"><span class="pre">hmmsearch</span></tt>, we will look at its available options:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hmmsearch</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>As you will see, the program takes a substantial amount of arguments.
+In this workshop we will work with the table output from HMMER, which
+you get by specifying the <tt class="docutils literal"><span class="pre">--tblout</span></tt> option together with a file
+name. We also want to make sure that we only got statistically
+relevant matches, which we can do using the E-value option. The
+E-value (Expect-value) is an estimation of how often we would expect
+to find a similar hit by chance, given the size of the database. To
+avoid getting a lot of noise matches, we will specify and E-value of
+10^-5, that is that we would by chance get a match with a similarly good
+alignment in 1 out of 100000 cases. This can be set with the <tt class="docutils literal"><span class="pre">-E</span> <span class="pre">1e-5</span></tt>
+option. Finally, to speed up the process a little, we will use the
+<tt class="docutils literal"><span class="pre">--cpu</span></tt> option to get multi-core support. Let&#8217;s say that we&#8217;ll use 8
+cores for our HMMER runs.</p>
+<p>To specify the HMM-file database and the input data set, we just type in
+the names of those two files at the end of the command. Finally we add in
+the <tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">/dev/null</span></tt> string, to avoid getting the screen cluttered with
+sequence alignments that HMMER outputs. That should give us the following
+command:</p>
+<div class="highlight-python"><pre>hmmsearch --tblout &lt;output file&gt; -E 1e-5 --cpu 8 Pfam-mobility.hmm &lt;input file (protein format)&gt; &gt; /dev/null</pre>
+</div>
+<p>Now run this command on all X input files that we just have downloaded. When the
+command has finished for all files, we can move on to the normalization exercise.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Search amino acid sequences with HMMER against the Pfam database</a><ul>
+<li><a class="reference internal" href="#running-hmmsearch-on-the-translated-sequence-data-sets">Running <tt class="docutils literal"><span class="pre">hmmsearch</span></tt> on the translated sequence data sets</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="translation.html"
+                        title="previous chapter">Translating nucleotide sequences into amino acid sequences</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="normalization.html"
+                        title="next chapter">Normalization of count data from the metagenomic data sets</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/annotation/annotation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="translation.html" title="Translating nucleotide sequences into amino acid sequences"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </body>
+</html>
