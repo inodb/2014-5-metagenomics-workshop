@@ -29,4 +29,3 @@ Contents:
    annotation
    normalization
    differential
-   metaxa2
