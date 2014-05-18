@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    assembly/index
+   comparative-functional-analysis/index
    annotation/index
 
 Enjoy!
