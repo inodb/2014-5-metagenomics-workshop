@@ -1,0 +1,40 @@
+commands: 
+    activate: 'source /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/activate'
+    check_activate:
+        concoct: 'concoct -h'
+        rpsblast: 'rpsblast -h'
+    copy_dataset: 
+        - 'mkdir -p ~/binning-workshop'
+        - 'mkdir -p ~/binning-workshop/data'
+        - 'cd ~/binning-workshop/'
+        - 'cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000.fa data/'
+        - 'cp /proj/g2014113/nobackup/concoct-workshop/120322_coverage_nolen.tsv data/'
+    browse_coverage: 'less -S ~/binning-workshop/data/120322_coverage_nolen.tsv'
+    cut_coverage: 'cut -f1,3 ~/binning-workshop/data/120322_coverage_nolen.tsv > ~/binning-workshop/data/120322_coverage_one_sample.tsv' 
+    run_concoct:
+        one_sample: 
+            - 'mkdir -p ~/binning-workshop/concoct_output'
+            - 'concoct --coverage_file ~/binning-workshop/data/120322_coverage_one_sample.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_one_sample/'
+        look_clustering: 'less ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv'
+        all_samples:
+            'concoct --coverage_file ~/binning-workshop/data/120322_coverage_nolen.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_all_samples/'
+    copy_blast: 
+        - 'cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000_blast.out ~/binning-workshop/data/'
+        - 'cp /proj/g2014113/nobackup/concoct-workshop/scg_cogs_min0.97_max1.03_unique_genera.txt ~/binning-workshop/data/'
+        - 'cp /proj/g2014113/nobackup/concoct-workshop/cdd_to_cog.tsv ~/binning-workshop/data/'
+    check_cog_scripts:
+        - 'COG_table.py -h'
+        - 'COGPlot.R -h'
+    cogplot_single:
+        - 'COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv > ~/binning-workshop/cog_table_3000_single_sample.tsv'
+        - 'COGPlot.R -s ~/binning-workshop/cog_table_3000_single_sample.tsv -o ~/binning-workshop/cog_plot_3000_single_sample.pdf'
+    download_single_cogplot: 'scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_single_sample.pdf ~/Desktop/'
+    cogplot_multiple:
+        - 'COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv > ~/binning-workshop/cog_table_3000_all_samples.tsv'
+        - 'COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-workshop/cog_plot_3000_all_samples.pdf'
+    download_multiple_cogplot: 'scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_all_samples.pdf ~/Desktop'
+    extract_fasta_help: 'EXTRACT_FASTA.py -h'    
+    extract_fasta:
+        - 'mkdir -p ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins'
+        - 'EXTRACT_FASTA.py ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv ~/binning-workshop/data/Contings_gt1000.fa -o ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/'
+    list_bins: 'ls ~/binning-workshop/concoct-output/3000_all_samples/fasta_bins'
