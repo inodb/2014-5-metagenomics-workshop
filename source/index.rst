@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    assembly/index
-
+   binning/index
 
 Indices and tables
 ==================
