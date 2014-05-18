@@ -140,7 +140,7 @@ You can now try this for a number of other genes (by changing the value of
 
 
 Visualizing differences in gene abundance
-========================================
+=========================================
 
 One neat way of visualizing metagenomic count data is through heatmaps. R has a built-in
 heatmap function, that can be called using the (surprise...) ``heatmap`` command.

@@ -73,7 +73,7 @@ Use it on all the four data sets.
 
 
 (Optional excercise) Install Metaxa2 by yourself
-===============================================
+================================================
 Follow these steps only if you want to install ``Metaxa2`` by yourself.
 The code for Metaxa2 is available from http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
 You can install Metaxa2 as follows::
@@ -103,4 +103,3 @@ If this did not work, you can try this manual approach::
     metaxa2 -h
     
 If this brings up the help message, you are all set!
-    
