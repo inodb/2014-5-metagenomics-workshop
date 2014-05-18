@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Comparative Taxonomic Analysis of Metagenomic Samples &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    <title>Metagenomic Binning Workshop &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
-    <link rel="next" title="Extracting rRNA encoding reads and annotating them" href="rrna.html" />
-    <link rel="prev" title="Comparative functional analysis with R" href="../comparative-functional-analysis/compare.html" /> 
+    <link rel="next" title="Setup Environment" href="setup.html" />
+    <link rel="prev" title="Mapping reads back to the assembly" href="../assembly/map.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,10 +35,10 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="rrna.html" title="Extracting rRNA encoding reads and annotating them"
+          <a href="setup.html" title="Setup Environment"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../comparative-functional-analysis/compare.html" title="Comparative functional analysis with R"
+          <a href="../assembly/map.html" title="Mapping reads back to the assembly"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -49,21 +49,37 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="comparative-taxonomic-analysis-of-metagenomic-samples">
-<h1>Comparative Taxonomic Analysis of Metagenomic Samples<a class="headerlink" href="#comparative-taxonomic-analysis-of-metagenomic-samples" title="Permalink to this headline">¶</a></h1>
-<p>In this workshop we will do a comparative analysis of several Baltic Sea
-samples on taxonomy. The following topics will be discussed:</p>
+  <div class="section" id="metagenomic-binning-workshop">
+<h1>Metagenomic Binning Workshop<a class="headerlink" href="#metagenomic-binning-workshop" title="Permalink to this headline">¶</a></h1>
+<p>In this metagenomics workshop we will learn how to:</p>
 <ul class="simple">
-<li>Taxonomic annotation of rRNA reads using sortmeRNA</li>
-<li>Visualizing taxonomy with KRONA</li>
-<li>Comparative taxonomic analysis in R</li>
+<li>Perform unsupervised binning with concoct</li>
+<li>Evaluate binning performance</li>
 </ul>
 <p>The workshop has the following exercises:</p>
+<ol class="arabic simple">
+<li>Setup Environment</li>
+<li>Running Concoct</li>
+<li>Evaluate Clustering Using Single Copy Genes</li>
+<li>Phylogenetic Classification using Phylosift</li>
+</ol>
+<p>At least a basic knowledge of how to work with the command line is required
+otherwise it will be very difficult to follow some of the examples. Have
+fun!</p>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="rrna.html">Extracting rRNA encoding reads and annotating them</a></li>
-<li class="toctree-l1"><a class="reference internal" href="krona.html">Visualising taxonomy with KRONA</a></li>
-<li class="toctree-l1"><a class="reference internal" href="compare.html">Comparative taxonomic analysis with R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html#check-that-the-programs-are-available">Check that the programs are available</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concoct.html">CONCOCT - Clustering cONtigs with Coverage and ComposiTion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concoct.html#getting-to-know-the-test-data-set">Getting to know the test data set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concoct.html#running-concoct">Running CONCOCT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concoct.html#evaluating-clustering-results">Evaluating Clustering Results</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -75,14 +91,14 @@ samples on taxonomy. The following topics will be discussed:</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../comparative-functional-analysis/compare.html"
-                        title="previous chapter">Comparative functional analysis with R</a></p>
+  <p class="topless"><a href="../assembly/map.html"
+                        title="previous chapter">Mapping reads back to the assembly</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="rrna.html"
-                        title="next chapter">Extracting rRNA encoding reads and annotating them</a></p>
+  <p class="topless"><a href="setup.html"
+                        title="next chapter">Setup Environment</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/comparative-taxonomic-analysis/index.txt"
+    <li><a href="../_sources/binning/index.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -109,10 +125,10 @@ samples on taxonomy. The following topics will be discussed:</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="rrna.html" title="Extracting rRNA encoding reads and annotating them"
+          <a href="setup.html" title="Setup Environment"
              >next</a> |</li>
         <li class="right" >
-          <a href="../comparative-functional-analysis/compare.html" title="Comparative functional analysis with R"
+          <a href="../assembly/map.html" title="Mapping reads back to the assembly"
              >previous</a> |</li>
         <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
       </ul>

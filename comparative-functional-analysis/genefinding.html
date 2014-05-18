@@ -64,22 +64,19 @@ use another dataset consisting of 11 samples from a time series sampling of
 surface water in the Baltic Sea. Sequencing was done with Illumina MiSeq here
 generating on average 835,048 2 x 250 bp reads per sample. The reads can be
 found here:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/reads/
-</pre></div>
+<div class="highlight-python"><pre>/proj/g2013206/metagenomics/reads/</pre>
 </div>
 <p>The first four numbers in the filename represent a date. All samples are from
 2012. R1 and R2 both contain one read of a pair. They are ordered, so the first
 four lines in R1 are paired with the read in the first four lines of R2. They
 are in CASAVA v1.8 format (<a class="reference external" href="http://en.wikipedia.org/wiki/FASTQ_format">http://en.wikipedia.org/wiki/FASTQ_format</a>).</p>
 <p>You can find the contigs from a combined assembly on reads from all samples here:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa
-</pre></div>
+<div class="highlight-python"><pre>/proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa</pre>
 </div>
 <p>They have been constructed with Ray using a kmer of 41 and no scaffolding. Only
 contigs &gt;= 1000 are in this file.</p>
 <p>Note that all solutions (i.e. the generated outputs) for the exercises are also in:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/
-</pre></div>
+<div class="highlight-python"><pre>/proj/g2013206/metagenomics/</pre>
 </div>
 <p>In all the following exercises you should again use the virtual environment to
 get all the necessary programs:</p>
@@ -88,25 +85,22 @@ get all the necessary programs:</p>
 </div>
 <p>It’s time to run Prodigal. First create an output directory with a copy of the
 contig file:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/prodigal
+<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/prodigal
 cd ~/metagenomics_workshop2/prodigal
-cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .
-</pre></div>
+cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .</pre>
 </div>
 <p>Then run Prodigal on the contig file (~2m20):</p>
-<div class="highlight-python"><div class="highlight"><pre>prodigal -a baltic-sea-ray-noscaf-41.1000.aa.fa \
+<div class="highlight-python"><pre>prodigal -a baltic-sea-ray-noscaf-41.1000.aa.fa \
               -d baltic-sea-ray-noscaf-41.1000.nuc.fa \
                -i baltic-sea-ray-noscaf-41.1000.fa \
                -f gff -p meta \
-               &gt; baltic-sea-ray-noscaf-41.1000.gff
-</pre></div>
+               &gt; baltic-sea-ray-noscaf-41.1000.gff</pre>
 </div>
 <p>This will produce 3 files, a fasta file with the gene sequences (nucleotides) a
 fasta file with the protein sequences (aminoacids) and a gff file that is a
 standardised file type for showing annotations. It’s a tab delimited file that
 can be viewed by e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre>less baltic-sea-ray-noscaf-41.1000.gff
-</pre></div>
+<div class="highlight-python"><pre>less baltic-sea-ray-noscaf-41.1000.gff</pre>
 </div>
 <p>Pass the option -S to less if you don’t want lines to wrap</p>
 <p>An explanation of the gff format can be found at
@@ -165,7 +159,7 @@ can be viewed by e.g.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>

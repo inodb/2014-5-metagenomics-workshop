@@ -60,21 +60,18 @@ the script uses a bootstrap support of 0.80 to include a taxonomic level (this
 can be changed easily by changing the number on row 16 in the script). You may
 need to change the input file names in the beginning of the script ($in_file[0]
 = ...). The script will only import the 16S bacterial data:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd rdp
-sum_rdp_annot.pl  &gt; summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
-</pre></div>
+<div class="highlight-python"><pre>cd rdp
+sum_rdp_annot.pl  &gt; summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv</pre>
 </div>
 <p>Let’s import this table into R:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">tab_tax</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">delim</span><span class="p">(</span><span class="s">&quot;summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>And assign the descriptor column to a vector:</p>
-<div class="highlight-python"><div class="highlight"><pre>tax &lt;- tab_tax[,1]
-</pre></div>
+<div class="highlight-python"><pre>tax &lt;- tab_tax[,1]</pre>
 </div>
 <p>And put the counts into a matrix:</p>
-<div class="highlight-python"><div class="highlight"><pre>tax_counts &lt;- tab_tax[,2:ncol(tab_tax)] # counts of taxa in the different samples
-</pre></div>
+<div class="highlight-python"><pre>tax_counts &lt;- tab_tax[,2:ncol(tab_tax)] # counts of taxa in the different samples</pre>
 </div>
 <p>Since you will compare this dataset with the functional dataset you generated
 before it&#8217;s great if the samples come in the same order. Check the previous
@@ -92,11 +89,10 @@ order:</p>
 </pre></div>
 </div>
 <p>Make a normalised version of tax_counts:</p>
-<div class="highlight-python"><div class="highlight"><pre>norm_tax_counts &lt;- tax_counts
+<div class="highlight-python"><pre>norm_tax_counts &lt;- tax_counts
 for (i in 1:ncol(tax_counts)) {
     norm_tax_counts[,i] &lt;- tax_counts[,i]/sum(tax_counts[,i])
-}
-</pre></div>
+}</pre>
 </div>
 <p>What different taxa do we have there?:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">tax</span>
@@ -107,7 +103,7 @@ levels. If you open the text file /proj/g2013206/metagenomics/r_commands.txt
 you can copy and paste all of this code into R and this will give you the
 matrices and vectors below (check carefully that you didn’t get any error
 messages!):</p>
-<div class="highlight-python"><div class="highlight"><pre>phylum_counts             matrix with counts for different phyla
+<div class="highlight-python"><pre>phylum_counts             matrix with counts for different phyla
 norm_phylum_counts          normalised version of phylum_count
 phylum              vector with phyla (same order as in phyla matrix)
 
@@ -117,8 +113,7 @@ class                 vector with classes
 
 phylumclass_counts         matrix with counts for different phyla and proteobacteria classes
 norm_phylumclass_counts    normalised version of phylumclass_count
-phylumclass              vector with phyla and proteobacteria classes
-</pre></div>
+phylumclass              vector with phyla and proteobacteria classes</pre>
 </div>
 <p>The “other” clade in each of the above sums reads that were not classified at
 the defined level. Having these more well defined matrices we can compare the
@@ -138,8 +133,7 @@ the functional analysis:</p>
 </div>
 <p>If you can&#8217;t see the legends, they&#8217;re just in a bad position. Try altering the x and y parameters in the args.legend.</p>
 <p>Calculate beta-diversity based on class-level taxonomic counts:</p>
-<div class="highlight-python"><div class="highlight"><pre>class_dist &lt;- as.matrix(vegdist(t(norm_class_counts[1:(nrow(norm_class_counts) - 1),]), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
-</pre></div>
+<div class="highlight-python"><pre>class_dist &lt;- as.matrix(vegdist(t(norm_class_counts[1:(nrow(norm_class_counts) - 1),]), method="bray", binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))</pre>
 </div>
 <p>Note that by &#8220;[1:(nrow(norm_class_counts) - 1),]&#8221; we exclude the last row in
 norm_class_counts when we calculate the distances because this is the &#8220;others&#8221;
@@ -155,15 +149,13 @@ column that contains all kinds of unclassified taxa.</p>
 </pre></div>
 </div>
 <p>And ordinate the data by NMDS:</p>
-<div class="highlight-python"><div class="highlight"><pre>color = brewer.pal(length(sample), &quot;Reds&quot;)
+<div class="highlight-python"><pre>color = brewer.pal(length(sample), "Reds")
 mds &lt;- metaMDS(class_dist)
-plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
-</pre></div>
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = "NMDS1", ylab = "NMDS2", cex = 5, col = color)</pre>
 </div>
 <p>Does the pattern look similar as that obtained by functional data?:</p>
-<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogc_dist)
-plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
-</pre></div>
+<div class="highlight-python"><pre>mds &lt;- metaMDS(cogc_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = "NMDS1", ylab = "NMDS2", cex = 5, col = color)</pre>
 </div>
 <p>We can actually check how beta diversity generated by the two approaches is
 correlated:</p>
@@ -254,7 +246,7 @@ high Shannon. There is a vegan function for getting shannon:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>

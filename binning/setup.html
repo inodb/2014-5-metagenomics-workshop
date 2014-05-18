@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setup Environment &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Binning Workshop" href="index.html" />
+    <link rel="next" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion" href="concoct.html" />
+    <link rel="prev" title="Metagenomic Binning Workshop" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="concoct.html" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Metagenomic Binning Workshop"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Binning Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setup-environment">
+<h1>Setup Environment<a class="headerlink" href="#setup-environment" title="Permalink to this headline">¶</a></h1>
+<p>This workshop will be using the same environment used for the assembly workshop. If you did not participate in the assembly workshop, please have a look at the introductory setup description for that.</p>
+<div class="section" id="programs-used-in-this-workshop">
+<h2>Programs used in this workshop<a class="headerlink" href="#programs-used-in-this-workshop" title="Permalink to this headline">¶</a></h2>
+<p>The following programs are used in this workshop:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://github.com/BinPro/CONCOCT">CONCOCT</a></li>
+<li><a class="reference external" href="http://phylosift.wordpress.com/">Phylosift</a></li>
+<li><a class="reference external" href="http://blast.ncbi.nlm.nih.gov/">Blast</a></li>
+</ul>
+</div></blockquote>
+<p>All programs are already installed, all you have to do is load the virtual
+environment for this workshop. Once you are logged in to the server run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2014113</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>You deactivate the virtual environment with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>NOTE: This is a python virtual environment. The binary folder of the virtual
+environment has symbolic links to all programs used in this workshop so you
+should be able to run those without problems.</p>
+</div>
+<div class="section" id="check-that-the-programs-are-available">
+<h2>Check that the programs are available<a class="headerlink" href="#check-that-the-programs-are-available" title="Permalink to this headline">¶</a></h2>
+<p>After you have activated the virtual environment the following commands should execute properly and you should be able to see some brief instructions on how to run the different programs respectively.</p>
+<p>CONCOCT:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">concoct</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>BLAST:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rpsblast</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setup Environment</a><ul>
+<li><a class="reference internal" href="#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li><a class="reference internal" href="#check-that-the-programs-are-available">Check that the programs are available</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Metagenomic Binning Workshop</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="concoct.html"
+                        title="next chapter">CONCOCT - Clustering cONtigs with Coverage and ComposiTion</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/binning/setup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="concoct.html" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Metagenomic Binning Workshop"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Binning Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </body>
+</html>

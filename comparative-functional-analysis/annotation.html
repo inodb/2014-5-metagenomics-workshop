@@ -63,9 +63,8 @@ evolutionary counterparts in different species, usually with the same function
 (<a class="reference external" href="http://www.ncbi.nlm.nih.gov/COG/">http://www.ncbi.nlm.nih.gov/COG/</a>). Many COGs have known functions and the COGs
 are also grouped at a higher level with functional classes. To download your
 newly created file open a new terminal and type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/
-scp username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa .
-</pre></div>
+<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/
+scp username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa .</pre>
 </div>
 <p>To get COG classifications of your proteins, go to webMGA
 <a class="reference external" href="http://weizhong-lab.ucsd.edu/metagenomic-analysis/">http://weizhong-lab.ucsd.edu/metagenomic-analysis/</a> and select Server  /
@@ -80,30 +79,25 @@ metagenome are distant from existing sequences in databases. It is also faster
 than searching against all proteins out there.</p>
 <p>When the search is done you get a zipped folder. On kalkyl, create the
 directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/wmga-cog
-</pre></div>
+<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/wmga-cog</pre>
 </div>
 <p>Use wget or curl to download the zip file on uppmax or use scp to upload it to
 that folder i.e.:</p>
-<div class="highlight-python"><div class="highlight"><pre>scp output.zip username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/wmga-cog
-</pre></div>
+<div class="highlight-python"><pre>scp output.zip username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/wmga-cog</pre>
 </div>
 <p>Then unzip the file on kalkyl:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics_workshop2/wmga-cog
-unzip output.zip
-</pre></div>
+<div class="highlight-python"><pre>cd ~/metagenomics_workshop2/wmga-cog
+unzip output.zip</pre>
 </div>
 <p>Have a look at the README.txt to see what all the files represent. The file
 output.2 includes detailed information on the classifications for every protein
 with a hit below the -e value cutoff. View them with:</p>
-<div class="highlight-python"><div class="highlight"><pre>less README.txt
-less -S output.2
-</pre></div>
+<div class="highlight-python"><pre>less README.txt
+less -S output.2</pre>
 </div>
 <p>NOTE: If the queueing takes too much time you can also just copy the results
 from the project dir:</p>
-<div class="highlight-python"><div class="highlight"><pre>cp -r /proj/g2013206/metagenomics/wmga-cog/ ~/metagenomics_workshop2/
-</pre></div>
+<div class="highlight-python"><pre>cp -r /proj/g2013206/metagenomics/wmga-cog/ ~/metagenomics_workshop2/</pre>
 </div>
 </div>
 
@@ -159,7 +153,7 @@ from the project dir:</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>
