@@ -13,6 +13,7 @@ Contents:
 
    assembly/index
    comparative-functional-analysis/index
+   comparative-taxonomic-analysis/index
    annotation/index
 
 Enjoy!
