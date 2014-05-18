@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Comparative functional analysis with R &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="comparative-functional-analysis-with-r">
+<h1>Comparative functional analysis with R<a class="headerlink" href="#comparative-functional-analysis-with-r" title="Permalink to this headline">¶</a></h1>
+<p>Having this table one can use different statistical and visualisation software
+to analyse the results. One option would be to import a simpler version of the
+table into the program Fantom, a graphical user interface program developed for
+comparative analysis of metagenome data. You can try this in the end of the day
+if you have time.</p>
+<p>But here we will use the statistical programming language R to do some simple
+analysis. cd to the directory where you have the cog-sum-mean-cov.tsv file.
+Then start R:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics_workshop2
+R
+</pre></div>
+</div>
+<p>and import the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tab_cog</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">delim</span><span class="p">(</span><span class="s">&quot;cog-sum-mean-cov/cog-sum-mean-cov.tsv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Assign the different columns with descriptors to vectors of logical names:</p>
+<div class="highlight-python"><div class="highlight"><pre>cogf &lt;- tab_cog[,1] # cog family
+cogfd &lt;- tab_cog[,2] # cog class
+cogc &lt;- tab_cog[,3] # cog family descriptor
+cogcd &lt;- tab_cog[,4] # cog class descriptor
+</pre></div>
+</div>
+<p>Make a matrix with the coverages of the cog families:</p>
+<div class="highlight-python"><div class="highlight"><pre>cogf_cov &lt;- as.matrix(tab_cog[,5:ncol(tab_cog)]) # coverage in the different samples
+</pre></div>
+</div>
+<p>And why not put sample names into a vector as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sample</span> <span class="o">&lt;-</span> <span class="n">colnames</span><span class="p">(</span><span class="n">cogf_cov</span><span class="p">)</span>
+<span class="n">sample</span>
+</pre></div>
+</div>
+<p>Let’s clean the sample names a bit:</p>
+<div class="highlight-python"><div class="highlight"><pre>for (i in 1:length(sample)) {
+    sample[i] &lt;- matrix(unlist(strsplit(sample[i],&quot;_&quot;)), 1)[1,4]
+}
+</pre></div>
+</div>
+<p>Since the coverages will differ depending on how many reads per sample we have
+we can normalise by dividing the coverages by the total coverage for the sample
+(only considering cog-annotated genes though):</p>
+<div class="highlight-python"><div class="highlight"><pre>for (i in 1:ncol(cogf_cov)) {
+    cogf_cov[,i] &lt;- cogf_cov[,i]/sum(cogf_cov[,i])
+}
+</pre></div>
+</div>
+<p>The cogf_cov gives coverage per cog family. Let’s summarise within cog classes
+and make a separate matrix for that:</p>
+<div class="highlight-python"><div class="highlight"><pre>unique_cogc &lt;- levels(cogc)
+cogc_cov &lt;- matrix(ncol = length(sample), nrow = length(unique_cogc))
+colnames(cogc_cov) &lt;- sample
+rownames(cogc_cov) &lt;- unique_cogc
+for (i in 1:length(unique_cogc)) {
+    these &lt;- grep(paste(&quot;^&quot;, unique_cogc[i],&quot;$&quot;, sep = &quot;&quot;), cogc)
+    for (j in 1:ncol(cogf_cov)) {
+        cogc_cov[i,j] &lt;- sum(cogf_cov[these,j])
+    }
+}
+</pre></div>
+</div>
+<p>OK, now let’s start playing with the data. We can for example do a pairwise
+plot of coverage of cog classes in sample1 vs. sample2:</p>
+<div class="highlight-python"><div class="highlight"><pre>plot(cogc_cov[,1], cogc_cov[,2])
+</pre></div>
+</div>
+<p>or make a stacked barplot showing the different classes in the different
+samples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">barplot</span><span class="p">(</span><span class="n">cogf_cov</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rainbow</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="n">border</span><span class="o">=</span><span class="n">NA</span><span class="p">)</span>
+<span class="n">barplot</span><span class="p">(</span><span class="n">cogc_cov</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rainbow</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">border</span><span class="o">=</span><span class="n">NA</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The vegan package contains many nice functions for doing (microbial) ecology
+analysis. Load vegan:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s">&quot;vegan&quot;</span><span class="p">)</span> <span class="c"># not necessary if already installed</span>
+<span class="n">library</span><span class="p">(</span><span class="n">vegan</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If installing doesn&#8217;t work for you have a look here
+<a class="reference external" href="http://www.stat.osu.edu/computer-support/mathstatistics-packages/installing-r-libraries-locally-your-home-directory">http://www.stat.osu.edu/computer-support/mathstatistics-packages/installing-r-libraries-locally-your-home-directory</a></p>
+<p>We can calculate pairwise distances between the samples based on their
+functional composition. In ecology pairwise distance between samples is
+referred to as beta-diversity, although typically based on taxonomic
+composition rather than functional:</p>
+<div class="highlight-python"><div class="highlight"><pre>cogf_dist &lt;- as.matrix(vegdist(t(cogf_cov), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
+cogc_dist &lt;- as.matrix(vegdist(t(cogc_cov), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
+</pre></div>
+</div>
+<p>You can visualise the distance matrices as a heatmaps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">image</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">)</span>
+<span class="n">image</span><span class="p">(</span><span class="n">cogc_dist</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Are the distances calculated on the different functional levels correlated?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="n">cogc_dist</span><span class="p">,</span> <span class="n">cogf_dist</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now let’s cluster the samples based on the distances with hierarchical
+clustering. We use the function &#8220;agnes&#8221; in the &#8220;cluster&#8221; library and apply
+average linkage clustering:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s">&quot;cluster&quot;</span><span class="p">)</span> <span class="c"># not necessary if already installed</span>
+<span class="n">library</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+
+<span class="n">cluster</span> <span class="o">&lt;-</span> <span class="n">agnes</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">,</span> <span class="n">diss</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;average&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">which</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hang</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">sample</span><span class="p">,</span> <span class="n">main</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">xlab</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">ylab</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">sub</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Alternatively you can use the function heatmap, that calculates distances both
+between samples and between features and clusters in two dimensions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">heatmap</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span><span class="p">(</span><span class="n">cogc_dist</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And let’s ordinate the data in two dimensions. This can be done e.g. by PCA
+based on the actual coverage values or by e.g. PcOA or NMDS (non-metrical
+dimensional scaling). Let&#8217;s do NMDS:</p>
+<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogf_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 2)
+</pre></div>
+</div>
+<p>We can color the samples according to date (provided your samples are ordered
+according to date). There are some nice color scales to choose from here
+<a class="reference external" href="http://colorbrewer2.org/">http://colorbrewer2.org/</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre>install.packages(&quot;RColorBrewer&quot;) # not necessary if already installed
+library(RColorBrewer)
+color = brewer.pal(length(sample), &quot;Reds&quot;) # or select another color scale!
+
+mds &lt;- metaMDS(cogf_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
+</div>
+<p>Let’s compare with how it looks if we base the clustering on COG class coverage
+instead:</p>
+<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogc_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
+</div>
+<p>In addition to these examples there are of course infinite ways to analyse the
+results in R. One could for instance find COGs that significantly differ in
+abundance between samples, do different types of correlations between metadata
+(nutrients, temperature, etc) and functions, etc. Leave your R window open,
+since we will compare these results with taxonomic data in a bit.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/comparative-functional-analysis/compare.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

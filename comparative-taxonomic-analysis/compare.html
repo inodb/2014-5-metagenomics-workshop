@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Comparative taxonomic analysis with R &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Comparative Taxonomic Analysis of Metagenomic Samples" href="index.html" />
+    <link rel="next" title="Metagenomic Annotation Workshop" href="../annotation/index.html" />
+    <link rel="prev" title="Visualising taxonomy with KRONA" href="krona.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../annotation/index.html" title="Metagenomic Annotation Workshop"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="krona.html" title="Visualising taxonomy with KRONA"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Comparative Taxonomic Analysis of Metagenomic Samples</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="comparative-taxonomic-analysis-with-r">
+<h1>Comparative taxonomic analysis with R<a class="headerlink" href="#comparative-taxonomic-analysis-with-r" title="Permalink to this headline">¶</a></h1>
+<p>KRONA is not very good for comparing multiple samples though. Instead we will
+use R as for the functional data.  First combine the data from the different
+samples with the script sum_rdp_annot.pl (made by us) into a table. By default
+the script uses a bootstrap support of 0.80 to include a taxonomic level (this
+can be changed easily by changing the number on row 16 in the script). You may
+need to change the input file names in the beginning of the script ($in_file[0]
+= ...). The script will only import the 16S bacterial data:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd rdp
+sum_rdp_annot.pl  &gt; summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
+</pre></div>
+</div>
+<p>Let’s import this table into R:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tab_tax</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">delim</span><span class="p">(</span><span class="s">&quot;summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And assign the descriptor column to a vector:</p>
+<div class="highlight-python"><div class="highlight"><pre>tax &lt;- tab_tax[,1]
+</pre></div>
+</div>
+<p>And put the counts into a matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre>tax_counts &lt;- tab_tax[,2:ncol(tab_tax)] # counts of taxa in the different samples
+</pre></div>
+</div>
+<p>Since you will compare this dataset with the functional dataset you generated
+before it&#8217;s great if the samples come in the same order. Check the previous
+order:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sample</span>
+</pre></div>
+</div>
+<p>And the current order:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">colnames</span><span class="p">(</span><span class="n">tax_counts</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>if they are not in the same order contact an assistant for help. Otherwise:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">colnames</span><span class="p">(</span><span class="n">tax_counts</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">sample</span>
+<span class="n">rownames</span><span class="p">(</span><span class="n">tax_counts</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">tax</span>
+</pre></div>
+</div>
+<p>Make a normalised version of tax_counts:</p>
+<div class="highlight-python"><div class="highlight"><pre>norm_tax_counts &lt;- tax_counts
+for (i in 1:ncol(tax_counts)) {
+    norm_tax_counts[,i] &lt;- tax_counts[,i]/sum(tax_counts[,i])
+}
+</pre></div>
+</div>
+<p>What different taxa do we have there?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">tax</span>
+</pre></div>
+</div>
+<p>From the tax_counts matrix we can create new matrices at defined taxonomic
+levels. If you open the text file /proj/g2013206/metagenomics/r_commands.txt
+you can copy and paste all of this code into R and this will give you the
+matrices and vectors below (check carefully that you didn’t get any error
+messages!):</p>
+<div class="highlight-python"><div class="highlight"><pre>phylum_counts             matrix with counts for different phyla
+norm_phylum_counts          normalised version of phylum_count
+phylum              vector with phyla (same order as in phyla matrix)
+
+class_counts             matrix with counts for different classes
+norm_class_counts        normalised version of class_count
+class                 vector with classes
+
+phylumclass_counts         matrix with counts for different phyla and proteobacteria classes
+norm_phylumclass_counts    normalised version of phylumclass_count
+phylumclass              vector with phyla and proteobacteria classes
+</pre></div>
+</div>
+<p>The “other” clade in each of the above sums reads that were not classified at
+the defined level. Having these more well defined matrices we can compare the
+taxonomic composition in the samples. We can apply the commands that we did for
+the functional analysis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">library</span><span class="p">(</span><span class="n">vegan</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">RColorBrewer</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Barplots:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">par</span><span class="p">(</span><span class="n">mar</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">22</span><span class="p">))</span> <span class="c"># Increase the MARgins, to make space for a legend</span>
+
+<span class="n">barplot</span><span class="p">(</span><span class="n">norm_phylum_counts</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rainbow</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span> <span class="n">legend</span><span class="o">.</span><span class="n">text</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">legend</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ncol</span><span class="p">(</span><span class="n">norm_phylum_counts</span><span class="p">)</span><span class="o">+</span><span class="mi">25</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adj</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+<span class="n">barplot</span><span class="p">(</span><span class="n">norm_phylumclass_counts</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rainbow</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">legend</span><span class="o">.</span><span class="n">text</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">legend</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ncol</span><span class="p">(</span><span class="n">norm_phylum_counts</span><span class="p">)</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adj</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+<span class="n">barplot</span><span class="p">(</span><span class="n">norm_class_counts</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">rainbow</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span> <span class="n">legend</span><span class="o">.</span><span class="n">text</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">legend</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">ncol</span><span class="p">(</span><span class="n">norm_phylum_counts</span><span class="p">)</span><span class="o">+</span><span class="mi">32</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">adj</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>If you can&#8217;t see the legends, they&#8217;re just in a bad position. Try altering the x and y parameters in the args.legend.</p>
+<p>Calculate beta-diversity based on class-level taxonomic counts:</p>
+<div class="highlight-python"><div class="highlight"><pre>class_dist &lt;- as.matrix(vegdist(t(norm_class_counts[1:(nrow(norm_class_counts) - 1),]), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
+</pre></div>
+</div>
+<p>Note that by &#8220;[1:(nrow(norm_class_counts) - 1),]&#8221; we exclude the last row in
+norm_class_counts when we calculate the distances because this is the &#8220;others&#8221;
+column that contains all kinds of unclassified taxa.</p>
+<p>Hierarchical clustering:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cluster</span> <span class="o">&lt;-</span> <span class="n">agnes</span><span class="p">(</span><span class="n">class_dist</span><span class="p">,</span> <span class="n">diss</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;average&quot;</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">which</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hang</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Heatmaps with clusterings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">heatmap</span><span class="p">(</span><span class="n">norm_class_counts</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">heatmap</span><span class="p">(</span><span class="n">norm_phylumclass_counts</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And ordinate the data by NMDS:</p>
+<div class="highlight-python"><div class="highlight"><pre>color = brewer.pal(length(sample), &quot;Reds&quot;)
+mds &lt;- metaMDS(class_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
+</div>
+<p>Does the pattern look similar as that obtained by functional data?:</p>
+<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogc_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
+</div>
+<p>We can actually check how beta diversity generated by the two approaches is
+correlated:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">,</span> <span class="n">class_dist</span><span class="p">)</span>
+<span class="n">cor</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">,</span> <span class="n">class_dist</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(For comparing matrices it is common to use a mantel test, but the r-value (but
+not the p-value) is in fact the same.)</p>
+<p>Finally, let’s check how alpha-diversity fluctuates over the year and compares
+between taxonomic and functional data. Since alpha-diversity is influenced by
+sample size it is advisable to subsample the datasets to the same number of
+reads. We can make a subsampled table using the vegan function rrarefy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sub_class_counts</span> <span class="o">&lt;-</span> <span class="n">t</span><span class="p">(</span><span class="n">rrarefy</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">class_counts</span><span class="p">),</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This will be difficult to achieve for the functional data at this point,
+however, so let’s skip that for the functional data.</p>
+<p>Let’s use Shannon diversity index since this is pretty insensitive to sample
+size. Shannon index combines richness (number of species) and evenness (how
+evenly the species are distributed); many, evenly distributed species gives a
+high Shannon. There is a vegan function for getting shannon:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">class_shannon</span> <span class="o">&lt;-</span> <span class="n">diversity</span><span class="p">(</span><span class="n">class_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">:(</span><span class="n">nrow</span><span class="p">(</span><span class="n">norm_class_counts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),],</span> <span class="n">MARGIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sub_class_shannon</span> <span class="o">&lt;-</span> <span class="n">diversity</span><span class="p">(</span><span class="n">sub_class_counts</span><span class="p">[</span><span class="mi">1</span><span class="p">:(</span><span class="n">nrow</span><span class="p">(</span><span class="n">norm_class_counts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),],</span> <span class="n">MARGIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">cogf_shannon</span> <span class="o">&lt;-</span> <span class="n">diversity</span><span class="p">(</span><span class="n">cogf_cov</span><span class="p">,</span> <span class="n">MARGIN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>How does subsampling influence shannon?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="n">class_shannon</span><span class="p">,</span> <span class="n">sub_class_shannon</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Is functional and taxonomic shannon correlated?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="n">sub_class_shannon</span><span class="p">,</span> <span class="n">cogf_shannon</span><span class="p">)</span>
+<span class="n">cor</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">sub_class_shannon</span><span class="p">,</span> <span class="n">cogf_shannon</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="krona.html"
+                        title="previous chapter">Visualising taxonomy with KRONA</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../annotation/index.html"
+                        title="next chapter">Metagenomic Annotation Workshop</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/comparative-taxonomic-analysis/compare.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../annotation/index.html" title="Metagenomic Annotation Workshop"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="krona.html" title="Visualising taxonomy with KRONA"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Comparative Taxonomic Analysis of Metagenomic Samples</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

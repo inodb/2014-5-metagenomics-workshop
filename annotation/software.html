@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Checking required software &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Annotation Workshop" href="index.html" />
+    <link rel="next" title="Translating nucleotide sequences into amino acid sequences" href="translation.html" />
+    <link rel="prev" title="Metagenomic Annotation Workshop" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="translation.html" title="Translating nucleotide sequences into amino acid sequences"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Metagenomic Annotation Workshop"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="checking-required-software">
+<h1>Checking required software<a class="headerlink" href="#checking-required-software" title="Permalink to this headline">¶</a></h1>
+<p>Before we begin, we will quickly go through the required software and datasets
+for this workshop. For those who are already command-line-skilled there will
+also be a possibility to install the Metaxa2 tool for rRNA finding, but this
+is not required to complete the workshop.</p>
+<div class="section" id="programs-used-in-this-workshop">
+<h2>Programs used in this workshop<a class="headerlink" href="#programs-used-in-this-workshop" title="Permalink to this headline">¶</a></h2>
+<p>The following programs are used in this workshop:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://emboss.sourceforge.net">EMBOSS (transeq)</a></li>
+<li><a class="reference external" href="http://hmmer.janelia.org">HMMER</a></li>
+<li><a class="reference external" href="http://www.r-project.org">R</a></li>
+<li>Optionally: <a class="reference external" href="http://microbiology.se/software/metaxa2/">Metaxa2</a></li>
+</ul>
+</div></blockquote>
+<p>All programs but Metaxa2 are already installed, all you have to do is load
+the virtual environment for this workshop. Once you are logged in to the
+server run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2014113</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>You deactivate the virtual environment with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">deactivate</span>
+</pre></div>
+</div>
+<p>NOTE: This is a python virtual environment. The binary folder of the virtual
+environment has symbolic links to all programs used in this workshop so you
+should be able to run those without problems.</p>
+</div>
+<div class="section" id="check-all-programs-in-one-go-with-which">
+<h2>Check all programs in one go with which<a class="headerlink" href="#check-all-programs-in-one-go-with-which" title="Permalink to this headline">¶</a></h2>
+<p>To check whether you have all programs installed in one go, you can use <tt class="docutils literal"><span class="pre">which</span></tt>
+to test for the following programs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">hmmsearch</span>
+<span class="n">transeq</span>
+<span class="n">R</span>
+<span class="n">blastall</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="data-and-databases-used-in-this-workshop">
+<h2>Data and databases used in this workshop<a class="headerlink" href="#data-and-databases-used-in-this-workshop" title="Permalink to this headline">¶</a></h2>
+<p>In this workshop, we are (due to time constraints) going to use a simplified version
+of the <a class="reference external" href="http://pfam.xfam.org/">Pfam</a> database, including only protein families
+related to plasmid replication and maintenance. This database is pre-compiled and can
+be downloaded from <a class="reference external" href="http://microbiology.se/teach/scilife2014/pfam.tar.gz">http://microbiology.se/teach/scilife2014/pfam.tar.gz</a>
+Download it using the following commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/Pfam
+cd ~/Pfam
+wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
+tar -xzvf pfam.tar.gz
+</pre></div>
+</div>
+<p>In addition, you will need to obtain the following data sets for the workshop:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2014113/metagenomics/annotation/baltic1.fna
+/proj/g2014113/metagenomics/annotation/baltic2.fna
+/proj/g2014113/metagenomics/annotation/indian_lake.fna
+/proj/g2014113/metagenomics/annotation/swedish_lake.fna
+</pre></div>
+</div>
+<p>We are going to use two data sets from the Baltic Sea, one from a Swedish lake and one
+from an Indian lake contaminated with wastewater from pharmaceutical production. For
+the same of time, I have reduced the data sets in size dramatically prior to this
+workshop. You can create links to the above files using the <tt class="docutils literal"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">&lt;path&gt;</span></tt> command.
+Use it on all the four data sets.</p>
+</div>
+<div class="section" id="optional-excercise-install-metaxa2-by-yourself">
+<h2>(Optional excercise) Install Metaxa2 by yourself<a class="headerlink" href="#optional-excercise-install-metaxa2-by-yourself" title="Permalink to this headline">¶</a></h2>
+<p>Follow these steps only if you want to install <tt class="docutils literal"><span class="pre">Metaxa2</span></tt> by yourself.
+The code for Metaxa2 is available from <a class="reference external" href="http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz">http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz</a>
+You can install Metaxa2 as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre># Create a src and a bin directory
+mkdir -p ~/src
+mkdir -p ~/bin
+
+# Go to the source directory and download the Metaxa2 tarball
+cd ~/src
+wget http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
+tar -xzvf Metaxa2_2.0rc3.tar.gz
+cd Metaxa2_2.0rc3
+
+# Run the installation script
+./install_metaxa2
+
+# Try to run Metaxa2 (this should bring up the main options for the software)
+metaxa2 -h
+</pre></div>
+</div>
+<p>If this did not work, you can try this manual approach:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ~/src/Metaxa2_2.0rc3
+cp -r metaxa2* ~/bin/
+
+# Then try to run Metaxa2 again
+metaxa2 -h
+</pre></div>
+</div>
+<p>If this brings up the help message, you are all set!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Checking required software</a><ul>
+<li><a class="reference internal" href="#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li><a class="reference internal" href="#check-all-programs-in-one-go-with-which">Check all programs in one go with which</a></li>
+<li><a class="reference internal" href="#data-and-databases-used-in-this-workshop">Data and databases used in this workshop</a></li>
+<li><a class="reference internal" href="#optional-excercise-install-metaxa2-by-yourself">(Optional excercise) Install Metaxa2 by yourself</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Metagenomic Annotation Workshop</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="translation.html"
+                        title="next chapter">Translating nucleotide sequences into amino acid sequences</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/annotation/software.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="translation.html" title="Translating nucleotide sequences into amino acid sequences"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Metagenomic Annotation Workshop"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

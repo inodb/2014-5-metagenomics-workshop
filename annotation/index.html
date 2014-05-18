@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Metagenomic Annotation Workshop &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="next" title="Checking required software" href="software.html" />
+    <link rel="prev" title="Mapping reads back to the assembly" href="../assembly/map.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="software.html" title="Checking required software"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../assembly/map.html" title="Mapping reads back to the assembly"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="metagenomic-annotation-workshop">
+<h1>Metagenomic Annotation Workshop<a class="headerlink" href="#metagenomic-annotation-workshop" title="Permalink to this headline">¶</a></h1>
+<p>In this part of the metagenomics workshop we will:</p>
+<ul class="simple">
+<li>Translate nucleotides into amino acid seuquences using EMBOSS</li>
+<li>Annotate metagenomic reads with Pfam domains</li>
+<li>Discuss and perform normalization of metagenomic counts</li>
+<li>Perform a simple differential abundance analysis</li>
+</ul>
+<p>The workshop has the following exercises:</p>
+<ol class="arabic simple">
+<li>Translation Exercise</li>
+<li>HMMER Exercise</li>
+<li>Normalization Exercise</li>
+<li>Differential Exercise</li>
+<li>BonusExercise: Metaxa2</li>
+</ol>
+<p>At least a basic knowledge of how to work with the command line is required
+otherwise it will be very difficult to follow some of the examples. Have
+fun!</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="software.html">Checking required software</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="software.html#programs-used-in-this-workshop">Programs used in this workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="software.html#check-all-programs-in-one-go-with-which">Check all programs in one go with which</a></li>
+<li class="toctree-l2"><a class="reference internal" href="software.html#data-and-databases-used-in-this-workshop">Data and databases used in this workshop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="software.html#optional-excercise-install-metaxa2-by-yourself">(Optional excercise) Install Metaxa2 by yourself</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translating nucleotide sequences into amino acid sequences</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="translation.html#running-transeq-on-the-sequence-data-sets">Running <tt class="docutils literal"><span class="pre">transeq</span></tt> on the sequence data sets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="annotation.html">Search amino acid sequences with HMMER against the Pfam database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotation.html#running-hmmsearch-on-the-translated-sequence-data-sets">Running <tt class="docutils literal"><span class="pre">hmmsearch</span></tt> on the translated sequence data sets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="normalization.html">Normalization of count data from the metagenomic data sets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="normalization.html#why-is-normalization-important">Why is normalization important?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="normalization.html#what-normalization-methods-are-possible">What normalization methods are possible?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="normalization.html#trying-out-some-normalization-methods">Trying out some normalization methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="differential.html">Estimating differentially abundant protein families in the metagenomes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="differential.html#loading-the-the-count-tables">Loading the the count tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differential.html#apply-normalizations">Apply normalizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differential.html#comparing-normalizations">Comparing normalizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differential.html#visualizing-differences-in-gene-abundance">Visualizing differences in gene abundance</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../assembly/map.html"
+                        title="previous chapter">Mapping reads back to the assembly</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="software.html"
+                        title="next chapter">Checking required software</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/annotation/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="software.html" title="Checking required software"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../assembly/map.html" title="Mapping reads back to the assembly"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Gene finding &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gene-finding">
+<h1>Gene finding<a class="headerlink" href="#gene-finding" title="Permalink to this headline">¶</a></h1>
+<p>Now that you have assembled the data into contigs next natural step to do is
+annotation of the data, i.e. finding the genes and doing functional annotation
+of those. For gene finding a range of programs are available (Metagene
+Annotator, MetaGeneMark, Orphelia, FragGeneScan), here we will use Prodigal
+which is very fast and has recently been enhanced for metagenomics. We will use
+the -p flag which instructs Prodigal to use the algorithm suitable for
+metagenomic data. We will not continue with the data from the morning but will
+use another dataset consisting of 11 samples from a time series sampling of
+surface water in the Baltic Sea. Sequencing was done with Illumina MiSeq here
+generating on average 835,048 2 x 250 bp reads per sample. The reads can be
+found here:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/reads/
+</pre></div>
+</div>
+<p>The first four numbers in the filename represent a date. All samples are from
+2012. R1 and R2 both contain one read of a pair. They are ordered, so the first
+four lines in R1 are paired with the read in the first four lines of R2. They
+are in CASAVA v1.8 format (<a class="reference external" href="http://en.wikipedia.org/wiki/FASTQ_format">http://en.wikipedia.org/wiki/FASTQ_format</a>).</p>
+<p>You can find the contigs from a combined assembly on reads from all samples here:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa
+</pre></div>
+</div>
+<p>They have been constructed with Ray using a kmer of 41 and no scaffolding. Only
+contigs &gt;= 1000 are in this file.</p>
+<p>Note that all solutions (i.e. the generated outputs) for the exercises are also in:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/
+</pre></div>
+</div>
+<p>In all the following exercises you should again use the virtual environment to
+get all the necessary programs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2013206</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt_env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+</pre></div>
+</div>
+<p>It’s time to run Prodigal. First create an output directory with a copy of the
+contig file:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/prodigal
+cd ~/metagenomics_workshop2/prodigal
+cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .
+</pre></div>
+</div>
+<p>Then run Prodigal on the contig file (~2m20):</p>
+<div class="highlight-python"><div class="highlight"><pre>prodigal -a baltic-sea-ray-noscaf-41.1000.aa.fa \
+              -d baltic-sea-ray-noscaf-41.1000.nuc.fa \
+               -i baltic-sea-ray-noscaf-41.1000.fa \
+               -f gff -p meta \
+               &gt; baltic-sea-ray-noscaf-41.1000.gff
+</pre></div>
+</div>
+<p>This will produce 3 files, a fasta file with the gene sequences (nucleotides) a
+fasta file with the protein sequences (aminoacids) and a gff file that is a
+standardised file type for showing annotations. It’s a tab delimited file that
+can be viewed by e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre>less baltic-sea-ray-noscaf-41.1000.gff
+</pre></div>
+</div>
+<p>Pass the option -S to less if you don’t want lines to wrap</p>
+<p>An explanation of the gff format can be found at
+<a class="reference external" href="http://genome.ucsc.edu/FAQ/FAQformat.html">http://genome.ucsc.edu/FAQ/FAQformat.html</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/comparative-functional-analysis/genefinding.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

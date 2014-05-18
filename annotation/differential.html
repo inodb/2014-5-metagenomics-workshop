@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Estimating differentially abundant protein families in the metagenomes &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Annotation Workshop" href="index.html" />
+    <link rel="prev" title="Normalization of count data from the metagenomic data sets" href="normalization.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="estimating-differentially-abundant-protein-families-in-the-metagenomes">
+<h1>Estimating differentially abundant protein families in the metagenomes<a class="headerlink" href="#estimating-differentially-abundant-protein-families-in-the-metagenomes" title="Permalink to this headline">¶</a></h1>
+<p>Finally, we are about to do some real analysis of the data, and look
+at the results! To do this, we will use the R statistical program.
+You start the program by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">R</span>
+</pre></div>
+</div>
+<div class="section" id="loading-the-the-count-tables">
+<h2>Loading the the count tables<a class="headerlink" href="#loading-the-the-count-tables" title="Permalink to this headline">¶</a></h2>
+<p>We will begin by loading the count tables from HMMER into R:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;baltic1.hmmsearch&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">skip</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To get the number of entries of each kind, we will use the R command <tt class="docutils literal"><span class="pre">rle</span></tt>.
+We want to get the domain list, which is the third column. For <tt class="docutils literal"><span class="pre">rle</span></tt> to be
+able to work with the data, we must also convert it into a proper vector.:</p>
+<div class="highlight-python"><div class="highlight"><pre>raw_counts = rle(as.vector(b1[,3]))
+b1_counts = as.matrix(raw_counts$lengths)
+row.names(b1_counts) = raw_counts$values
+</pre></div>
+</div>
+<p>Repeat this procedure for all four data sets.</p>
+</div>
+<div class="section" id="apply-normalizations">
+<h2>Apply normalizations<a class="headerlink" href="#apply-normalizations" title="Permalink to this headline">¶</a></h2>
+<p>We will now try out the three different normalization methods to see their
+effect on the data. First, we will try by normalizing to the number of reads
+in each sequencing library. Find the note you have taken on the data set sizes.
+Then apply a command like this on the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1_norm1</span> <span class="o">=</span> <span class="n">b1_counts</span> <span class="o">/</span> <span class="mi">118025</span>
+</pre></div>
+</div>
+<p>You will now see counts in the range of 10^-5 and 10^6. To make these numbers
+more interpretable, let&#8217;s also multiply them by 1,000,000 to yield the counts
+per million reads:</p>
+<blockquote>
+<div>b1_norm1 = b1_counts / 118025 * 1000000</div></blockquote>
+<p>Do the same thing for the other data sets.</p>
+<p>We would then like to compare all the four data sets to each other. Since R&#8217;s
+merge function really suck for multiple data sets, I have provided this
+function for merging four data sets. Copy and paste it into the R console:</p>
+<div class="highlight-python"><div class="highlight"><pre>merge_four = function(a,b,c,d,names) {
+m1 = merge(a,b,by = &quot;row.names&quot;, all = TRUE)
+row.names(m1) = m1[,1]
+m1 = m1[,2:3]
+m2 = merge(c, m1, by = &quot;row.names&quot;, all = TRUE)
+row.names(m2) = m2[,1]
+m2 = m2[,2:4]
+m3 = merge(d, m2, by = &quot;row.names&quot;, all = TRUE)
+row.names(m3) = m3[,1]
+m3 = m3[,2:5]
+m3[is.na(m3)] = 0
+colnames(m3) = c(names[4], names[3], names[1], names[2])
+return(as.matrix(m3))
+}
+</pre></div>
+</div>
+<p>You can then try it by running this command on the raw counts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm0</span> <span class="o">=</span> <span class="n">merge_four</span><span class="p">(</span><span class="n">b1_counts</span><span class="p">,</span><span class="n">b2_counts</span><span class="p">,</span><span class="n">swe_counts</span><span class="p">,</span><span class="n">ind_counts</span><span class="p">,</span><span class="n">c</span><span class="p">(</span><span class="s">&quot;Baltic 1&quot;</span><span class="p">,</span><span class="s">&quot;Baltic 2&quot;</span><span class="p">,</span><span class="s">&quot;Sweden&quot;</span><span class="p">,</span> <span class="s">&quot;India&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>You should then see a matrix containing all counts from the four data
+sets, with each row corresponding to a Pfam family. Next, run the same
+command on the normalized data and store the output into a variable, called
+for example <tt class="docutils literal"><span class="pre">norm1</span></tt>. The total abundance of mobility domains can then be
+visualzied using the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">barplot</span><span class="p">(</span><span class="n">colSums</span><span class="p">(</span><span class="n">norm1</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We can then repeat the normalization procedure, by instead normalizing to
+the number of 16S rRNA counts in each library. This can be done similarly
+to the division by total number of reads above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1_norm2</span> <span class="o">=</span> <span class="n">b1_counts</span> <span class="o">/</span> <span class="mi">21</span>
+</pre></div>
+</div>
+<p>This time, we won&#8217;t multiply by a million, as that would make numbers
+much larger (and harder to interpret).</p>
+<p>Follow the above procedure for all the data sets, and finally store the
+end result from <tt class="docutils literal"><span class="pre">merge_four</span></tt> into a variable, for example called <tt class="docutils literal"><span class="pre">norm2</span></tt>.</p>
+<p>Finally, we will do the same for the third type of normalization, the
+division by the mapped number of reads. This can, once more, be done as
+above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1_norm3</span> <span class="o">=</span> <span class="n">b1_counts</span> <span class="o">/</span> <span class="mi">22</span>
+</pre></div>
+</div>
+<p>Follow the above procedure for all the data sets, and store the final
+result from <tt class="docutils literal"><span class="pre">merge_four</span></tt> into a variable, for example called <tt class="docutils literal"><span class="pre">norm3</span></tt>.</p>
+</div>
+<div class="section" id="comparing-normalizations">
+<h2>Comparing normalizations<a class="headerlink" href="#comparing-normalizations" title="Permalink to this headline">¶</a></h2>
+<p>Let us now quickly compare the three normalization methods. As a quick
+overview, we can just make three colorful barplots next to each other,
+each representing one normalization method:</p>
+<div class="highlight-python"><div class="highlight"><pre>layout(matrix(c(1,3,2,4),2,2))
+barplot(norm0, col = 1:nrow(norm1), main = &quot;Raw gene counts&quot;)
+barplot(norm1, col = 1:nrow(norm1), main = &quot;Counts per million reads&quot;)
+barplot(norm2, col = 1:nrow(norm2), main = &quot;Counts per 16S rRNA&quot;)
+barplot(norm3, col = 1:nrow(norm3), main = &quot;Relative abundance&quot;)
+</pre></div>
+</div>
+<p>As you can see, each of these plots will tell a slightly different story.
+Let&#8217;s take a closer look at how normalization affect the behavior of some
+genes. First, we can see if there are any genes that are present in all
+samples. This is easily investigated by the following command, which takes
+counts if a value is larger than zero, counts the number of occurences per
+per row (rowSums), and finally outputs all the rows from <tt class="docutils literal"><span class="pre">norm1</span></tt> where
+this sum is exactly four:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm1</span><span class="p">[</span><span class="n">rowSums</span><span class="p">(</span><span class="n">norm1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,]</span>
+</pre></div>
+</div>
+<p>That shoudn&#8217;t have given you much luck. Let&#8217;s see if we can find any genes
+that occur in at least three samples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm1</span><span class="p">[</span><span class="n">rowSums</span><span class="p">(</span><span class="n">norm1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">,]</span>
+</pre></div>
+</div>
+<p>Better! Select one of those and find out its row number in the count table.
+Hint: <tt class="docutils literal"><span class="pre">row.names(norm1)</span></tt> will help you here! Now lets make boxplots for
+that row only:</p>
+<div class="highlight-python"><div class="highlight"><pre>x = &lt;insert your selected row number here&gt;
+layout(matrix(c(1,3,2,4),2,2))
+barplot(norm0[x,], main = paste(row.names(norm1)[x], &quot;- Raw gene counts&quot;))
+barplot(norm1[x,], main = paste(row.names(norm1)[x], &quot;- Counts per million reads&quot;))
+barplot(norm2[x,], main = paste(row.names(norm2)[x], &quot;- Counts per 16S rRNA&quot;))
+barplot(norm3[x,], main = paste(row.names(norm3)[x], &quot;- Relative abundance&quot;))
+</pre></div>
+</div>
+<p>You can now try this for a number of other genes (by changing the value of
+<tt class="docutils literal"><span class="pre">x</span></tt>) and see how normalization affects your story.</p>
+<p><strong>Question: Which normalization method would be most suitable to use in this case? Why?</strong></p>
+</div>
+<div class="section" id="visualizing-differences-in-gene-abundance">
+<h2>Visualizing differences in gene abundance<a class="headerlink" href="#visualizing-differences-in-gene-abundance" title="Permalink to this headline">¶</a></h2>
+<p>One neat way of visualizing metagenomic count data is through heatmaps. R has a built-in
+heatmap function, that can be called using the (surprise...) <tt class="docutils literal"><span class="pre">heatmap</span></tt> command.
+However, you will quickly notice that this function is rather limited, and we will
+therefore install a package containing a better one - the <tt class="docutils literal"><span class="pre">gplots</span></tt> package. You can do
+this by typing the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">install</span><span class="o">.</span><span class="n">packages</span><span class="p">(</span><span class="s">&quot;gplots&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Just answer &#8220;yes&#8221; to the questions, and the package will be installed locally for your
+user. After this, you will be able to use the more powerful <tt class="docutils literal"><span class="pre">heatmap.2</span></tt> command. Try,
+for example, this command on the data:</p>
+<div class="highlight-python"><div class="highlight"><pre>heatmap.2(norm1, trace = &quot;none&quot;, col = colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+</pre></div>
+</div>
+<p>The trace, margin, cexCol and cexRow options are just there to make the plot look better
+(play around with them if you wish). The <tt class="docutils literal"><span class="pre">col</span> <span class="pre">=</span> <span class="pre">colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;)</span></tt>
+option creates a scale from black to yellow where yellow means highly abundant and black
+lowly abundant. To make more clear which genes that are not even detected, let&#8217;s add a
+grey color to that for genes with zero count:</p>
+<div class="highlight-python"><div class="highlight"><pre>heatmap.2(norm1, trace = &quot;none&quot;, col = c(&quot;grey&quot;,colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;)), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+</pre></div>
+</div>
+<p>You will now notice that it is hard to see the differences for the lowly abundant genes.
+To aid in this, we can add a variance-stabilizing transform (fancy name for squareroot)
+to the data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm1_sqrt</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">norm1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can then re-run the <tt class="docutils literal"><span class="pre">heatmap.2</span></tt> command on the newly created <tt class="docutils literal"><span class="pre">norm1_sqrt</span></tt>
+variable.</p>
+<p>Sometimes, it makes more sense to apply a logarithmic transform to the data instead of
+the squareroot. This, however, is a bit more tricky since we have zeros in the data.
+For fun&#8217;s sake, we can try:</p>
+<div class="highlight-python"><div class="highlight"><pre>norm1_log10 = log10(norm1)
+heatmap.2(norm1_log10, trace = &quot;none&quot;, col = c(&quot;grey&quot;,colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;)), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+</pre></div>
+</div>
+<p>This should give you an error message. The easiest way to solve this problem is to add
+some small number to the matrix before the <tt class="docutils literal"><span class="pre">log10</span></tt> command. Since we will display this
+number with grey color anyway, it will in this case, and for this application, matter
+much exactly what number you add. You can, for example, choose 1:</p>
+<div class="highlight-python"><div class="highlight"><pre>norm1_log10 = log10(norm1 + 1)
+heatmap.2(norm1_log10, trace = &quot;none&quot;, col = c(&quot;grey&quot;,colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;)), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+</pre></div>
+</div>
+<p>Before we end, let&#8217;s also try another kind of commonly used visualization, the PCA plot.
+Principal Component Analysis (PCA) essentially builds upon projecting complex data onto a
+2D (or 3D) surface, while trying to separate the data points as much as possible. This
+can be useful for finding groups of observations that fit together. We will use the built-in
+PCA command called <tt class="docutils literal"><span class="pre">prcomp</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm1_pca</span> <span class="o">=</span> <span class="n">prcomp</span><span class="p">(</span><span class="n">norm1_sqrt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that we used the data created using the variance stabilizing transform. There are more
+sophisticated ways of reducing the influence of very large values, but many times the
+squareroot is sufficient. We can visualize the PCA using a plotting command called <tt class="docutils literal"><span class="pre">biplot</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">layout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">biplot</span><span class="p">(</span><span class="n">norm1_pca</span><span class="p">,</span> <span class="n">cex</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To see the proportion of variance explained by the different components, we can use the
+normal plot command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">plot</span><span class="p">(</span><span class="n">norm1_pca</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We want the first two bars to be as large as possible, since that means that the dataset
+can be easily simplified to two dimensions. If all bars are of roughly equal height, the
+projection to a 2D surface has caused a loss of much of the information of the data, and
+we can not trust the patterns in the PCA plot as much.</p>
+<p>If we do the PCA on the relative abundance data (normalization three), we can get a view
+of which Pfam domains that dominate in these samples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">norm3_pca</span> <span class="o">=</span> <span class="n">prcomp</span><span class="p">(</span><span class="n">norm3</span><span class="p">)</span>
+<span class="n">biplot</span><span class="p">(</span><span class="n">norm3_pca</span><span class="p">,</span> <span class="n">cex</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And that&#8217;s the end of the lab. If you have lots of time to spare, you can move on to the
+bonus excersize, in which we will analyze the 16S rRNA data generated by Metaxa2 further,
+to understand which bacterial species that are present in the samples.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Estimating differentially abundant protein families in the metagenomes</a><ul>
+<li><a class="reference internal" href="#loading-the-the-count-tables">Loading the the count tables</a></li>
+<li><a class="reference internal" href="#apply-normalizations">Apply normalizations</a></li>
+<li><a class="reference internal" href="#comparing-normalizations">Comparing normalizations</a></li>
+<li><a class="reference internal" href="#visualizing-differences-in-gene-abundance">Visualizing differences in gene abundance</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="normalization.html"
+                        title="previous chapter">Normalization of count data from the metagenomic data sets</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/annotation/differential.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Annotation Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

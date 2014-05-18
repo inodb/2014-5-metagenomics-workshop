@@ -8,17 +8,6 @@ In this metagenomics workshop we will learn how to:
 
 The workshop has the following exercises:
 
-1. ReqsExercise
-2. QtrimExercise
-3. VelvetExercise
-4. Bowtie2Exercise
-
-At least a basic knowledge of how to work with the command line is required
-otherwise it will be very difficult to follow some of the examples. Have
-fun!
-
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
@@ -26,3 +15,7 @@ Contents:
    qtrim
    assembly
    map
+
+At least a basic knowledge of how to work with the command line is required
+otherwise it will be very difficult to follow some of the examples. Have
+fun!
