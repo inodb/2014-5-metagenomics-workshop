@@ -10,7 +10,7 @@ http://inodb.github.io/2014-5-metagenomics-workshop/
 
 and
 
-http://2014-5-metagenomics-workshop.readthedocs.org/en/latest/assembly/index.html
+http://2014-5-metagenomics-workshop.readthedocs.org/en/latest/
 
 How does it work?
 -------------------------
