@@ -13,6 +13,11 @@ Contents:
 
    assembly/index
    binning/index
+   comparative-functional-analysis/index
+   comparative-taxonomic-analysis/index
+   annotation/index
+
+Enjoy!
 
 Indices and tables
 ==================
