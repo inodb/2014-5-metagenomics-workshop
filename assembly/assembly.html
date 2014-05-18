@@ -76,16 +76,19 @@ Google <a class="reference external" href="https://docs.google.com/spreadsheet/c
 <p>Create the graph data structure with <tt class="docutils literal"><span class="pre">velveth</span></tt>. Again like we did with
 <tt class="docutils literal"><span class="pre">sickle</span></tt>, first create a directory with symbolic links to the pairs that you
 want to use:</p>
-<div class="highlight-python"><pre>mkdir -p ~/asm-workshop/velvet
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/asm-workshop/velvet
 cd ~/asm-workshop/velvet
 ln -s ../sickle/qtrim1.fastq pair1.fastq
-ln -s ../sickle/qtrim2.fastq pair2.fastq</pre>
+ln -s ../sickle/qtrim2.fastq pair2.fastq
+</pre></div>
 </div>
 <p>The reads need to be interleaved for <tt class="docutils literal"><span class="pre">velveth</span></tt>:</p>
-<div class="highlight-python"><pre>shuffleSequences_fastq.pl pair1.fastq pair2.fastq pair.fastq</pre>
+<div class="highlight-python"><div class="highlight"><pre>shuffleSequences_fastq.pl pair1.fastq pair2.fastq pair.fastq
+</pre></div>
 </div>
 <p>Run velveth over the kmer you picked (21 in this example):</p>
-<div class="highlight-python"><pre>velveth out_21 21 -fastq -shortPaired pair.fastq</pre>
+<div class="highlight-python"><div class="highlight"><pre>velveth out_21 21 -fastq -shortPaired pair.fastq
+</pre></div>
 </div>
 <p>Check what directories have been created:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">ls</span>
@@ -98,14 +101,16 @@ ln -s ../sickle/qtrim2.fastq pair2.fastq</pre>
 graph. You can vary options such expected coverage and the coverage cut-off if
 you want, but we do not do that in this tutorial. We only choose not to do
 scaffolding:</p>
-<div class="highlight-python"><pre>velvetg out_21 -scaffolding no</pre>
+<div class="highlight-python"><div class="highlight"><pre>velvetg out_21 -scaffolding no
+</pre></div>
 </div>
 </div>
 <div class="section" id="assemstats">
 <h2>assemstats<a class="headerlink" href="#assemstats" title="Permalink to this headline">¶</a></h2>
 <p>After the assembly one wants to look at the length distributions of the
 resulting assemblies. You can use the <tt class="docutils literal"><span class="pre">assemstats</span></tt> script for that:</p>
-<div class="highlight-python"><pre>assemstats 100 out_*/contigs.fa</pre>
+<div class="highlight-python"><div class="highlight"><pre>assemstats 100 out_*/contigs.fa
+</pre></div>
 </div>
 <p>Try to find-out what each of the stats represent by varying the cut-off. One of
 the most often used statistics in assembly length distribution comparisons is
@@ -114,7 +119,8 @@ length. This way you assign more weight to larger contigs. Fifty procent of all
 the bases in the assembly are contained in contigs shorter or equal to N50
 length. Once you have gotten an idea of what it all the stats mean, it is time
 to compare your results with the other attendees of this workshop. Generate the results and copy them to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a>:</p>
-<div class="highlight-python"><pre>assemstats 100 out_*/contigs.fa</pre>
+<div class="highlight-python"><div class="highlight"><pre>assemstats 100 out_*/contigs.fa
+</pre></div>
 </div>
 <p>Do the same for the cut-off at 1000 and add it to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a>. Compare your kmer
 against the others. If there are very little available yet, this would be an
@@ -132,11 +138,12 @@ column names from the <a class="reference external" href="https://docs.google.co
 <p>Try to create an assembly with Ray over the same kmer. Ray is an assembler that
 uses MPI to distribute the assembly over multiple cores and nodes. The latest
 version of Ray was made to work well with metagenomics data as well:</p>
-<div class="highlight-python"><pre>mkdir -p ~/asm-workshop/ray
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/asm-workshop/ray
 cd ~/asm-workshop/ray
 ln -s ../sickle/qtrim1.fastq pair1.fastq
 ln -s ../sickle/qtrim2.fastq pair2.fastq
-mpiexec -n 1 Ray -k 21 -p pair1.fastq pair2.fastq -o out_21</pre>
+mpiexec -n 1 Ray -k 21 -p pair1.fastq pair2.fastq -o out_21
+</pre></div>
 </div>
 <p>Add the <tt class="docutils literal"><span class="pre">assemstats</span></tt> results to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a> as you did for Velvet. There is a
 separate tab for the Ray assemblies, compare the results with Velvet.</p>
@@ -214,7 +221,7 @@ that gets the best score for the optimization function you designed in <a class=
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

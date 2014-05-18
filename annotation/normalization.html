@@ -72,12 +72,8 @@ gene counts to something. Let&#8217;s begin with checking how unequal the
 librairies are. You can do that by counting the number of sequences
 in the FASTA files, by checking for the number of &#8220;&gt;&#8221; characters in
 each file, using <tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
-<<<<<<< HEAD
 <div class="highlight-python"><div class="highlight"><pre>grep -c &quot;&gt;&quot; &lt;input file&gt;
 </pre></div>
-=======
-<div class="highlight-python"><pre>grep -c "&gt;" &lt;input file&gt;</pre>
->>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 </div>
 <p>As you will see, there are quite substantial differences in the
 number of reads in each library. How do we account for that?</p>
@@ -132,24 +128,16 @@ microbial community can be studied, and the rest is ignored.</p>
 generating the numbers we need for normalization. We begin with the
 library sizes. As you remember, those numbers can be generated using
 <tt class="docutils literal"><span class="pre">grep</span></tt>:</p>
-<<<<<<< HEAD
 <div class="highlight-python"><div class="highlight"><pre>grep -c &quot;&gt;&quot; &lt;input file&gt;
 </pre></div>
-=======
-<div class="highlight-python"><pre>grep -c "&gt;" &lt;input file&gt;</pre>
->>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 </div>
 <p>To get the number of 16S rRNA sequences, we will use Metaxa2. If you
 did not install it, you can &#8220;cheat&#8221; by getting the numbers from this
 file: <tt class="docutils literal"><span class="pre">/proj/g2014113/metagenomics/annotation/metaxa2_16S_rRNA_counts.txt</span></tt>.
 If you installed it previously, you can test it out using the following
 command:</p>
-<<<<<<< HEAD
 <div class="highlight-python"><div class="highlight"><pre>metaxa2 -i &lt;input file&gt; -o &lt;output file&gt; --cpu 4 --align none
 </pre></div>
-=======
-<div class="highlight-python"><pre>metaxa2 -i &lt;input file&gt; -o &lt;output file&gt; --cpu 4 --align none</pre>
->>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 </div>
 <p>Metaxa2 will take a few minutes to run. You will then be able to
 get the number of bacterial 16S rRNA sequences from the file ending
@@ -159,12 +147,8 @@ Pfam family in the database. To get that number, we can again use
 <tt class="docutils literal"><span class="pre">grep</span></tt>. This time however, we will use it to <em>remove</em> the entries
 that we are not interested in, and counting the rest. This can be
 done by:</p>
-<<<<<<< HEAD
 <div class="highlight-python"><div class="highlight"><pre>grep -c -v &quot;^#&quot; &lt;hmmer output file&gt;
 </pre></div>
-=======
-<div class="highlight-python"><pre>grep -c -v "^#" &lt;hmmer output file&gt;</pre>
->>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 </div>
 <p>That will remove all lines beginning with a <tt class="docutils literal"><span class="pre">#</span></tt> character, and
 count all remaining lines. Write all the numbers down that you have
@@ -234,11 +218,7 @@ got during this exercize, we will use them in the next step!</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-<<<<<<< HEAD
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
-=======
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
->>>>>>> 25975bed567656120b6383bad6cd129d1051a092
     </div>
   </body>
 </html>
