@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    assembly/index
+   binning/index
    comparative-functional-analysis/index
    comparative-taxonomic-analysis/index
    annotation/index
