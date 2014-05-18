@@ -8,6 +8,10 @@ Sphinx_. The webpage can be found at:
 
 http://inodb.github.io/2014-5-metagenomics-workshop/
 
+and
+
+http://2014-5-metagenomics-workshop.readthedocs.org/en/latest/
+
 How does it work?
 -------------------------
 In short, we use a python package called Sphinx_ to convert a bunch of text
