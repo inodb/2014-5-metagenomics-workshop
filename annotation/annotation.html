@@ -78,8 +78,12 @@ the names of those two files at the end of the command. Finally we add in
 the <tt class="docutils literal"><span class="pre">&gt;</span> <span class="pre">/dev/null</span></tt> string, to avoid getting the screen cluttered with
 sequence alignments that HMMER outputs. That should give us the following
 command:</p>
+<<<<<<< HEAD
 <div class="highlight-python"><div class="highlight"><pre>hmmsearch --tblout &lt;output file&gt; -E 1e-5 --cpu 8 Pfam-mobility.hmm &lt;input file (protein format)&gt; &gt; /dev/null
 </pre></div>
+=======
+<div class="highlight-python"><pre>hmmsearch --tblout &lt;output file&gt; -E 1e-5 --cpu 8 Pfam-mobility.hmm &lt;input file (protein format)&gt; &gt; /dev/null</pre>
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 </div>
 <p>Now run this command on all X input files that we just have downloaded. When the
 command has finished for all files, we can move on to the normalization exercise.</p>
@@ -146,7 +150,11 @@ command has finished for all files, we can move on to the normalization exercise
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+<<<<<<< HEAD
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+=======
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
     </div>
   </body>
 </html>

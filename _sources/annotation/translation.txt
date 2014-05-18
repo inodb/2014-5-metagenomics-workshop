@@ -40,15 +40,26 @@ software documentation:
     passive-aggressive, yet also a pragmatist: so while HMMER3 pragmatically
     accepts * chararacters in input “protein” sequences just fine, it pedantically
     relegates them to somewhat suboptimal status, and it passively-aggressively
+<<<<<<< HEAD
     figures that any suboptimal performance on \*-containing ORFs is your own
     fault for using \*’s in the first place.
+=======
+    figures that any suboptimal performance on *-containing ORFs is your own
+    fault for using *’s in the first place.
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
     
 To avoid making Sean Eddy angry and causing other problems for our HMMER runs,
 we will use the ``-frame 6`` option to ``transeq`` in order to get translations
 of all six reading frames, and the ``-clean`` option to convert stop codons to X
+<<<<<<< HEAD
 instead of \*.
 
 That should give us the command::
+=======
+instead of *.
+
+That should give us the command:
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 
     transeq -sequence <input file> -outseq <output file> -frame 6 -clean
     

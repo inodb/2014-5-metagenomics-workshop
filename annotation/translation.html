@@ -90,6 +90,7 @@ amino acid residue codes, and the author of HMMER3 is a pedantic nitpicker,
 passive-aggressive, yet also a pragmatist: so while HMMER3 pragmatically
 accepts * chararacters in input “protein” sequences just fine, it pedantically
 relegates them to somewhat suboptimal status, and it passively-aggressively
+<<<<<<< HEAD
 figures that any suboptimal performance on *-containing ORFs is your own
 fault for using *’s in the first place.</div></blockquote>
 <p>To avoid making Sean Eddy angry and causing other problems for our HMMER runs,
@@ -100,6 +101,17 @@ instead of *.</p>
 <div class="highlight-python"><div class="highlight"><pre>transeq -sequence &lt;input file&gt; -outseq &lt;output file&gt; -frame 6 -clean
 </pre></div>
 </div>
+=======
+figures that any suboptimal performance on <a href="#id1"><span class="problematic" id="id2">*</span></a>-containing ORFs is your own
+fault for using <a href="#id3"><span class="problematic" id="id4">*</span></a>’s in the first place.</div></blockquote>
+<p>To avoid making Sean Eddy angry and causing other problems for our HMMER runs,
+we will use the <tt class="docutils literal"><span class="pre">-frame</span> <span class="pre">6</span></tt> option to <tt class="docutils literal"><span class="pre">transeq</span></tt> in order to get translations
+of all six reading frames, and the <tt class="docutils literal"><span class="pre">-clean</span></tt> option to convert stop codons to X
+instead of <a href="#id5"><span class="problematic" id="id6">*</span></a>.</p>
+<p>That should give us the command:</p>
+<blockquote>
+<div>transeq -sequence &lt;input file&gt; -outseq &lt;output file&gt; -frame 6 -clean</div></blockquote>
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
 <p>Now run this command on all four input files that we have created links to.
 When the command has finished for all files, we can move on to the actual
 annotation.</p>
@@ -166,7 +178,11 @@ annotation.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+<<<<<<< HEAD
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+=======
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
     </div>
   </body>
 </html>

@@ -12,8 +12,11 @@ Contents:
    :maxdepth: 2
 
    assembly/index
+<<<<<<< HEAD
    comparative-functional-analysis/index
    comparative-taxonomic-analysis/index
+=======
+>>>>>>> 25975bed567656120b6383bad6cd129d1051a092
    annotation/index
 
 Enjoy!
