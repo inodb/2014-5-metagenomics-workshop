@@ -94,6 +94,10 @@ data::
 
     library(gplots)
     heatmap.2(all_fam, trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+    
+As you will notice, we will need to do some tweaking to fit in the taxonomic data::
+
+    heatmap.2(all_fam, trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,30), cexCol = 1, cexRow = 0.7)
 
 
 Apply normalizations
@@ -130,13 +134,21 @@ Comparing taxonomic distributions
 Next we will compare the taxonomic composition of the four environments.
 Let's start out by just using a barplot. To get the different taxa on
 the x-axis, we will transform the matrix with normalized counts using the
-``t()`` command::
+``t()`` command. But first we need to set the margins to fit the taxonomic
+names::
 
-    barplot(t(fam_norm1), main = "Counts per million reads", las = 2, cex.names = 0.6)
+    par(mar = c(25, 4, 4, 2))
+    barplot(t(fam_norm1), main = "Counts per million reads", las = 2, cex.names = 0.6, beside = TRUE)
     
 We can then do the same for the relative abundances::
 
-    barplot(t(fam_norm2), main = "Relative abundance", las = 2, cex.names = 0.6)
+    barplot(t(fam_norm2), main = "Relative abundance", las = 2, cex.names = 0.6, beside = TRUE)
+    
+To only look at families present in at least two samples, we can use the
+following command for filtering::
+
+    fam_norm1_filter = fam_norm1[rowSums(fam_norm1 > 0) >= 2,]
+    barplot(t(fam_norm1_filter), main = "Counts per million reads", las = 2, cex.names = 0.6, beside = TRUE)
     
 
 **Question: Which normalization method would be most suitable to use in this case? Why?**
@@ -145,7 +157,7 @@ We can then do the same for the relative abundances::
 We can also look at the differences in taxonomic content using a heatmap. As before,
 we will use the squareroot as a variance stabilizing transform::
 
-    heatmap.2(sqrt(fam_norm1), trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(5,10), cexCol = 1, cexRow = 0.7)
+    heatmap.2(sqrt(fam_norm1), trace = "none", col = c("grey",colorpanel(255,"black","red","yellow")), margin = c(30,10), cexCol = 1, cexRow = 0.7)
 
 Finally, we can of course also use PCA on taxonomic abundances. We will turn back to the
 ``prcomp`` PCA command::
