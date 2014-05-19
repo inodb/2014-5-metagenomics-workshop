@@ -59,6 +59,7 @@ Download it using the following commands::
     cd ~/Pfam
     wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
     tar -xzvf pfam.tar.gz
+    cd ~
     
 In addition, you will need to obtain the following data sets for the workshop::
 
