@@ -48,6 +48,12 @@ If this brings up the help message, you are all set!
 Generating family level taxonomic counts
 ========================================
 
+If you have already run Metaxa2 to get the number of 16S rRNA sequences,
+you can use the output of those runs. Otherwise you need to run the
+following command on all the raw read data from all libraries::
+
+    metaxa2 -i <input file> -o <output file> --cpu 16 --align none
+
 To get counts on the family level from the metaxa2 output
 
 
