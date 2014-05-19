@@ -6,23 +6,30 @@
 Welcome to the Metagenomics Workshop at SciLifeLab, Stockholm
 =============================================================
 
+This is a three day metagenomics workshop. We will discuss assembly, binning
+and annotation of metagenomic samples.
+
+Program:
+
+* Day 1
+    * :doc:`assembly/index`
+    * :doc:`comparative-functional-analysis/index`
+    * :doc:`comparative-taxonomic-analysis/index`
+* Day 2
+    * :doc:`binning/index`
+* Day 3
+    * :doc:`annotation/index`
+
+
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
    assembly/index
-   binning/index
    comparative-functional-analysis/index
    comparative-taxonomic-analysis/index
+   binning/index
    annotation/index
 
 Enjoy!
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
