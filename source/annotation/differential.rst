@@ -139,12 +139,12 @@ this sum is exactly four::
 
     norm1[rowSums(norm1 > 0) == 4,]
 
-That shoudn't have given you much luck. Let's see if we can find any genes
+If that didn't give you much luck, you can try if you can find any genes
 that occur in at least three samples::
 
     norm1[rowSums(norm1 > 0) >= 3,]
 
-Better! Select one of those and find out its row number in the count table.
+Select one of those and find out its row number in the count table.
 Hint: ``row.names(norm1)`` will help you here! Now lets make boxplots for
 that row only::
 
