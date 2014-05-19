@@ -17,7 +17,7 @@ Loading the the count tables
 
 We will begin by loading the count tables from HMMER into R::
 
-    b1 = read.table("baltic1.hmmsearch", sep = "", comment.char = "", skip = 3)
+    b1 = read.table("baltic1.hmmsearch", sep = "")
 
 To get the number of entries of each kind, we will use the R command ``rle``.
 We want to get the domain list, which is the third column. For ``rle`` to be
