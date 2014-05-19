@@ -30,7 +30,7 @@ the ``> /dev/null`` string, to avoid getting the screen cluttered with
 sequence alignments that HMMER outputs. That should give us the following
 command::
 
-    hmmsearch --tblout <output file> -E 1e-5 --cpu 8 Pfam-mobility.hmm <input file (protein format)> > /dev/null
+    hmmsearch --tblout <output file> -E 1e-5 --cpu 8 ~/Pfam/Pfam-mobility.hmm <input file (protein format)> > /dev/null
     
 Now run this command on all four input files that we just have downloaded. When the
 command has finished for all files, we can move on to the normalization exercise.
