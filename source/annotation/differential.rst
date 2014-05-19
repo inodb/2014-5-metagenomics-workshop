@@ -41,7 +41,7 @@ Then apply a command like this on the data::
     
 You will now see counts in the range of 10^-5 and 10^6. To make these numbers
 more interpretable, let's also multiply them by 1,000,000 to yield the counts
-per million reads:
+per million reads::
 
     b1_norm1 = b1_counts / 118025 * 1000000
     
