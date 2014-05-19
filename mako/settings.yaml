@@ -2,7 +2,7 @@ commands:
     activate: 'source /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/activate'
     check_activate:
         concoct: 'concoct -h'
-        rpsblast: 'rpsblast -h'
+        rpsblast: 'rpsblast --help'
     copy_dataset: 
         - 'mkdir -p ~/binning-workshop'
         - 'mkdir -p ~/binning-workshop/data'

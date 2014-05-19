@@ -65,7 +65,7 @@ Evaluating Clustering Results
 One way of evaluating the resulting clusters are to look at the distribution of so called Single Copy Genes (SCG:s), genes that are present in all bacteria and archea in only one copy. 
 With this background, a complete and correct bin should have exactly one copy of each gene present, while missing genes indicate an inclomplete bin and several copies of the same gene indicate a chimeric cluster. 
 To predict genes in prokaryotes, we use Prodigal that we then use as the query sequences for an RPS-BLAST search against the Clusters of Orthologous Groups (COG) database.
-This RPS-BLAST search takes about an hour and a half for our dataset so we're not going to use a precomputed result file.
+This RPS-BLAST search takes about an hour and a half for our dataset so we're going to use a precomputed result file.
 Copy this result file along with two files necessary for the COG counting scripts::
 
     cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000_blast.out ~/binning-workshop/data/
