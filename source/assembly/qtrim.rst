@@ -8,7 +8,7 @@ Sickle
 ======
 For quality trimming Illumina paired end reads we use the library sickle which
 trims reads from 3' end to 5' end using a sliding window. If the mean quality
-drops below a specified number remaining part of the read will be trimmed.
+drops below a specified number the remaining part of the read will be trimmed.
 
 
 Downloading a test set
@@ -32,10 +32,17 @@ all these commands in your shell::
 If successfull you should have the files::
 
     $ ls -lh ~/asm-workshop/data/SRS018585/
-    -rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/<username>/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq
-    -rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/<username>/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+    -rw-rw-r-- 1 inod inod  36M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.1.fastq
+    -rw-rw-r-- 1 inod inod  36M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+    -rw-rw-r-- 1 inod inod 6.4M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.singleton.fastq
 
 If not, try to find out if one of the previous commands gave an error.
+
+Look at the top of the one of the pairs::
+
+    cat ~/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq | head
+
+**Question: Can you explain what the different parts of this header mean @HWI-EAS324_102408434:5:100:10055:13493/1?**
 
 
 Running sickle on a paired end library
@@ -67,3 +74,11 @@ Now run sickle::
         -s qtrim.unpaired.fastq
     # Check what files have been generated
     ls
+
+Sickle states how many reads it trimmed, but it is always good to be
+suspicious! Check if the numbers correspond with the amount of reads you count.
+Hint: use ``wc -l``.
+
+**Question: How many paired reads are left after trimming? How many singletons?**
+
+**Question: What are the different quality scores that sickle can handle? Why do we specify -t sanger here?**

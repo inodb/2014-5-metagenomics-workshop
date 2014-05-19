@@ -21,7 +21,7 @@ their likings - pick a random one if you haven't developed a preference yet.
 Write you and your partner's name down at a kmer on the
 Google doc_ for this workshop.
 
-.. _doc: https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&usp=drive_web#gid=3.
+.. _doc: https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3 
 __ doc_ 
 
 velveth
@@ -81,14 +81,16 @@ that has not been picked by somebody else yet. Please write down you and your
 partners name again at the doc_ in that case.
 
 
-What are the important length statistics? Do we prefer sum over length? Should
-it be a combination? Think of a formula that could indicate the best preferred
+**Question: What are the important length statistics? Do we prefer sum over
+length? Should it be a combination?**
+
+Think of a formula that could indicate the best preferred
 length distribution where you express the optimization function in terms of the
 column names from the doc_. For instance only ``n50_len`` or ``sum *
 n50_len``.
 
 
-(Optional exercise) Ray
+Ray
 =======================
 Try to create an assembly with Ray over the same kmer. Ray is an assembler that
 uses MPI to distribute the assembly over multiple cores and nodes. The latest
@@ -107,6 +109,8 @@ separate tab for the Ray assemblies, compare the results with Velvet.
 ===================================
 VelvetOptimiser_ is a script that runs Velvet multiple times and follows the
 optimization function you give it. Use VelvetOptimiser_ to find the assembly
-that gets the best score for the optimization function you designed in `assemstats`_.
+that gets the best score for the optimization function you designed in
+`assemstats`_. It requires ``BioPerl``, which you can get on uppmax with
+``module load BioPerl``.
 
 .. _VelvetOptimiser: https://github.com/Victorian-Bioinformatics-Consortium/VelvetOptimiser
