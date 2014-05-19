@@ -7,6 +7,11 @@ You start the program by typing::
     
     R
     
+To get out of R, you type ``q()``. You will then be asked if you want
+to save your workspace. Typing "y" (yes) might be smart, since that
+will remember all your variables until the next time you use R in the
+same directory!
+    
 Loading the the count tables
 ============================
 
