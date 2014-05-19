@@ -52,7 +52,7 @@ we will use the ``-frame 6`` option to ``transeq`` in order to get translations
 of all six reading frames, and the ``-clean`` option to convert stop codons to X
 instead of *.
 
-That should give us the command:
+That should give us the command::
 
     transeq -sequence <input file> -outseq <output file> -frame 6 -clean
     
