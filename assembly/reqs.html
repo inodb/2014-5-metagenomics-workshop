@@ -69,11 +69,12 @@ software installed. There&#8217;s an optional excerise on how to install <tt cla
 <li><a class="reference external" href="http://sourceforge.net/apps/mediawiki/amos/index.php?title=AMOS">AMOS</a></li>
 <li><a class="reference external" href="https://github.com/najoshi/sickle">sickle</a></li>
 <li><a class="reference external" href="http://picard.sourceforge.net/index.shtml">Picard</a></li>
+<li><a class="reference external" href="http://denovoassembler.sourceforge.net/">Ray</a></li>
 </ul>
 </div></blockquote>
 <p>All programs are already installed, all you have to do is load the virtual
 environment for this workshop. Once you are logged in to the server run:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2013206</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt_env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2014113</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 </pre></div>
 </div>
 <p>You deactivate the virtual environment with:</p>
@@ -100,6 +101,8 @@ simply <tt class="docutils literal"><span class="pre">echo</span></tt> it:</p>
 <div class="highlight-python"><div class="highlight"><pre>echo $PATH
 </pre></div>
 </div>
+<p>For more information on the <tt class="docutils literal"><span class="pre">$PATH</span></tt> variable see this link:
+<a class="reference external" href="http://www.linfo.org/path_env_var.html">http://www.linfo.org/path_env_var.html</a>.</p>
 </div>
 <div class="section" id="check-all-programs-in-one-go-with-which">
 <h2>Check all programs in one go with which<a class="headerlink" href="#check-all-programs-in-one-go-with-which" title="Permalink to this headline">¶</a></h2>
@@ -111,32 +114,51 @@ velveth
 velvetg
 shuffleSequences_fastq.pl
 parallel
-samtools</div></blockquote>
-<p>Iterate over the programs calling <tt class="docutils literal"><span class="pre">which</span></tt> on each of them:</p>
-<div class="highlight-python"><div class="highlight"><pre>$ req_progs=&quot;bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl&quot;
+samtools
+Ray</div></blockquote>
+<p>We will now iterate over all the programs in calling <tt class="docutils literal"><span class="pre">which</span></tt> on each of them.
+First make a variable containing all programs separated by whitespace:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ req_progs=&quot;bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl Ray&quot;
 $ echo $req_progs
 bowtie2 bowtie2-build velveth velvetg parallel samtools shuffleSequences_fastq.pl
-$ for p in $req_progs; do which $p || echo $p not in PATH; done
-/home/idb/bin/bowtie2
-/home/idb/bin/bowtie2-build
-/home/idb/downloaded_software/velvet_1.2.03/velveth
-/home/idb/downloaded_software/velvet_1.2.03/velvetg
-/usr/local/bin/parallel
-/home/idb/bin/samtools
 </pre></div>
 </div>
-<p>As you can see all programs are found, except tablet in this case. If any of
-the installed programs is missing, try to install them yourself or ask. If you
-are having troubles following these examples, try to find some bash tutorials
-online next time you have some time to kill. Educating yourself on how to use
-the command line effectively increases your productivity immensely.</p>
+<p>Now iterate over the variable <tt class="docutils literal"><span class="pre">req_progs</span></tt> and call which:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ for p in $req_progs; do which $p || echo $p not in PATH; done
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/bowtie2
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/bowtie2-build
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/velveth
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/velvetg
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/parallel
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/samtools
+/proj/g2014113/metagenomics/virt-env/mg-workshop/bin/shuffleSequences_fastq.pl
+</pre></div>
+</div>
+<p>In Unix-like systems a program that sucessfully completes it tasks should
+return a zero exit status. For the program <tt class="docutils literal"><span class="pre">which</span></tt> that is the case if the
+program is found. The <tt class="docutils literal"><span class="pre">||</span></tt> character does not mean <em>pipe the output onward</em> as
+you are probably familiar with (otherwise see
+<a class="reference external" href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-4.html">http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-4.html</a>), but checks whether the
+program before it exists succesfully and executes the part behind it if not.</p>
+<p>If any of the installed programs is missing, try to install them yourself or
+ask. If you are having troubles following these examples, try to find some bash
+tutorials online next time you have some time to kill. Educating yourself on
+how to use the command line effectively increases your productivity immensely.</p>
+<p>Some bash resources:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Excellent bash tutorial <a class="reference external" href="http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html">http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html</a></li>
+<li>Blog post on pipes for NGS <a class="reference external" href="http://www.vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html">http://www.vincebuffalo.com/2013/08/08/the-mighty-named-pipe.html</a></li>
+<li>Using bash and GNU parallel for NGS <a class="reference external" href="http://bit.ly/gwbash">http://bit.ly/gwbash</a></li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="optional-excercise-install-sickle-by-yourself">
 <h2>(Optional excercise) Install sickle by yourself<a class="headerlink" href="#optional-excercise-install-sickle-by-yourself" title="Permalink to this headline">¶</a></h2>
 <p>Follow these steps only if you want to install <tt class="docutils literal"><span class="pre">sickle</span></tt> by yourself.
 Installation procedures of research software often follow the same pattern.
 Download the code, <em>compile</em> it and copy the binary to a location in your
-<tt class="docutils literal"><span class="pre">$PATH</span></tt>. The code for sickle is on <a class="reference external" href="https://github.com/najoshi/sickle">https://github.com/najoshi/sickle</a>. I
+<tt class="docutils literal"><span class="pre">$PATH</span></tt>.  The code for sickle is on <a class="reference external" href="https://github.com/najoshi/sickle">https://github.com/najoshi/sickle</a>. I
 prefer <em>compiling</em> my programs in <tt class="docutils literal"><span class="pre">~/src</span></tt> and then copying the resulting
 program to my <tt class="docutils literal"><span class="pre">~/bin</span></tt> directory, which is in my <tt class="docutils literal"><span class="pre">$PATH</span></tt>. This should get
 you a long way:</p>

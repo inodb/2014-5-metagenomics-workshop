@@ -59,7 +59,7 @@ The most common Next Generation Sequencing (NGS) technology for metagenomics.</p
 <h2>Sickle<a class="headerlink" href="#sickle" title="Permalink to this headline">¶</a></h2>
 <p>For quality trimming Illumina paired end reads we use the library sickle which
 trims reads from 3&#8217; end to 5&#8217; end using a sliding window. If the mean quality
-drops below a specified number remaining part of the read will be trimmed.</p>
+drops below a specified number the remaining part of the read will be trimmed.</p>
 </div>
 <div class="section" id="downloading-a-test-set">
 <h2>Downloading a test set<a class="headerlink" href="#downloading-a-test-set" title="Permalink to this headline">¶</a></h2>
@@ -78,11 +78,17 @@ tar -xjf SRS018585.tar.bz2
 </div>
 <p>If successfull you should have the files:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ ls -lh ~/asm-workshop/data/SRS018585/
--rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq
--rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+-rw-rw-r-- 1 inod inod  36M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.1.fastq
+-rw-rw-r-- 1 inod inod  36M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+-rw-rw-r-- 1 inod inod 6.4M Apr 18  2011 SRS018585.denovo_duplicates_marked.trimmed.singleton.fastq
 </pre></div>
 </div>
 <p>If not, try to find out if one of the previous commands gave an error.</p>
+<p>Look at the top of the one of the pairs:</p>
+<div class="highlight-python"><div class="highlight"><pre>cat ~/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq | head
+</pre></div>
+</div>
+<p><strong>Question: Can you explain what the different parts of this header mean &#64;HWI-EAS324_102408434:5:100:10055:13493/1?</strong></p>
 </div>
 <div class="section" id="running-sickle-on-a-paired-end-library">
 <h2>Running sickle on a paired end library<a class="headerlink" href="#running-sickle-on-a-paired-end-library" title="Permalink to this headline">¶</a></h2>
@@ -114,6 +120,11 @@ sickle pe \
 ls
 </pre></div>
 </div>
+<p>Sickle states how many reads it trimmed, but it is always good to be
+suspicious! Check if the numbers correspond with the amount of reads you count.
+Hint: use <tt class="docutils literal"><span class="pre">wc</span> <span class="pre">-l</span></tt>.</p>
+<p><strong>Question: How many paired reads are left after trimming? How many singletons?</strong></p>
+<p><strong>Question: What are the different quality scores that sickle can handle? Why do we specify -t sanger here?</strong></p>
 </div>
 </div>
 

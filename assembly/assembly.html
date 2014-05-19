@@ -69,7 +69,7 @@ kmers instead of unique reads. A more detailled explanation can be found at
 <p>Please work in pairs for this assignment. Every group can select a kmer of
 their likings - pick a random one if you haven&#8217;t developed a preference yet.
 Write you and your partner&#8217;s name down at a kmer on the
-Google <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a> for this workshop.</p>
+Google <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a> for this workshop.</p>
 </div>
 <div class="section" id="velveth">
 <h2>velveth<a class="headerlink" href="#velveth" title="Permalink to this headline">¶</a></h2>
@@ -118,23 +118,24 @@ the <em>N50 length</em>, a weighted median, where you weight each contig by it&#
 length. This way you assign more weight to larger contigs. Fifty procent of all
 the bases in the assembly are contained in contigs shorter or equal to N50
 length. Once you have gotten an idea of what it all the stats mean, it is time
-to compare your results with the other attendees of this workshop. Generate the results and copy them to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a>:</p>
+to compare your results with the other attendees of this workshop. Generate the results and copy them to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a>:</p>
 <div class="highlight-python"><div class="highlight"><pre>assemstats 100 out_*/contigs.fa
 </pre></div>
 </div>
-<p>Do the same for the cut-off at 1000 and add it to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a>. Compare your kmer
+<p>Do the same for the cut-off at 1000 and add it to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a>. Compare your kmer
 against the others. If there are very little available yet, this would be an
 ideal time to help out some other attendees or do the same exercise for a kmer
 that has not been picked by somebody else yet. Please write down you and your
-partners name again at the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a> in that case.</p>
-<p>What are the important length statistics? Do we prefer sum over length? Should
-it be a combination? Think of a formula that could indicate the best preferred
+partners name again at the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a> in that case.</p>
+<p><strong>Question: What are the important length statistics? Do we prefer sum over
+length? Should it be a combination?</strong></p>
+<p>Think of a formula that could indicate the best preferred
 length distribution where you express the optimization function in terms of the
-column names from the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a>. For instance only <tt class="docutils literal"><span class="pre">n50_len</span></tt> or <tt class="docutils literal"><span class="pre">sum</span> <span class="pre">*</span>
+column names from the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a>. For instance only <tt class="docutils literal"><span class="pre">n50_len</span></tt> or <tt class="docutils literal"><span class="pre">sum</span> <span class="pre">*</span>
 <span class="pre">n50_len</span></tt>.</p>
 </div>
-<div class="section" id="optional-exercise-ray">
-<h2>(Optional exercise) Ray<a class="headerlink" href="#optional-exercise-ray" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ray">
+<h2>Ray<a class="headerlink" href="#ray" title="Permalink to this headline">¶</a></h2>
 <p>Try to create an assembly with Ray over the same kmer. Ray is an assembler that
 uses MPI to distribute the assembly over multiple cores and nodes. The latest
 version of Ray was made to work well with metagenomics data as well:</p>
@@ -145,14 +146,16 @@ ln -s ../sickle/qtrim2.fastq pair2.fastq
 mpiexec -n 1 Ray -k 21 -p pair1.fastq pair2.fastq -o out_21
 </pre></div>
 </div>
-<p>Add the <tt class="docutils literal"><span class="pre">assemstats</span></tt> results to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dGtrcV9hRUZxLWxreE5ENGs2OXRnM3c&amp;usp=drive_web#gid=3.">doc</a> as you did for Velvet. There is a
+<p>Add the <tt class="docutils literal"><span class="pre">assemstats</span></tt> results to the <a class="reference external" href="https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3">doc</a> as you did for Velvet. There is a
 separate tab for the Ray assemblies, compare the results with Velvet.</p>
 </div>
 <div class="section" id="optional-exercise-velvetoptimiser">
 <h2>(Optional exercise) VelvetOptimiser<a class="headerlink" href="#optional-exercise-velvetoptimiser" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/Victorian-Bioinformatics-Consortium/VelvetOptimiser">VelvetOptimiser</a> is a script that runs Velvet multiple times and follows the
 optimization function you give it. Use <a class="reference external" href="https://github.com/Victorian-Bioinformatics-Consortium/VelvetOptimiser">VelvetOptimiser</a> to find the assembly
-that gets the best score for the optimization function you designed in <a class="reference internal" href="#assemstats">assemstats</a>.</p>
+that gets the best score for the optimization function you designed in
+<a class="reference internal" href="#assemstats">assemstats</a>. It requires <tt class="docutils literal"><span class="pre">BioPerl</span></tt>, which you can get on uppmax with
+<tt class="docutils literal"><span class="pre">module</span> <span class="pre">load</span> <span class="pre">BioPerl</span></tt>.</p>
 </div>
 </div>
 
@@ -169,7 +172,7 @@ that gets the best score for the optimization function you designed in <a class=
 <li><a class="reference internal" href="#velveth">velveth</a></li>
 <li><a class="reference internal" href="#velvetg">velvetg</a></li>
 <li><a class="reference internal" href="#assemstats">assemstats</a></li>
-<li><a class="reference internal" href="#optional-exercise-ray">(Optional exercise) Ray</a></li>
+<li><a class="reference internal" href="#ray">Ray</a></li>
 <li><a class="reference internal" href="#optional-exercise-velvetoptimiser">(Optional exercise) VelvetOptimiser</a></li>
 </ul>
 </li>
