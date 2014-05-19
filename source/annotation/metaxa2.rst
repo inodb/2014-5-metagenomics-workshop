@@ -54,14 +54,34 @@ following command on all the raw read data from all libraries::
 
     metaxa2 -i <input file> -o <output file> --cpu 16 --align none
 
-To get counts on the family level from the metaxa2 output
+To get counts on the family level from the metaxa2 output, we will use
+another tool bundled with the Metaxa2 package; the Metaxa2 Taxonomic
+Travesal Tool (``metaxa2_ttt``). Take a look at its options by typing::
 
+    metaxa2_ttt -h
+    
+In this exercise we are interested in bacterial counts only , so we will
+use the ``-t b`` option. Since we are only interested in family abundance
+(we have too little data to get any good genus or species counts), we will
+only output the data for phyla, classes, orders and families, that is we
+will use the ``-m 5`` option. As input files, you should use the files
+ending with ".taxonomy.txt" that Metaxa2 produced as output. That should
+give you a command looking like this::
 
+    metaxa2_ttt -i <metaxa .taxonomy.txt file> -o <output file> -m 5 -t b
+    
+Run this command on the taxonomy.txt files from all input libraries. It
+should be really quick. If you type ``ls`` you will notice that ``metaxa2_ttt``
+produced a bunch of .level_X.txt files. Those are the files we are going
+to work with next.
 
+Visualizing family level taxonomic counts
+=========================================
+To visualize the family level counts, we will once again use R. Fire it
+up again and load in the count tables from Metaxa2::
 
-We will begin by loading the count tables from HMMER into R::
-
-    b1 = read.table("baltic1.hmmsearch", sep = "", comment.char = "", skip = 3)
+    R
+    b1_tax = read.table("baltic1.hmmsearch", sep = "", comment.char = "", skip = 3)
 
 To get the number of entries of each kind, we will use the R command ``rle``.
 We want to get the domain list, which is the third column. For ``rle`` to be
