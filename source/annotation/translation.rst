@@ -14,6 +14,10 @@ To run ``transeq``, take a look at its available options::
 
     transeq -h
     
+If you have trouble getting ``transeq`` to run, try to run::
+
+    module load emboss
+
 A few options are important in this context. First of all, we need to
 supply an input file, using the (somewhat bulky) option ``-sequence``.
 Second, we also need to specify an output file, otherwise transeq will
