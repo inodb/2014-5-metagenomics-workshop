@@ -94,6 +94,23 @@ above::
 Follow the above procedure for all the data sets, and store the final
 result from ``merge_four`` into a variable, for example called ``norm3``.
 
+A note on saving plots
+======================
+Note that if you would like to save your plots to a PDF file you can run
+the command::
+
+    pdf("output_file_name.pdf", width = 10, height = 10)
+    
+and then you can just run all the R commands as normal. Instead of getting
+plots printed on the screen, all the plots will be output to the specified
+PDF file, and can later be viewed in e.g. Acrobat Reader. When you are
+finished plotting you can finalize the PDF file using the command::
+
+    dev.off()
+    
+This closes the PDF and enables other software to read it. Please note that
+it will be considered a "broken" PDF until the ``dev.off()`` command is run!
+
 Comparing normalizations
 ========================
 
