@@ -33,8 +33,15 @@ commands:
         - 'COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv > ~/binning-workshop/cog_table_3000_all_samples.tsv'
         - 'COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-workshop/cog_plot_3000_all_samples.pdf'
     download_multiple_cogplot: 'scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_all_samples.pdf ~/Desktop'
-    extract_fasta_help: 'EXTRACT_FASTA.py -h'    
+    extract_fasta_help: 'extract_fasta_bins.py -h'    
     extract_fasta:
         - 'mkdir -p ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins'
-        - 'EXTRACT_FASTA.py ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv ~/binning-workshop/data/Contings_gt1000.fa -o ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/'
-    list_bins: 'ls ~/binning-workshop/concoct-output/3000_all_samples/fasta_bins'
+        - 'extract_fasta_bins.py ~/binning-workshop/data/Contigs_gt1000.fa ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv --output_path ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/'
+    download_fasta: 'scp username@milou.uppmax.uu.se:~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/x.fa ~/Desktop/'
+    list_bins: 'ls ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins'
+    move_to_phylosift: 'cd /proj/g2014113/src/phylosift_v1.0.1'
+    run_phylosift: 
+        - 'mkdir -p ~/binning-workshop/phylosift_output/'
+        - './phylosift all -f --output ~/binning-workshop/phylosift_output/ ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/x.fa' 
+    browse_phylosift: 'ls ~/binning-workshop/phylosift_output/'
+    download_phylosift: 'scp username@milou.uppmax.uu.se:~/binning-workshop/phylosift_output/x.fa.html ~/Desktop/'

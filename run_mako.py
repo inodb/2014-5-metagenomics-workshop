@@ -10,7 +10,8 @@ FILE_PATH = os.path.dirname(__file__)
 
 TEMPLATES = ['binning/index.rst',
              'binning/setup.rst',
-             'binning/concoct.rst']
+             'binning/concoct.rst',
+             'binning/phylosift.rst']
 
 def main(args):
     with open(os.path.join(args.input_path, "settings.yaml")) as settings_file:

@@ -23,5 +23,4 @@ Contents:
 
     setup
     concoct
-    scg
-    classification
+    phylosift
