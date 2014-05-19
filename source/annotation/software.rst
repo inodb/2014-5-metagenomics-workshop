@@ -20,9 +20,11 @@ The following programs are used in this workshop:
 .. _R: http://www.r-project.org
 .. _Metaxa2: http://microbiology.se/software/metaxa2/
 
-All programs but Metaxa2 are already installed, all you have to do is load
-the virtual environment for this workshop. Once you are logged in to the
-server run::
+Since we are going to use the plotting functionality of R, we need to login
+to Uppmax with X11 forwarding turned on. In the Unix/Linux terminal this is
+easily achieved by adding the ``-X`` (captal X) option. All programs but
+Metaxa2 are already installed, all you have to do is load the virtual
+environment for this workshop. Once you are logged in to the server run::
 
     source /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/activate
 
