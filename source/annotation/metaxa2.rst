@@ -8,11 +8,50 @@ a taxonomic affiliation only if it is reliably able to (given conservation
 between taxa etc.) You can read more about Metaxa2 here:
 http://microbiology.se/software/metaxa2
 
-For this exercise to work, you need Metaxa2 installed. The instructions on
-how to install it is available on the Software page. Follow those unless
+Install Metaxa2
+===============
+For this exercise to work, you need Metaxa2 installed. If you did not do this
+earlier, here are the installation instructions again. If you did install
+Metaxa2 at the beginning of the workshop, you can skip this step and move
+straight to the next heading!
+
+The code for Metaxa2 is available from http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
+You can install Metaxa2 as follows::
+
+    # Create a src and a bin directory
+    mkdir -p ~/src
+    mkdir -p ~/bin 
+
+    # Go to the source directory and download the Metaxa2 tarball
+    cd ~/src
+    wget http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz
+    tar -xzvf Metaxa2_2.0rc3.tar.gz
+    cd Metaxa2_2.0rc3
+
+    # Run the installation script
+    ./install_metaxa2
+    
+    # Try to run Metaxa2 (this should bring up the main options for the software)
+    metaxa2 -h
+
+If this did not work, you can try this manual approach::
+
+    cd ~/src/Metaxa2_2.0rc3
+    cp -r metaxa2* ~/bin/
+    
+    # Then try to run Metaxa2 again
+    metaxa2 -h
+    
+If this brings up the help message, you are all set!
+
     
 Generating family level taxonomic counts
 ========================================
+
+To get counts on the family level from the metaxa2 output
+
+
+
 
 We will begin by loading the count tables from HMMER into R::
 
