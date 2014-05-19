@@ -173,7 +173,11 @@ this by typing the following command::
     install.packages("gplots")
     
 Just answer "yes" to the questions, and the package will be installed locally for your
-user. After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
+user. After installation you load the package by typing::
+
+    library(gplots)
+
+After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
 for example, this command on the data::
 
     heatmap.2(norm1, trace = "none", col = colorpanel(255,"black","red","yellow"), margin = c(5,10), cexCol = 1, cexRow = 0.7)
