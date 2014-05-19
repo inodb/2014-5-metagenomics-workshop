@@ -7,12 +7,17 @@ You start the program by typing::
     
     R
     
+To get out of R, you type ``q()``. You will then be asked if you want
+to save your workspace. Typing "y" (yes) might be smart, since that
+will remember all your variables until the next time you use R in the
+same directory!
+    
 Loading the the count tables
 ============================
 
 We will begin by loading the count tables from HMMER into R::
 
-    b1 = read.table("baltic1.hmmsearch", sep = "", comment.char = "", skip = 3)
+    b1 = read.table("baltic1.hmmsearch", sep = "")
 
 To get the number of entries of each kind, we will use the R command ``rle``.
 We want to get the domain list, which is the third column. For ``rle`` to be
@@ -36,7 +41,7 @@ Then apply a command like this on the data::
     
 You will now see counts in the range of 10^-5 and 10^6. To make these numbers
 more interpretable, let's also multiply them by 1,000,000 to yield the counts
-per million reads:
+per million reads::
 
     b1_norm1 = b1_counts / 118025 * 1000000
     
@@ -94,6 +99,23 @@ above::
 Follow the above procedure for all the data sets, and store the final
 result from ``merge_four`` into a variable, for example called ``norm3``.
 
+A note on saving plots
+======================
+Note that if you would like to save your plots to a PDF file you can run
+the command::
+
+    pdf("output_file_name.pdf", width = 10, height = 10)
+    
+and then you can just run all the R commands as normal. Instead of getting
+plots printed on the screen, all the plots will be output to the specified
+PDF file, and can later be viewed in e.g. Acrobat Reader. When you are
+finished plotting you can finalize the PDF file using the command::
+
+    dev.off()
+    
+This closes the PDF and enables other software to read it. Please note that
+it will be considered a "broken" PDF until the ``dev.off()`` command is run!
+
 Comparing normalizations
 ========================
 
@@ -117,12 +139,12 @@ this sum is exactly four::
 
     norm1[rowSums(norm1 > 0) == 4,]
 
-That shoudn't have given you much luck. Let's see if we can find any genes
+If that didn't give you much luck, you can try if you can find any genes
 that occur in at least three samples::
 
     norm1[rowSums(norm1 > 0) >= 3,]
 
-Better! Select one of those and find out its row number in the count table.
+Select one of those and find out its row number in the count table.
 Hint: ``row.names(norm1)`` will help you here! Now lets make boxplots for
 that row only::
 
@@ -151,7 +173,11 @@ this by typing the following command::
     install.packages("gplots")
     
 Just answer "yes" to the questions, and the package will be installed locally for your
-user. After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
+user. After installation you load the package by typing::
+
+    library(gplots)
+
+After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
 for example, this command on the data::
 
     heatmap.2(norm1, trace = "none", col = colorpanel(255,"black","red","yellow"), margin = c(5,10), cexCol = 1, cexRow = 0.7)
