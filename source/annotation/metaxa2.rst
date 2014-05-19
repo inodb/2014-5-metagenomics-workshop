@@ -81,17 +81,14 @@ To visualize the family level counts, we will once again use R. Fire it
 up again and load in the count tables from Metaxa2::
 
     R
-    b1_tax = read.table("baltic1.hmmsearch", sep = "", comment.char = "", skip = 3)
+    b1_fam = read.table("baltic1.level_5.txt", sep = "\t", row.names = 1)
 
-To get the number of entries of each kind, we will use the R command ``rle``.
-We want to get the domain list, which is the third column. For ``rle`` to be
-able to work with the data, we must also convert it into a proper vector.::
+Repeat this procedure for all four data set. If you saved your workspace,
+the merge_four function should still be available. You can try it out on the
+taxonomic counts::
 
-    raw_counts = rle(as.vector(b1[,3]))
-    b1_counts = as.matrix(raw_counts$lengths)
-    row.names(b1_counts) = raw_counts$values
-    
-Repeat this procedure for all four data sets.
+    all_fam = merge_four(b1_fam,b2_fam,swe_fam,ind_fam,c("Baltic 1","Baltic 2","Sweden", "India"))
+
 
 Apply normalizations
 ====================
@@ -237,7 +234,11 @@ this by typing the following command::
     install.packages("gplots")
     
 Just answer "yes" to the questions, and the package will be installed locally for your
-user. After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
+user. After installation you load the package by typing::
+
+    library(gplots)
+
+After this, you will be able to use the more powerful ``heatmap.2`` command. Try,
 for example, this command on the data::
 
     heatmap.2(norm1, trace = "none", col = colorpanel(255,"black","red","yellow"), margin = c(5,10), cexCol = 1, cexRow = 0.7)
