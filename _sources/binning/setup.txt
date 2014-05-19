@@ -39,6 +39,6 @@ CONCOCT::
 
 BLAST::
 
-    rpsblast -h
+    rpsblast --help
 
 

@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
     <link rel="up" title="Metagenomic Binning Workshop" href="index.html" />
-    <link rel="next" title="Comparative Functional Analysis of Metagenomic Samples" href="../comparative-functional-analysis/index.html" />
+    <link rel="next" title="Phylogenetic Classification using Phylosift" href="phylosift.html" />
     <link rel="prev" title="Setup Environment" href="setup.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../comparative-functional-analysis/index.html" title="Comparative Functional Analysis of Metagenomic Samples"
+          <a href="phylosift.html" title="Phylogenetic Classification using Phylosift"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="setup.html" title="Setup Environment"
@@ -64,19 +64,22 @@ This is done by mapping the reads from the other samples to the contigs resultin
 <p>Today we&#8217;ll be working on a metagenomic data set from the baltic sea.
 The sample we&#8217;ll be using is part of a time series study, where the same location have been sampled twice weekly during 2013. This specific sample was taken march 22.</p>
 <p>Start by copying the contigs to your working directory:</p>
-<div class="highlight-python"><pre>mkdir -p ~/binning-workshop
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/binning-workshop
 mkdir -p ~/binning-workshop/data
 cd ~/binning-workshop/
 cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000.fa data/
-cp /proj/g2014113/nobackup/concoct-workshop/120322_coverage_nolen.tsv data/</pre>
+cp /proj/g2014113/nobackup/concoct-workshop/120322_coverage_nolen.tsv data/
+</pre></div>
 </div>
 <p>You should now have one fasta file containing all contigs, in this case only contigs longer than 1000 bases is included to save space, and one comma separated file containing the coverage profiles for each contig.
 Let&#8217;s have a look at the coverage profiles:</p>
-<div class="highlight-python"><pre>less -S ~/binning-workshop/data/120322_coverage_nolen.tsv</pre>
+<div class="highlight-python"><div class="highlight"><pre>less -S ~/binning-workshop/data/120322_coverage_nolen.tsv
+</pre></div>
 </div>
 <p>Try to find the column corresponding to March 22 and compare this column to the other ones. Can you draw any conclusions from this comparison?</p>
 <p>We&#8217;d like to first run concoct using only one sample, so we remove all other columns in the coverage table to create this new coverage file:</p>
-<div class="highlight-python"><pre>cut -f1,3 ~/binning-workshop/data/120322_coverage_nolen.tsv &gt; ~/binning-workshop/data/120322_coverage_one_sample.tsv</pre>
+<div class="highlight-python"><div class="highlight"><pre>cut -f1,3 ~/binning-workshop/data/120322_coverage_nolen.tsv &gt; ~/binning-workshop/data/120322_coverage_one_sample.tsv
+</pre></div>
 </div>
 </div>
 <div class="section" id="running-concoct">
@@ -87,16 +90,19 @@ Let&#8217;s have a look at the coverage profiles:</p>
 </div>
 <p>The contigs will be input as the composition file and the coverage file obviously as the coverage file. The output path is given by as the -b (&#8211;basename) parameter, where it is important to include a trailing slash if we want to create an output directory containing all result files.
 Last but not least we will set the length threshold to 3000 to speed up the clustering (the less contigs we use, the shorter the runtime):</p>
-<div class="highlight-python"><pre>mkdir -p ~/binning-workshop/concoct_output
-concoct --coverage_file ~/binning-workshop/data/120322_coverage_one_sample.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_one_sample/</pre>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/binning-workshop/concoct_output
+concoct --coverage_file ~/binning-workshop/data/120322_coverage_one_sample.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_one_sample/
+</pre></div>
 </div>
 <p>This command will normally take a couple of minutes to finish. When it is done, check the output directory and try to figure out what the different files contain.
 Especially, have a look at the main output file:</p>
-<div class="highlight-python"><pre>less ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv</pre>
+<div class="highlight-python"><div class="highlight"><pre>less ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv
+</pre></div>
 </div>
 <p>This file gives you the cluster id for each contig that was included in the clustering, in this case all contigs longer than 3000 bases.</p>
 <p>For the comparison we will now run concoct again, using the coverage profile over all samples in the time series:</p>
-<div class="highlight-python"><pre>concoct --coverage_file ~/binning-workshop/data/120322_coverage_nolen.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_all_samples/</pre>
+<div class="highlight-python"><div class="highlight"><pre>concoct --coverage_file ~/binning-workshop/data/120322_coverage_nolen.tsv --composition_file ~/binning-workshop/data/Contigs_gt1000.fa -l 3000 -b ~/binning-workshop/concoct_output/3000_all_samples/
+</pre></div>
 </div>
 <p>Have a look at the output from this clustering as well, do you notice anything different?</p>
 </div>
@@ -105,11 +111,12 @@ Especially, have a look at the main output file:</p>
 <p>One way of evaluating the resulting clusters are to look at the distribution of so called Single Copy Genes (SCG:s), genes that are present in all bacteria and archea in only one copy.
 With this background, a complete and correct bin should have exactly one copy of each gene present, while missing genes indicate an inclomplete bin and several copies of the same gene indicate a chimeric cluster.
 To predict genes in prokaryotes, we use Prodigal that we then use as the query sequences for an RPS-BLAST search against the Clusters of Orthologous Groups (COG) database.
-This RPS-BLAST search takes about an hour and a half for our dataset so we&#8217;re not going to use a precomputed result file.
+This RPS-BLAST search takes about an hour and a half for our dataset so we&#8217;re going to use a precomputed result file.
 Copy this result file along with two files necessary for the COG counting scripts:</p>
-<div class="highlight-python"><pre>cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000_blast.out ~/binning-workshop/data/
+<div class="highlight-python"><div class="highlight"><pre>cp /proj/g2014113/nobackup/concoct-workshop/Contigs_gt1000_blast.out ~/binning-workshop/data/
 cp /proj/g2014113/nobackup/concoct-workshop/scg_cogs_min0.97_max1.03_unique_genera.txt ~/binning-workshop/data/
-cp /proj/g2014113/nobackup/concoct-workshop/cdd_to_cog.tsv ~/binning-workshop/data/</pre>
+cp /proj/g2014113/nobackup/concoct-workshop/cdd_to_cog.tsv ~/binning-workshop/data/
+</pre></div>
 </div>
 <p>With the CONCOCT distribution comes scripts for parsing this output and creating a plot where each cog present in the data are grouped accordingly to the clustering results, namely COG_table.py and COGPlot.R. These scripts are added to the virtual environment, try check out their usage:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">COG_table</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">h</span>
@@ -117,19 +124,23 @@ cp /proj/g2014113/nobackup/concoct-workshop/cdd_to_cog.tsv ~/binning-workshop/da
 </pre></div>
 </div>
 <p>Let&#8217;s first create a plot for the single sample run:</p>
-<div class="highlight-python"><pre>COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv &gt; ~/binning-workshop/cog_table_3000_single_sample.tsv
-COGPlot.R -s ~/binning-workshop/cog_table_3000_single_sample.tsv -o ~/binning-workshop/cog_plot_3000_single_sample.pdf</pre>
+<div class="highlight-python"><div class="highlight"><pre>COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv &gt; ~/binning-workshop/cog_table_3000_single_sample.tsv
+COGPlot.R -s ~/binning-workshop/cog_table_3000_single_sample.tsv -o ~/binning-workshop/cog_plot_3000_single_sample.pdf
+</pre></div>
 </div>
 <p>This command should have created a pdf file with your plot. In order to look at it, you can download it to your personal computer with scp. OBS! You need to run this in a separate terminal window where you are not logged in to Uppmax:</p>
-<div class="highlight-python"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_single_sample.pdf ~/Desktop/</pre>
+<div class="highlight-python"><div class="highlight"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_single_sample.pdf ~/Desktop/
+</pre></div>
 </div>
 <p>Have a look at the plot and try to figure out if the clustering was successful or not. Which clusters are good? Which clusters are bad? Are all clusters present in the plot?
 Now, lets do the same thing for the multiple samples run:</p>
-<div class="highlight-python"><pre>COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv &gt; ~/binning-workshop/cog_table_3000_all_samples.tsv
-COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-workshop/cog_plot_3000_all_samples.pdf</pre>
+<div class="highlight-python"><div class="highlight"><pre>COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv &gt; ~/binning-workshop/cog_table_3000_all_samples.tsv
+COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-workshop/cog_plot_3000_all_samples.pdf
+</pre></div>
 </div>
 <p>And download again from your separate terminal window:</p>
-<div class="highlight-python"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_all_samples.pdf ~/Desktop</pre>
+<div class="highlight-python"><div class="highlight"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/cog_plot_3000_all_samples.pdf ~/Desktop
+</pre></div>
 </div>
 <p>What differences can you observe for these plots? Think about how we were able to use samples not included in the assembly in order to create a different clustering result. Can this be done with any samples?</p>
 </div>
@@ -155,8 +166,8 @@ COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-work
   <p class="topless"><a href="setup.html"
                         title="previous chapter">Setup Environment</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../comparative-functional-analysis/index.html"
-                        title="next chapter">Comparative Functional Analysis of Metagenomic Samples</a></p>
+  <p class="topless"><a href="phylosift.html"
+                        title="next chapter">Phylogenetic Classification using Phylosift</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/binning/concoct.txt"
@@ -186,7 +197,7 @@ COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-work
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../comparative-functional-analysis/index.html" title="Comparative Functional Analysis of Metagenomic Samples"
+          <a href="phylosift.html" title="Phylogenetic Classification using Phylosift"
              >next</a> |</li>
         <li class="right" >
           <a href="setup.html" title="Setup Environment"
@@ -197,7 +208,7 @@ COGPlot.R -s ~/binning-workshop/cog_table_3000_all_samples.tsv -o ~/binning-work
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Phylogenetic Classification using Phylosift &mdash; Metagenomics Workshop SciLifeLab 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Metagenomic Binning Workshop" href="index.html" />
+    <link rel="next" title="Comparative Functional Analysis of Metagenomic Samples" href="../comparative-functional-analysis/index.html" />
+    <link rel="prev" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion" href="concoct.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../comparative-functional-analysis/index.html" title="Comparative Functional Analysis of Metagenomic Samples"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="concoct.html" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Metagenomic Binning Workshop</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="phylogenetic-classification-using-phylosift">
+<h1>Phylogenetic Classification using Phylosift<a class="headerlink" href="#phylogenetic-classification-using-phylosift" title="Permalink to this headline">¶</a></h1>
+<p>In this workshop we&#8217;ll extract interesting bins from the concoct runs and investigate which species they consists of. We&#8217;ll start by using a plain&#8217;ol BLASTN search and later we&#8217;ll try a more sophisticated strategy with the program Phylosift.</p>
+<div class="section" id="extract-bins-from-concoct-output">
+<h2>Extract bins from CONCOCT output<a class="headerlink" href="#extract-bins-from-concoct-output" title="Permalink to this headline">¶</a></h2>
+<p>The output from concoct is only a list of cluster id and contig ids respectively, so if we&#8217;d like to have fasta files for all our bins, we need to run the following script:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">extract_fasta_bins</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>Running it will create a separate fasta file for each bin, so we&#8217;d first like to create a output directory where we can store these files:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins
+extract_fasta_bins.py ~/binning-workshop/data/Contigs_gt1000.fa ~/binning-workshop/concoct_output/3000_all_samples/clustering_gt3000.csv --output_path ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/
+</pre></div>
+</div>
+<p>Now you can see a number of bins in your output folder:</p>
+<div class="highlight-python"><div class="highlight"><pre>ls ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins
+</pre></div>
+</div>
+<p>Using the graph downloaded in the previous part, decide one cluster you&#8217;d like to investigate further. We&#8217;re going to use the web based BLASTN tool at ncbi, so lets first download the fasta file for the cluster you choose. Execute on a terminal not logged in to UPPMAX:</p>
+<div class="highlight-python"><div class="highlight"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/x.fa ~/Desktop/
+</pre></div>
+</div>
+<p>Before starting to blasting this cluster, lets begin with the next assignment, since the next assignment will include a long waiting time that suits for running the BLASTN search.</p>
+</div>
+<div class="section" id="phylosift">
+<h2>Phylosift<a class="headerlink" href="#phylosift" title="Permalink to this headline">¶</a></h2>
+<p>Phylosift is a software created for the purpose of determining the phylogenetic composition of your metagenomic data. It uses a defined set of genes to predict the taxonomy of each sequence in your dataset. You can read more about how this works here: <a class="reference external" href="http://phylosift.wordpress.com">http://phylosift.wordpress.com</a>
+I&#8217;ve yet to discover how to install phylosift into a common bin, so in order to execute phylosift, you&#8217;d have to cd into the phylosift directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd /proj/g2014113/src/phylosift_v1.0.1
+</pre></div>
+</div>
+<p>Running phylosift will take some time (roughly 45 min) so lets start running phylosift on the cluster you choose:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/binning-workshop/phylosift_output/
+./phylosift all -f --output ~/binning-workshop/phylosift_output/ ~/binning-workshop/concoct_output/3000_all_samples/fasta_bins/x.fa
+</pre></div>
+</div>
+<p>While this command is running, go to ncbi web blast service:</p>
+<p><a class="reference external" href="http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome">http://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome</a></p>
+<p>Upload your fasta file that you downloaded in the previous step and submit a blast search against the nr/nt database.
+Browse through the result and try and see if you can do a taxonomic classification from these.</p>
+<p>When the phylosift run is completed, browse the output directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>ls ~/binning-workshop/phylosift_output/
+</pre></div>
+</div>
+<p>All of these files are interesting, but the most fun one is the html file, so lets download this to your own computer and have a look. Again, switch to a terminal where you&#8217;re not logged in to UPPMAX:</p>
+<div class="highlight-python"><div class="highlight"><pre>scp username@milou.uppmax.uu.se:~/binning-workshop/phylosift_output/x.fa.html ~/Desktop/
+</pre></div>
+</div>
+<p>Did the phylosift result correspond to any results in the BLAST output?</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Phylogenetic Classification using Phylosift</a><ul>
+<li><a class="reference internal" href="#extract-bins-from-concoct-output">Extract bins from CONCOCT output</a></li>
+<li><a class="reference internal" href="#phylosift">Phylosift</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="concoct.html"
+                        title="previous chapter">CONCOCT - Clustering cONtigs with Coverage and ComposiTion</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../comparative-functional-analysis/index.html"
+                        title="next chapter">Comparative Functional Analysis of Metagenomic Samples</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/binning/phylosift.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../comparative-functional-analysis/index.html" title="Comparative Functional Analysis of Metagenomic Samples"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="concoct.html" title="CONCOCT - Clustering cONtigs with Coverage and ComposiTion"
+             >previous</a> |</li>
+        <li><a href="../index.html">Metagenomics Workshop SciLifeLab 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Metagenomic Binning Workshop</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

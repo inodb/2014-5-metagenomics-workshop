@@ -60,8 +60,9 @@ are present in the different samples, since this will likely change between
 seasons. To do this we first map the reads from the different samples against
 the contigs. We will use the mapping script that we used this morning. First
 create a directory and cd there:</p>
-<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/map
-cd ~/metagenomics_workshop2/map</pre>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/map
+cd ~/metagenomics_workshop2/map
+</pre></div>
 </div>
 <p>Copy the contig file and build an index on it for bowtie2. Note that this does
 not work with a symbolic link, which is why we copy the contigs this time. We
@@ -69,8 +70,9 @@ are going to map all samples against the assembly in parallel which is why we
 have to build the index of the assembly first. Otherwise all processes will all
 be trying to build the index for the assembly at the same time. There’s no way
 to do this step in parallel yet that we are aware of:</p>
-<div class="highlight-python"><pre>cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .
-bowtie2-build baltic-sea-ray-noscaf-41.1000.fa baltic-sea-ray-noscaf-41.1000.fa</pre>
+<div class="highlight-python"><div class="highlight"><pre>cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .
+bowtie2-build baltic-sea-ray-noscaf-41.1000.fa baltic-sea-ray-noscaf-41.1000.fa
+</pre></div>
 </div>
 <p>You will end up with various baltic-sea-ray-noscaf-41.1000.fa.*.bt2 files that
 represent the index for the assembly. It allows for faster alignment of
@@ -78,35 +80,41 @@ sequences, see <a class="reference external" href="http://en.wikipedia.org/wiki/
 for more information.</p>
 <p>Get a bash array with all the sample names
 (<a class="reference external" href="http://www.linuxjournal.com/content/bash-arrays">http://www.linuxjournal.com/content/bash-arrays</a> ):</p>
-<div class="highlight-python"><pre>samplenames=( $(for s in /proj/g2013206/metagenomics/reads/*_R1.fastq.gz; do echo ${s: -16:4}; done) )
-echo ${samplenames[*]}</pre>
+<div class="highlight-python"><div class="highlight"><pre>samplenames=( $(for s in /proj/g2013206/metagenomics/reads/*_R1.fastq.gz; do echo ${s: -16:4}; done) )
+echo ${samplenames[*]}
+</pre></div>
 </div>
 <p>Map the reads for each sample in parallel (cancel this whenever because it
 takes too much time):</p>
-<div class="highlight-python"><pre>parallel mkdir -p {} '&amp;&amp;' cd {} '&amp;&amp;' bash $METASSEMBLE_DIR/scripts/map/map-bowtie2-markduplicates.sh -ct 1 \
+<div class="highlight-python"><div class="highlight"><pre>parallel mkdir -p {} &#39;&amp;&amp;&#39; cd {} &#39;&amp;&amp;&#39; bash $METASSEMBLE_DIR/scripts/map/map-bowtie2-markduplicates.sh -ct 1 \
     /proj/g2013206/metagenomics/reads/{}_R1.fastq.gz  /proj/g2013206/metagenomics/reads/{}_R2.fastq.gz pair \
     ~/metagenomics_workshop2/map/baltic-sea-ray-noscaf-41.1000.fa asm bowtie2 \
-    ::: ${samplenames[*]}</pre>
+    ::: ${samplenames[*]}
+</pre></div>
 </div>
 <p>Since this step takes a lot of time you can cancel the task with Ctrl+C and
 just copy the data that we have already generated:</p>
-<div class="highlight-python"><pre>cp -r /proj/g2013206/metagenomics/map/* ~/metagenomics_workshop2/map</pre>
+<div class="highlight-python"><div class="highlight"><pre>cp -r /proj/g2013206/metagenomics/map/* ~/metagenomics_workshop2/map
+</pre></div>
 </div>
 <p>Next we want to figure out the coverage for every gene in every contig, for one
 sample at a time. We will use the bedtools coverage command within the BEDTools
 suite (<a class="reference external" href="https://code.google.com/p/bedtools/">https://code.google.com/p/bedtools/</a>) that can parse a SAM/BAM file and a
 gff file to extract coverage information for every gene:</p>
-<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/coverage-hist-per-feature-per-sample
-cd ~/metagenomics_workshop2/coverage-hist-per-feature-per-sample</pre>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/coverage-hist-per-feature-per-sample
+cd ~/metagenomics_workshop2/coverage-hist-per-feature-per-sample
+</pre></div>
 </div>
 <p>Again make sure you have the bash array with all the sample names:</p>
-<div class="highlight-python"><pre>samplenames=( $(for s in /proj/g2013206/metagenomics/reads/*_R1.fastq.gz; do echo ${s: -16:4}; done) )
-echo ${samplenames[*]}</pre>
+<div class="highlight-python"><div class="highlight"><pre>samplenames=( $(for s in /proj/g2013206/metagenomics/reads/*_R1.fastq.gz; do echo ${s: -16:4}; done) )
+echo ${samplenames[*]}
+</pre></div>
 </div>
 <p>Then run bedtools coverage on all samples using parallel (~4m):</p>
-<div class="highlight-python"><pre>parallel bedtools coverage -hist -abam ../map/{}/bowtie2/asm_pair-smds.bam \
+<div class="highlight-python"><div class="highlight"><pre>parallel bedtools coverage -hist -abam ../map/{}/bowtie2/asm_pair-smds.bam \
     -b ../prodigal/baltic-sea-ray-noscaf-41.1000.gff \
-    '&gt;' {}-baltic-sea-ray-noscaf-41.1000.gff.coverage.hist ::: ${samplenames[*]}</pre>
+    &#39;&gt;&#39; {}-baltic-sea-ray-noscaf-41.1000.gff.coverage.hist ::: ${samplenames[*]}
+</pre></div>
 </div>
 <p>Have a look at which files have been created with less again. The final four
 columns give you the histogram i.e. coverage, number of bases with that
@@ -115,12 +123,13 @@ as a ratio of the length of the contig/feature/gene.</p>
 <p>Once you have run this for all samples you can combine these files with the COG
 annotation file that you generated before with the script
 br-sum-mean-cov-per-cog.py  (made by us) like this (~2m47):</p>
-<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/cog-sum-mean-cov
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/cog-sum-mean-cov
 cd ~/metagenomics_workshop2/cog-sum-mean-cov
 br-sum-mean-cov-per-cog.py --samplenames &lt;(for s in ${samplenames[*]}; do echo $s; done) \
     ../prodigal/baltic-sea-ray-noscaf-41.1000.gff ../prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa \
     ../wmga-cog/output.2 ../coverage-hist-per-feature-per-sample/*.gff.coverage.hist \
-    &gt; cog-sum-mean-cov.tsv</pre>
+    &gt; cog-sum-mean-cov.tsv
+</pre></div>
 </div>
 <p>Have a look at the table with less -S again.</p>
 </div>
@@ -177,7 +186,7 @@ br-sum-mean-cov-per-cog.py --samplenames &lt;(for s in ${samplenames[*]}; do ech
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

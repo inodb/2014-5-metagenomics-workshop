@@ -61,21 +61,24 @@ if you have time.</p>
 <p>But here we will use the statistical programming language R to do some simple
 analysis. cd to the directory where you have the cog-sum-mean-cov.tsv file.
 Then start R:</p>
-<div class="highlight-python"><pre>cd ~/metagenomics_workshop2
-R</pre>
+<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics_workshop2
+R
+</pre></div>
 </div>
 <p>and import the data:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">tab_cog</span> <span class="o">&lt;-</span> <span class="n">read</span><span class="o">.</span><span class="n">delim</span><span class="p">(</span><span class="s">&quot;cog-sum-mean-cov/cog-sum-mean-cov.tsv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Assign the different columns with descriptors to vectors of logical names:</p>
-<div class="highlight-python"><pre>cogf &lt;- tab_cog[,1] # cog family
+<div class="highlight-python"><div class="highlight"><pre>cogf &lt;- tab_cog[,1] # cog family
 cogfd &lt;- tab_cog[,2] # cog class
 cogc &lt;- tab_cog[,3] # cog family descriptor
-cogcd &lt;- tab_cog[,4] # cog class descriptor</pre>
+cogcd &lt;- tab_cog[,4] # cog class descriptor
+</pre></div>
 </div>
 <p>Make a matrix with the coverages of the cog families:</p>
-<div class="highlight-python"><pre>cogf_cov &lt;- as.matrix(tab_cog[,5:ncol(tab_cog)]) # coverage in the different samples</pre>
+<div class="highlight-python"><div class="highlight"><pre>cogf_cov &lt;- as.matrix(tab_cog[,5:ncol(tab_cog)]) # coverage in the different samples
+</pre></div>
 </div>
 <p>And why not put sample names into a vector as well:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">sample</span> <span class="o">&lt;-</span> <span class="n">colnames</span><span class="p">(</span><span class="n">cogf_cov</span><span class="p">)</span>
@@ -83,33 +86,37 @@ cogcd &lt;- tab_cog[,4] # cog class descriptor</pre>
 </pre></div>
 </div>
 <p>Let’s clean the sample names a bit:</p>
-<div class="highlight-python"><pre>for (i in 1:length(sample)) {
-    sample[i] &lt;- matrix(unlist(strsplit(sample[i],"_")), 1)[1,4]
-}</pre>
+<div class="highlight-python"><div class="highlight"><pre>for (i in 1:length(sample)) {
+    sample[i] &lt;- matrix(unlist(strsplit(sample[i],&quot;_&quot;)), 1)[1,4]
+}
+</pre></div>
 </div>
 <p>Since the coverages will differ depending on how many reads per sample we have
 we can normalise by dividing the coverages by the total coverage for the sample
 (only considering cog-annotated genes though):</p>
-<div class="highlight-python"><pre>for (i in 1:ncol(cogf_cov)) {
+<div class="highlight-python"><div class="highlight"><pre>for (i in 1:ncol(cogf_cov)) {
     cogf_cov[,i] &lt;- cogf_cov[,i]/sum(cogf_cov[,i])
-}</pre>
+}
+</pre></div>
 </div>
 <p>The cogf_cov gives coverage per cog family. Let’s summarise within cog classes
 and make a separate matrix for that:</p>
-<div class="highlight-python"><pre>unique_cogc &lt;- levels(cogc)
+<div class="highlight-python"><div class="highlight"><pre>unique_cogc &lt;- levels(cogc)
 cogc_cov &lt;- matrix(ncol = length(sample), nrow = length(unique_cogc))
 colnames(cogc_cov) &lt;- sample
 rownames(cogc_cov) &lt;- unique_cogc
 for (i in 1:length(unique_cogc)) {
-    these &lt;- grep(paste("^", unique_cogc[i],"$", sep = ""), cogc)
+    these &lt;- grep(paste(&quot;^&quot;, unique_cogc[i],&quot;$&quot;, sep = &quot;&quot;), cogc)
     for (j in 1:ncol(cogf_cov)) {
         cogc_cov[i,j] &lt;- sum(cogf_cov[these,j])
     }
-}</pre>
+}
+</pre></div>
 </div>
 <p>OK, now let’s start playing with the data. We can for example do a pairwise
 plot of coverage of cog classes in sample1 vs. sample2:</p>
-<div class="highlight-python"><pre>plot(cogc_cov[,1], cogc_cov[,2])</pre>
+<div class="highlight-python"><div class="highlight"><pre>plot(cogc_cov[,1], cogc_cov[,2])
+</pre></div>
 </div>
 <p>or make a stacked barplot showing the different classes in the different
 samples:</p>
@@ -129,8 +136,9 @@ analysis. Load vegan:</p>
 functional composition. In ecology pairwise distance between samples is
 referred to as beta-diversity, although typically based on taxonomic
 composition rather than functional:</p>
-<div class="highlight-python"><pre>cogf_dist &lt;- as.matrix(vegdist(t(cogf_cov), method="bray", binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
-cogc_dist &lt;- as.matrix(vegdist(t(cogc_cov), method="bray", binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))</pre>
+<div class="highlight-python"><div class="highlight"><pre>cogf_dist &lt;- as.matrix(vegdist(t(cogf_cov), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
+cogc_dist &lt;- as.matrix(vegdist(t(cogc_cov), method=&quot;bray&quot;, binary=FALSE, diag=TRUE, upper=TRUE, na.rm = FALSE))
+</pre></div>
 </div>
 <p>You can visualise the distance matrices as a heatmaps:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">image</span><span class="p">(</span><span class="n">cogf_dist</span><span class="p">)</span>
@@ -160,23 +168,26 @@ between samples and between features and clusters in two dimensions:</p>
 <p>And let’s ordinate the data in two dimensions. This can be done e.g. by PCA
 based on the actual coverage values or by e.g. PcOA or NMDS (non-metrical
 dimensional scaling). Let&#8217;s do NMDS:</p>
-<div class="highlight-python"><pre>mds &lt;- metaMDS(cogf_dist)
-plot(mds$points[,1], mds$points[,2], pch = 20, xlab = "NMDS1", ylab = "NMDS2", cex = 2)</pre>
+<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogf_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 2)
+</pre></div>
 </div>
 <p>We can color the samples according to date (provided your samples are ordered
 according to date). There are some nice color scales to choose from here
 <a class="reference external" href="http://colorbrewer2.org/">http://colorbrewer2.org/</a>:</p>
-<div class="highlight-python"><pre>install.packages("RColorBrewer") # not necessary if already installed
+<div class="highlight-python"><div class="highlight"><pre>install.packages(&quot;RColorBrewer&quot;) # not necessary if already installed
 library(RColorBrewer)
-color = brewer.pal(length(sample), "Reds") # or select another color scale!
+color = brewer.pal(length(sample), &quot;Reds&quot;) # or select another color scale!
 
 mds &lt;- metaMDS(cogf_dist)
-plot(mds$points[,1], mds$points[,2], pch = 20, xlab = "NMDS1", ylab = "NMDS2", cex = 5, col = color)</pre>
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
 </div>
 <p>Let’s compare with how it looks if we base the clustering on COG class coverage
 instead:</p>
-<div class="highlight-python"><pre>mds &lt;- metaMDS(cogc_dist)
-plot(mds$points[,1], mds$points[,2], pch = 20, xlab = "NMDS1", ylab = "NMDS2", cex = 5, col = color)</pre>
+<div class="highlight-python"><div class="highlight"><pre>mds &lt;- metaMDS(cogc_dist)
+plot(mds$points[,1], mds$points[,2], pch = 20, xlab = &quot;NMDS1&quot;, ylab = &quot;NMDS2&quot;, cex = 5, col = color)
+</pre></div>
 </div>
 <p>In addition to these examples there are of course infinite ways to analyse the
 results in R. One could for instance find COGs that significantly differ in
@@ -237,7 +248,7 @@ since we will compare these results with taxonomic data in a bit.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -68,17 +68,19 @@ drops below a specified number remaining part of the read will be trimmed.</p>
 <img alt="https://raw.github.com/inodb/2013-metagenomics-workshop-gbg/master/images/nostril.jpg" src="https://raw.github.com/inodb/2013-metagenomics-workshop-gbg/master/images/nostril.jpg" />
 <p>So get ready for your first smell of metagenomic assembly - pun intended. Run
 all these commands in your shell:</p>
-<div class="highlight-python"><pre># Download the reads and extract them
+<div class="highlight-python"><div class="highlight"><pre># Download the reads and extract them
 mkdir -p ~/asm-workshop
 mkdir -p ~/asm-workshop/data
 cd ~/asm-workshop/data
 wget http://downloads.hmpdacc.org/data/Illumina/anterior_nares/SRS018585.tar.bz2
-tar -xjf SRS018585.tar.bz2</pre>
+tar -xjf SRS018585.tar.bz2
+</pre></div>
 </div>
 <p>If successfull you should have the files:</p>
-<div class="highlight-python"><pre>$ ls -lh ~/asm-workshop/data/SRS018585/
+<div class="highlight-python"><div class="highlight"><pre>$ ls -lh ~/asm-workshop/data/SRS018585/
 -rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq
--rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq</pre>
+-rw-rw-r-- 1 idb idb 36M Apr 18  2011 /home/&lt;username&gt;/asm-workshop/data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq
+</pre></div>
 </div>
 <p>If not, try to find out if one of the previous commands gave an error.</p>
 </div>
@@ -91,13 +93,14 @@ hard link can be found here:
 <a class="reference external" href="http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link">http://stackoverflow.com/questions/185899/what-is-the-difference-between-a-symbolic-link-and-a-hard-link</a>.
 In this case I use symbolic links so I know what path the original reads have,
 which can help one remember what those reads were:</p>
-<div class="highlight-python"><pre>mkdir -p ~/asm-workshop/sickle
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/asm-workshop/sickle
 cd ~/asm-workshop/sickle
 ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.1.fastq pair1.fastq
-ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq pair2.fastq</pre>
+ln -s ../data/SRS018585/SRS018585.denovo_duplicates_marked.trimmed.2.fastq pair2.fastq
+</pre></div>
 </div>
 <p>Now run sickle:</p>
-<div class="highlight-python"><pre># check if sickle is in your PATH
+<div class="highlight-python"><div class="highlight"><pre># check if sickle is in your PATH
 which sickle
 # Run sickle
 sickle pe \
@@ -108,7 +111,8 @@ sickle pe \
     -p qtrim2.fastq \
     -s qtrim.unpaired.fastq
 # Check what files have been generated
-ls</pre>
+ls
+</pre></div>
 </div>
 </div>
 </div>
@@ -175,7 +179,7 @@ ls</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

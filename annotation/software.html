@@ -100,16 +100,18 @@ of the <a class="reference external" href="http://pfam.xfam.org/">Pfam</a> datab
 related to plasmid replication and maintenance. This database is pre-compiled and can
 be downloaded from <a class="reference external" href="http://microbiology.se/teach/scilife2014/pfam.tar.gz">http://microbiology.se/teach/scilife2014/pfam.tar.gz</a>
 Download it using the following commands:</p>
-<div class="highlight-python"><pre>mkdir -p ~/Pfam
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/Pfam
 cd ~/Pfam
 wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
-tar -xzvf pfam.tar.gz</pre>
+tar -xzvf pfam.tar.gz
+</pre></div>
 </div>
 <p>In addition, you will need to obtain the following data sets for the workshop:</p>
-<div class="highlight-python"><pre>/proj/g2014113/metagenomics/annotation/baltic1.fna
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2014113/metagenomics/annotation/baltic1.fna
 /proj/g2014113/metagenomics/annotation/baltic2.fna
 /proj/g2014113/metagenomics/annotation/indian_lake.fna
-/proj/g2014113/metagenomics/annotation/swedish_lake.fna</pre>
+/proj/g2014113/metagenomics/annotation/swedish_lake.fna
+</pre></div>
 </div>
 <p>We are going to use two data sets from the Baltic Sea, one from a Swedish lake and one
 from an Indian lake contaminated with wastewater from pharmaceutical production. For
@@ -122,7 +124,7 @@ Use it on all the four data sets.</p>
 <p>Follow these steps only if you want to install <tt class="docutils literal"><span class="pre">Metaxa2</span></tt> by yourself.
 The code for Metaxa2 is available from <a class="reference external" href="http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz">http://microbiology.se/sw/Metaxa2_2.0rc3.tar.gz</a>
 You can install Metaxa2 as follows:</p>
-<div class="highlight-python"><pre># Create a src and a bin directory
+<div class="highlight-python"><div class="highlight"><pre># Create a src and a bin directory
 mkdir -p ~/src
 mkdir -p ~/bin
 
@@ -136,14 +138,16 @@ cd Metaxa2_2.0rc3
 ./install_metaxa2
 
 # Try to run Metaxa2 (this should bring up the main options for the software)
-metaxa2 -h</pre>
+metaxa2 -h
+</pre></div>
 </div>
 <p>If this did not work, you can try this manual approach:</p>
-<div class="highlight-python"><pre>cd ~/src/Metaxa2_2.0rc3
+<div class="highlight-python"><div class="highlight"><pre>cd ~/src/Metaxa2_2.0rc3
 cp -r metaxa2* ~/bin/
 
 # Then try to run Metaxa2 again
-metaxa2 -h</pre>
+metaxa2 -h
+</pre></div>
 </div>
 <p>If this brings up the help message, you are all set!</p>
 </div>
@@ -212,7 +216,7 @@ metaxa2 -h</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

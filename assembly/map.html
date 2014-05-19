@@ -68,15 +68,16 @@ be reads that come from a PCR duplicate (<a class="reference external" href="htt
 coverage statistics.</p>
 <p>There is a script available that does it all at once. Read it and try to
 understand what happens in each step:</p>
-<div class="highlight-python"><pre>less `which map-bowtie2-markduplicates.sh`
-map-bowtie2-markduplicates.sh -h</pre>
+<div class="highlight-python"><div class="highlight"><pre>less `which map-bowtie2-markduplicates.sh`
+map-bowtie2-markduplicates.sh -h
+</pre></div>
 </div>
 </div>
 <div class="section" id="mapping-reads-with-bowtie2">
 <h2>Mapping reads with bowtie2<a class="headerlink" href="#mapping-reads-with-bowtie2" title="Permalink to this headline">¶</a></h2>
 <p>Take an assembly and try to map the reads back using bowtie2. Do this on an
 interactive node again, and remember to change the &#8216;out_21&#8217; part to the actual output directory that you generated:</p>
-<div class="highlight-python"><pre># Create a new directory and link files
+<div class="highlight-python"><div class="highlight"><pre># Create a new directory and link files
 mkdir -p ~/asm-workshop/bowtie2
 cd ~/asm-workshop/bowtie2
 ln -s ../velvet/out_21/contigs.fa contigs.fa
@@ -84,18 +85,20 @@ ln -s ../sickle/pair1.fastq pair1.fastq
 ln -s ../sickle/pair2.fastq pair2.fastq
 
 # Run the everything in one go script.
-map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map</pre>
+map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map
+</pre></div>
 </div>
 </div>
 <div class="section" id="some-general-statistics-from-the-sam-bam-file">
 <h2>Some general statistics from the SAM/BAM file<a class="headerlink" href="#some-general-statistics-from-the-sam-bam-file" title="Permalink to this headline">¶</a></h2>
 <p>A good way to assess the quality of an assembly is by mapping the reads back
 and determining what proportion was mapped. Use for instance:</p>
-<div class="highlight-python"><pre># Mapped reads only
+<div class="highlight-python"><div class="highlight"><pre># Mapped reads only
 samtools view -c -F 4 map/contigs_pair-smds.bam
 
 # Unmapped reads only
-samtools view -c -f 4 map/contigs_pair-smds.bam</pre>
+samtools view -c -f 4 map/contigs_pair-smds.bam
+</pre></div>
 </div>
 <p>From:
 <a class="reference external" href="http://left.subtree.org/2012/04/13/counting-the-number-of-reads-in-a-bam-file/">http://left.subtree.org/2012/04/13/counting-the-number-of-reads-in-a-bam-file/</a>.
@@ -107,7 +110,8 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
 <div class="section" id="optional-coverage-information-from-bedtools">
 <h2>(Optional) Coverage information from BEDTools<a class="headerlink" href="#optional-coverage-information-from-bedtools" title="Permalink to this headline">¶</a></h2>
 <p>Look at the output from BEDTools:</p>
-<div class="highlight-python"><pre>less map/contigs_pair-smds.coverage</pre>
+<div class="highlight-python"><div class="highlight"><pre>less map/contigs_pair-smds.coverage
+</pre></div>
 </div>
 </div>
 </div>
@@ -175,7 +179,7 @@ duplication. Add that to the <a class="reference external" href="https://docs.go
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

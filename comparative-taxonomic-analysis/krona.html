@@ -57,11 +57,12 @@
 KRONA, which is an excellent program for exploring data with hierarchical
 structures in general. The output file is an html file that can be viewed in a
 browser. Again make a directory for KRONA:</p>
-<div class="highlight-python"><pre>mkdir -p ~/metagenomics_workshop2/krona
-cd ~/metagenomics_workshop2/krona</pre>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/krona
+cd ~/metagenomics_workshop2/krona
+</pre></div>
 </div>
 <p>And run KRONA, concatenating the archaea and bacteria class files together at the same time like this and providing the name of the sample:</p>
-<div class="highlight-python"><pre>ktImportRDP \
+<div class="highlight-python"><div class="highlight"><pre>ktImportRDP \
 &lt;(cat ../rdp/0328_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/0328_rrna.silva-bac-16s-database-id85.fasta.class.tsv),0328 \
 &lt;(cat ../rdp/0403_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/0403_rrna.silva-bac-16s-database-id85.fasta.class.tsv),0403 \
 &lt;(cat ../rdp/0423_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/0423_rrna.silva-bac-16s-database-id85.fasta.class.tsv),0423 \
@@ -72,13 +73,15 @@ cd ~/metagenomics_workshop2/krona</pre>
 &lt;(cat ../rdp/1001_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/1001_rrna.silva-bac-16s-database-id85.fasta.class.tsv),1001 \
 &lt;(cat ../rdp/1004_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/1004_rrna.silva-bac-16s-database-id85.fasta.class.tsv),1004 \
 &lt;(cat ../rdp/1028_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/1028_rrna.silva-bac-16s-database-id85.fasta.class.tsv),1028 \
-&lt;(cat ../rdp/1123_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/1123_rrna.silva-bac-16s-database-id85.fasta.class.tsv),1123</pre>
+&lt;(cat ../rdp/1123_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/1123_rrna.silva-bac-16s-database-id85.fasta.class.tsv),1123
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">&lt;()</span></tt> in bash can be used for process substitution
 (<a class="reference external" href="http://tldp.org/LDP/abs/html/process-sub.html">http://tldp.org/LDP/abs/html/process-sub.html</a> ). Just for your information,
 the above command was actually generated with the following commands:</p>
-<div class="highlight-python"><pre>cmd=`echo ktImportRDP; for s in ${samplenames[*]}; do echo '&lt;('cat ../rdp/${s}_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/${s}_rrna.silva-bac-16s-database-id85.fasta.class.tsv')',$s; done`
-echo $cmd</pre>
+<div class="highlight-python"><div class="highlight"><pre>cmd=`echo ktImportRDP; for s in ${samplenames[*]}; do echo &#39;&lt;(&#39;cat ../rdp/${s}_rrna.silva-arc-16s-database-id95.fasta.class.tsv ../rdp/${s}_rrna.silva-bac-16s-database-id85.fasta.class.tsv&#39;)&#39;,$s; done`
+echo $cmd
+</pre></div>
 </div>
 <p>Copy the resulting file rdp.krona.html to your local computer with scp and open it in firefox.</p>
 </div>
@@ -135,7 +138,7 @@ echo $cmd</pre>
     </div>
     <div class="footer">
         &copy; Copyright 2014, Johannes Alneberg, Johan Bengtsson-Palme, Ino de Bruijn, Luisa Hugerth, Mikael Huss, Thomas Svensson.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
