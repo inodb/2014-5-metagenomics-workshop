@@ -33,11 +33,11 @@ reads back per sample we can compare coverages of contigs between samples.
 **Question: What could be a possible advantage/disadvantage for the assembly
 process when assembling multiple samples at one time?**
 .. Advantage: more coverage. Disadvantage: more related strains/species makes
-   graph traversal harder
+.. graph traversal harder
 
 **Question: Can you think of other approaches to get a coassembly?**
 .. Maybe map contigs against each other in merge them in that way. Preferably
-   taking coverages into account
+.. taking coverages into account
 
 Note that all solutions (i.e. the generated outputs) for the exercises are also in::
 
@@ -80,12 +80,14 @@ An explanation of the gff format can be found at
 http://genome.ucsc.edu/FAQ/FAQformat.html
 
 **Question: How many coding regions were found by Prodigal? Hint: use grep -c**
+
 .. less *.gff | grep -c 'CDS'
-   23577
+.. 23577
 
 **Question: How many contigs have coding regions? How many do not?**
+
 .. less *.gff | grep '^contig' | grep 'CDS' | awk '{print $1}' | sort -u | wc -l
-   8517
-   grep -c '^>cont' baltic-sea-ray-noscaf-41.1000.fa 
-   8533
-   8533-8517=16
+.. 8517
+.. grep -c '^>cont' baltic-sea-ray-noscaf-41.1000.fa 
+.. 8533
+.. 8533-8517=16

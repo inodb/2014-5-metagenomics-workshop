@@ -6,6 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = build
+MILOU_EXPORT  = /proj/g2014113/webexport/
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -48,6 +49,11 @@ help:
 
 clean:
 	rm -rf $(BUILDDIR)/*
+
+milou:
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(MILOU_EXPORT)
+	@echo
+	@echo "Build finished. The HTML pages are in $(MILOU_EXPORT)"
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

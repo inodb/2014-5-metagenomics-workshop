@@ -57,6 +57,7 @@ from the project dir::
 
 **Question: What seem to be the 3 most abundant COG classes in our combined
 sample (not taking coverage into account)?**
+
 .. less output.2.class | tail -n +2 | sort -nk2,2 | tail -3
    J       1895    Translation, ribosomal structure and biogenesis 
    R       2031    General function prediction only 

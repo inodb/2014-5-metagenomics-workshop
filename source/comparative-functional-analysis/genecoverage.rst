@@ -56,6 +56,7 @@ Take a look at the files that have been created. Check
 ``map-bowtie2-markduplicates.sh -h`` for an explanation of the different files.
 
 **Question what is the mean coverage for contig-394 in sample 0328?**
+
 .. 0
 
 Next we want to figure out the coverage for every gene in every contig per
@@ -86,7 +87,7 @@ as a ratio of the length of the contig/feature/gene.
 Now what we want to is do is to extract the mean coverage per COG instead of
 per gene. Remember that multiple genes can belong to the same COG so we will
 take the sum of the mean coverage from those genes. We will use the script
-``br-sum-mean-cov-per-cog.py`` (made by us) for that. First make a directory
+``br-sum-mean-cov-per-cog.py`` for that. First make a directory
 again and go there::
 
     mkdir -p ~/metagenomics/cfa/cog-sum-mean-cov
@@ -98,7 +99,6 @@ array with those sample names
 
     samplenames=(0328 0403 0423 0531 0619 0705 0709 1001 1004 1028 1123)
     echo ${samplenames[*]}
-    for s in ${samplenames[*]}; do echo $s; done
 
 Now we can use process substitution to give the script those sample names
 without having to store it to a file first.
@@ -114,6 +114,7 @@ without having to store it to a file first.
    the last one adds newlines
 
 Run the the script that computes the sum of mean coverages per COG (~2m47)::
+
     br-sum-mean-cov-per-cog.py --samplenames <(echo ${samplenames[*]} | tr ' ' '\n') \
         ../prodigal/baltic-sea-ray-noscaf-41.1000.gff ../prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa \
         ../wmga-cog/output.2 ../coverage-hist-per-feature-per-sample/*.gff.coverage.hist \
@@ -122,3 +123,5 @@ Run the the script that computes the sum of mean coverages per COG (~2m47)::
 Have a look at the table with less -S again.
 
 **Question: What is the sum of mean coverages for COG0038 in sample 0423?**
+
+.. 1.8215488

@@ -9,8 +9,8 @@ can be changed easily by changing the number on row 16 in the script). You may
 need to change the input file names in the beginning of the script ($in_file[0]
 = ...). The script will only import the 16S bacterial data::
 
-    cd rdp
-    sum_rdp_annot.pl  > summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
+    cd ~/metagenomics/cta/rdp
+    sum_rdp_annot.pl > summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
 
 Let’s import this table into R::
 
@@ -52,9 +52,9 @@ What different taxa do we have there?::
 
 From the tax_counts matrix we can create new matrices at defined taxonomic
 levels. If you open the text file /proj/g2013206/metagenomics/r_commands.txt
-you can copy and paste all of this code into R and this will give you the
-matrices and vectors below (check carefully that you didn’t get any error
-messages!)::
+you can copy and paste all of this code into R (or use the source command) and
+this will give you the matrices and vectors below (check carefully that you
+didn’t get any error messages!)::
 
     phylum_counts             matrix with counts for different phyla 
     norm_phylum_counts          normalised version of phylum_count 
@@ -96,6 +96,7 @@ column that contains all kinds of unclassified taxa.
 
 Hierarchical clustering::
 
+    library(cluster)
     cluster <- agnes(class_dist, diss = TRUE, method = "average")
     plot(cluster, which.plots = 2, hang = -1)
 
