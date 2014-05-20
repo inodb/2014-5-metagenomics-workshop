@@ -11,13 +11,13 @@ and annotation of metagenomic samples.
 
 Program:
 
-* Day 1
+* Day 1 Time 14-17
     * :doc:`assembly/index`
     * :doc:`comparative-functional-analysis/index`
     * :doc:`comparative-taxonomic-analysis/index`
-* Day 2
+* Day 2 Time 14-17
     * :doc:`binning/index`
-* Day 3
+* Day 3 Time 13.30-17
     * :doc:`annotation/index`
 
 
