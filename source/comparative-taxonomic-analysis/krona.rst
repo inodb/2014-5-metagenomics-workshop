@@ -6,8 +6,8 @@ KRONA, which is an excellent program for exploring data with hierarchical
 structures in general. The output file is an html file that can be viewed in a
 browser. Again make a directory for KRONA::
 
-    mkdir -p ~/metagenomics_workshop2/krona
-    cd ~/metagenomics_workshop2/krona
+    mkdir -p ~/metagenomics/cta/krona
+    cd ~/metagenomics/cta/krona
 
 And run KRONA, concatenating the archaea and bacteria class files together at the same time like this and providing the name of the sample::
 
