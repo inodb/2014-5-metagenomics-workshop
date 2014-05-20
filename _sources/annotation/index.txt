@@ -5,7 +5,7 @@ In this part of the metagenomics workshop we will:
 - Translate nucleotides into amino acid seuquences using EMBOSS
 - Annotate metagenomic reads with Pfam domains
 - Discuss and perform normalization of metagenomic counts
-- Perform a simple differential abundance analysis
+- Take a look at different gene abundance analysis
 
 The workshop has the following exercises:
 
@@ -29,3 +29,4 @@ Contents:
    annotation
    normalization
    differential
+   metaxa2

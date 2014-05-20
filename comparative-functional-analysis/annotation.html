@@ -54,23 +54,23 @@
   <div class="section" id="functional-annotation">
 <h1>Functional annotation<a class="headerlink" href="#functional-annotation" title="Permalink to this headline">¶</a></h1>
 <p>Now that we have extracted the genes/proteins we want to functionally annotate
-those. There are a bunch of ways of doing this. Tomorrow you will familiarise
-with BLAST searching the NCBI nr database in combination with MEGAN, which is
-one possibility, but here will use one of many existing web services for
-getting functional information. We will use webMGA to do do rpsBLAST searches
-against the COG database. COGs are clusters of orthologs genes, i.e.
-evolutionary counterparts in different species, usually with the same function
-(<a class="reference external" href="http://www.ncbi.nlm.nih.gov/COG/">http://www.ncbi.nlm.nih.gov/COG/</a>). Many COGs have known functions and the COGs
-are also grouped at a higher level with functional classes. To download your
-newly created file open a new terminal and type:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/
-scp username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa .
+those. There are a bunch of ways of doing this. We will use webMGA to do do
+rpsBLAST searches against the COG database. COGs are clusters of orthologs
+genes, i.e.  evolutionary counterparts in different species, usually with the
+same function (<a class="reference external" href="http://www.ncbi.nlm.nih.gov/COG/">http://www.ncbi.nlm.nih.gov/COG/</a>). Many COGs have known
+functions and the COGs are also grouped at a higher level with functional
+classes.</p>
+<p>To download the protein sequences that Prodigal generated, open a local
+terminal and type:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics/cfa/prodigal
+cd ~/metagenomics/cfa/prodigal
+scp username@milou.uppmax.uu.se:~/metagenomics/cfa/prodigal/baltic-sea-ray-noscaf-41.1000.aa.fa .
 </pre></div>
 </div>
 <p>To get COG classifications of your proteins, go to webMGA
 <a class="reference external" href="http://weizhong-lab.ucsd.edu/metagenomic-analysis/">http://weizhong-lab.ucsd.edu/metagenomic-analysis/</a> and select Server  /
 Function annotation / COG. Upload the protein file
-(baltic-sea-ray-noscaf-41.1000.aa.fa) and use the default -e value cutoff.
+(<tt class="docutils literal"><span class="pre">baltic-sea-ray-noscaf-41.1000.aa.fa</span></tt>) and use the default -e value cutoff.
 rpsBLAST is used, which is a BLAST based on position specific scoring matrices
 (pssm). For each COG, one such pssm has been constructed. These are compiled
 into a database of profiles that is searched against.
@@ -78,18 +78,18 @@ into a database of profiles that is searched against.
 more sensitive than a normal BLAST, which is important if genomes in your
 metagenome are distant from existing sequences in databases. It is also faster
 than searching against all proteins out there.</p>
-<p>When the search is done you get a zipped folder. On kalkyl, create the
+<p>When the search is done you get a zipped folder. On milou, create the
 directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/wmga-cog
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics/cfa/wmga-cog
 </pre></div>
 </div>
 <p>Use wget or curl to download the zip file on uppmax or use scp to upload it to
 that folder i.e.:</p>
-<div class="highlight-python"><div class="highlight"><pre>scp output.zip username@kalkyl.uppmax.uu.se:~/metagenomics_workshop2/wmga-cog
+<div class="highlight-python"><div class="highlight"><pre>scp output.zip username@milou.uppmax.uu.se:~/metagenomics/cfa/wmga-cog
 </pre></div>
 </div>
 <p>Then unzip the file on kalkyl:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics_workshop2/wmga-cog
+<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics/cfa/wmga-cog
 unzip output.zip
 </pre></div>
 </div>
@@ -102,9 +102,11 @@ less -S output.2
 </div>
 <p>NOTE: If the queueing takes too much time you can also just copy the results
 from the project dir:</p>
-<div class="highlight-python"><div class="highlight"><pre>cp -r /proj/g2013206/metagenomics/wmga-cog/ ~/metagenomics_workshop2/
+<div class="highlight-python"><div class="highlight"><pre>cp -r /proj/g2014113/metagenomics/cfa/wmga-cog/ ~/metagenomics/cfa/
 </pre></div>
 </div>
+<p><strong>Question: What seem to be the 3 most abundant COG classes in our combined
+sample (not taking coverage into account)?</strong></p>
 </div>
 
 

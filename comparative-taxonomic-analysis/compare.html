@@ -60,8 +60,8 @@ the script uses a bootstrap support of 0.80 to include a taxonomic level (this
 can be changed easily by changing the number on row 16 in the script). You may
 need to change the input file names in the beginning of the script ($in_file[0]
 = ...). The script will only import the 16S bacterial data:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd rdp
-sum_rdp_annot.pl  &gt; summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
+<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics/cta/rdp
+sum_rdp_annot.pl &gt; summary.rrna.silva-bac-16s-database-id85.fasta.class.0.80.tsv
 </pre></div>
 </div>
 <p>Let’s import this table into R:</p>
@@ -104,9 +104,9 @@ for (i in 1:ncol(tax_counts)) {
 </div>
 <p>From the tax_counts matrix we can create new matrices at defined taxonomic
 levels. If you open the text file /proj/g2013206/metagenomics/r_commands.txt
-you can copy and paste all of this code into R and this will give you the
-matrices and vectors below (check carefully that you didn’t get any error
-messages!):</p>
+you can copy and paste all of this code into R (or use the source command) and
+this will give you the matrices and vectors below (check carefully that you
+didn’t get any error messages!):</p>
 <div class="highlight-python"><div class="highlight"><pre>phylum_counts             matrix with counts for different phyla
 norm_phylum_counts          normalised version of phylum_count
 phylum              vector with phyla (same order as in phyla matrix)
@@ -145,7 +145,8 @@ the functional analysis:</p>
 norm_class_counts when we calculate the distances because this is the &#8220;others&#8221;
 column that contains all kinds of unclassified taxa.</p>
 <p>Hierarchical clustering:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">cluster</span> <span class="o">&lt;-</span> <span class="n">agnes</span><span class="p">(</span><span class="n">class_dist</span><span class="p">,</span> <span class="n">diss</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;average&quot;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">library</span><span class="p">(</span><span class="n">cluster</span><span class="p">)</span>
+<span class="n">cluster</span> <span class="o">&lt;-</span> <span class="n">agnes</span><span class="p">(</span><span class="n">class_dist</span><span class="p">,</span> <span class="n">diss</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;average&quot;</span><span class="p">)</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">cluster</span><span class="p">,</span> <span class="n">which</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hang</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>

@@ -68,9 +68,11 @@ is not required to complete the workshop.</p>
 <li>Optionally: <a class="reference external" href="http://microbiology.se/software/metaxa2/">Metaxa2</a></li>
 </ul>
 </div></blockquote>
-<p>All programs but Metaxa2 are already installed, all you have to do is load
-the virtual environment for this workshop. Once you are logged in to the
-server run:</p>
+<p>Since we are going to use the plotting functionality of R, we need to login
+to Uppmax with X11 forwarding turned on. In the Unix/Linux terminal this is
+easily achieved by adding the <tt class="docutils literal"><span class="pre">-X</span></tt> (captal X) option. All programs but
+Metaxa2 are already installed, all you have to do is load the virtual
+environment for this workshop. Once you are logged in to the server run:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2014113</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 </pre></div>
 </div>
@@ -104,6 +106,7 @@ Download it using the following commands:</p>
 cd ~/Pfam
 wget http://microbiology.se/teach/scilife2014/pfam.tar.gz
 tar -xzvf pfam.tar.gz
+cd ~
 </pre></div>
 </div>
 <p>In addition, you will need to obtain the following data sets for the workshop:</p>

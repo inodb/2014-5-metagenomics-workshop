@@ -11,7 +11,7 @@ But here we will use the statistical programming language R to do some simple
 analysis. cd to the directory where you have the cog-sum-mean-cov.tsv file.
 Then start R::
 
-    cd ~/metagenomics_workshop2
+    cd ~/metagenomics/cfa
     R
 
 and import the data::
@@ -21,8 +21,8 @@ and import the data::
 Assign the different columns with descriptors to vectors of logical names::
 
     cogf <- tab_cog[,1] # cog family
-    cogfd <- tab_cog[,2] # cog class
-    cogc <- tab_cog[,3] # cog family descriptor
+    cogfd <- tab_cog[,2] # cog family descriptor
+    cogc <- tab_cog[,3] # cog class
     cogcd <- tab_cog[,4] # cog class descriptor
 
 Make a matrix with the coverages of the cog families::

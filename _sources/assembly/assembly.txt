@@ -22,7 +22,6 @@ Write you and your partner's name down at a kmer on the
 Google doc_ for this workshop.
 
 .. _doc: https://docs.google.com/spreadsheet/ccc?key=0AvduvUOYAB-_dDdDSVhqUi1KQmJkTlZJcHVfMGI3a2c#gid=3 
-__ doc_ 
 
 velveth
 =======

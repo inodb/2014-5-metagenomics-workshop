@@ -61,7 +61,7 @@ if you have time.</p>
 <p>But here we will use the statistical programming language R to do some simple
 analysis. cd to the directory where you have the cog-sum-mean-cov.tsv file.
 Then start R:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics_workshop2
+<div class="highlight-python"><div class="highlight"><pre>cd ~/metagenomics/cfa
 R
 </pre></div>
 </div>
@@ -71,8 +71,8 @@ R
 </div>
 <p>Assign the different columns with descriptors to vectors of logical names:</p>
 <div class="highlight-python"><div class="highlight"><pre>cogf &lt;- tab_cog[,1] # cog family
-cogfd &lt;- tab_cog[,2] # cog class
-cogc &lt;- tab_cog[,3] # cog family descriptor
+cogfd &lt;- tab_cog[,2] # cog family descriptor
+cogc &lt;- tab_cog[,3] # cog class
 cogcd &lt;- tab_cog[,4] # cog class descriptor
 </pre></div>
 </div>

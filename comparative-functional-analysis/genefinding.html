@@ -59,58 +59,76 @@ of those. For gene finding a range of programs are available (Metagene
 Annotator, MetaGeneMark, Orphelia, FragGeneScan), here we will use Prodigal
 which is very fast and has recently been enhanced for metagenomics. We will use
 the -p flag which instructs Prodigal to use the algorithm suitable for
-metagenomic data. We will not continue with the data from the morning but will
-use another dataset consisting of 11 samples from a time series sampling of
-surface water in the Baltic Sea. Sequencing was done with Illumina MiSeq here
-generating on average 835,048 2 x 250 bp reads per sample. The reads can be
-found here:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/reads/
+metagenomic data. We will use a dataset consisting of 11 samples from a time
+series sampling of surface water in the Baltic Sea. Sequencing was done with
+Illumina MiSeq here generating on average 835,048 2 x 250 bp reads per sample.
+The reads can be found here:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2014113/metagenomics/comparative-functional-analysis/reads
 </pre></div>
 </div>
 <p>The first four numbers in the filename represent a date. All samples are from
 2012. R1 and R2 both contain one read of a pair. They are ordered, so the first
 four lines in R1 are paired with the read in the first four lines of R2. They
 are in CASAVA v1.8 format (<a class="reference external" href="http://en.wikipedia.org/wiki/FASTQ_format">http://en.wikipedia.org/wiki/FASTQ_format</a>).</p>
-<p>You can find the contigs from a combined assembly on reads from all samples here:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa
+<p>A coassembly has already been made with Ray using all reads to save you some
+time. You can find the contigs from a combined assembly on reads from all
+samples here:</p>
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2014113/metagenomics/cfa/assembly/baltic-sea-ray-noscaf-41.1000.fa
 </pre></div>
 </div>
 <p>They have been constructed with Ray using a kmer of 41 and no scaffolding. Only
-contigs &gt;= 1000 are in this file.</p>
+contigs &gt;= 1000 are in this file. The reason a coassembly is used is that we
+can get an idea of the entire metagenome over multiple samples. By mapping the
+reads back per sample we can compare coverages of contigs between samples.</p>
+<p><strong>Question: What could be a possible advantage/disadvantage for the assembly
+process when assembling multiple samples at one time?</strong>
+.. Advantage: more coverage. Disadvantage: more related strains/species makes
+.. graph traversal harder</p>
+<p><strong>Question: Can you think of other approaches to get a coassembly?</strong>
+.. Maybe map contigs against each other in merge them in that way. Preferably
+.. taking coverages into account</p>
 <p>Note that all solutions (i.e. the generated outputs) for the exercises are also in:</p>
-<div class="highlight-python"><div class="highlight"><pre>/proj/g2013206/metagenomics/
+<div class="highlight-python"><div class="highlight"><pre>/proj/g2014113/metagenomics/cfa/
 </pre></div>
 </div>
 <p>In all the following exercises you should again use the virtual environment to
-get all the necessary programs:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2013206</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt_env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+get all the necessary programs (unless you already loaded it ofc):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">source</span> <span class="o">/</span><span class="n">proj</span><span class="o">/</span><span class="n">g2014113</span><span class="o">/</span><span class="n">metagenomics</span><span class="o">/</span><span class="n">virt</span><span class="o">-</span><span class="n">env</span><span class="o">/</span><span class="n">mg</span><span class="o">-</span><span class="n">workshop</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
 </pre></div>
 </div>
 <p>It’s time to run Prodigal. First create an output directory with a copy of the
 contig file:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics_workshop2/prodigal
-cd ~/metagenomics_workshop2/prodigal
-cp /proj/g2013206/metagenomics/assembly/baltic-sea-ray-noscaf-41.1000.fa .
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ~/metagenomics/cfa/prodigal
+cd ~/metagenomics/cfa/prodigal
+cp /proj/g2014113/metagenomics/cfa/assembly/baltic-sea-ray-noscaf-41.1000.fa .
 </pre></div>
 </div>
 <p>Then run Prodigal on the contig file (~2m20):</p>
 <div class="highlight-python"><div class="highlight"><pre>prodigal -a baltic-sea-ray-noscaf-41.1000.aa.fa \
-              -d baltic-sea-ray-noscaf-41.1000.nuc.fa \
-               -i baltic-sea-ray-noscaf-41.1000.fa \
-               -f gff -p meta \
-               &gt; baltic-sea-ray-noscaf-41.1000.gff
+         -d baltic-sea-ray-noscaf-41.1000.nuc.fa \
+         -i baltic-sea-ray-noscaf-41.1000.fa \
+         -f gff -p meta \
+         &gt; baltic-sea-ray-noscaf-41.1000.gff
 </pre></div>
 </div>
-<p>This will produce 3 files, a fasta file with the gene sequences (nucleotides) a
-fasta file with the protein sequences (aminoacids) and a gff file that is a
-standardised file type for showing annotations. It’s a tab delimited file that
-can be viewed by e.g.</p>
+<p>This will produce 3 files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">-d</span></tt> a fasta file with the gene sequences (nucleotides)</li>
+<li><tt class="docutils literal"><span class="pre">-a</span></tt> a fasta file with the protein sequences (aminoacids)</li>
+<li><tt class="docutils literal"><span class="pre">stdout</span></tt> a gff file</li>
+</ul>
+</div></blockquote>
+<p>The gff format is a standardised file type for showing annotations.It’s a tab
+delimited file that can be viewed by e.g.</p>
 <div class="highlight-python"><div class="highlight"><pre>less baltic-sea-ray-noscaf-41.1000.gff
 </pre></div>
 </div>
 <p>Pass the option -S to less if you don’t want lines to wrap</p>
 <p>An explanation of the gff format can be found at
 <a class="reference external" href="http://genome.ucsc.edu/FAQ/FAQformat.html">http://genome.ucsc.edu/FAQ/FAQformat.html</a></p>
+<p><strong>Question: How many coding regions were found by Prodigal? Hint: use grep -c</strong></p>
+<p><strong>Question: How many contigs have coding regions? How many do not?</strong></p>
 </div>
 
 

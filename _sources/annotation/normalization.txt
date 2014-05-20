@@ -91,7 +91,7 @@ file: ``/proj/g2014113/metagenomics/annotation/metaxa2_16S_rRNA_counts.txt``.
 If you installed it previously, you can test it out using the following
 command::
 
-    metaxa2 -i <input file> -o <output file> --cpu 4 --align none
+    metaxa2 -i <input file> -o <output file> --cpu 16 --align none
     
 Metaxa2 will take a few minutes to run. You will then be able to
 get the number of bacterial 16S rRNA sequences from the file ending

@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Metagenomics Workshop SciLifeLab 1.0 documentation" href="../index.html" />
     <link rel="up" title="Metagenomic Annotation Workshop" href="index.html" />
+    <link rel="next" title="Bonus exercise: Using Metaxa2 to investigate the taxonomic content" href="metaxa2.html" />
     <link rel="prev" title="Normalization of count data from the metagenomic data sets" href="normalization.html" /> 
   </head>
   <body>
@@ -34,6 +35,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="metaxa2.html" title="Bonus exercise: Using Metaxa2 to investigate the taxonomic content"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
              accesskey="P">previous</a> |</li>
@@ -55,10 +59,14 @@ You start the program by typing:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">R</span>
 </pre></div>
 </div>
+<p>To get out of R, you type <tt class="docutils literal"><span class="pre">q()</span></tt>. You will then be asked if you want
+to save your workspace. Typing &#8220;y&#8221; (yes) might be smart, since that
+will remember all your variables until the next time you use R in the
+same directory!</p>
 <div class="section" id="loading-the-the-count-tables">
 <h2>Loading the the count tables<a class="headerlink" href="#loading-the-the-count-tables" title="Permalink to this headline">¶</a></h2>
 <p>We will begin by loading the count tables from HMMER into R:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">b1</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;baltic1.hmmsearch&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">comment</span><span class="o">.</span><span class="n">char</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">skip</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1</span> <span class="o">=</span> <span class="n">read</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="s">&quot;baltic1.hmmsearch&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>To get the number of entries of each kind, we will use the R command <tt class="docutils literal"><span class="pre">rle</span></tt>.
@@ -83,8 +91,9 @@ Then apply a command like this on the data:</p>
 <p>You will now see counts in the range of 10^-5 and 10^6. To make these numbers
 more interpretable, let&#8217;s also multiply them by 1,000,000 to yield the counts
 per million reads:</p>
-<blockquote>
-<div>b1_norm1 = b1_counts / 118025 * 1000000</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b1_norm1</span> <span class="o">=</span> <span class="n">b1_counts</span> <span class="o">/</span> <span class="mi">118025</span> <span class="o">*</span> <span class="mi">1000000</span>
+</pre></div>
+</div>
 <p>Do the same thing for the other data sets.</p>
 <p>We would then like to compare all the four data sets to each other. Since R&#8217;s
 merge function really suck for multiple data sets, I have provided this
@@ -136,6 +145,23 @@ above:</p>
 <p>Follow the above procedure for all the data sets, and store the final
 result from <tt class="docutils literal"><span class="pre">merge_four</span></tt> into a variable, for example called <tt class="docutils literal"><span class="pre">norm3</span></tt>.</p>
 </div>
+<div class="section" id="a-note-on-saving-plots">
+<h2>A note on saving plots<a class="headerlink" href="#a-note-on-saving-plots" title="Permalink to this headline">¶</a></h2>
+<p>Note that if you would like to save your plots to a PDF file you can run
+the command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pdf</span><span class="p">(</span><span class="s">&quot;output_file_name.pdf&quot;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and then you can just run all the R commands as normal. Instead of getting
+plots printed on the screen, all the plots will be output to the specified
+PDF file, and can later be viewed in e.g. Acrobat Reader. When you are
+finished plotting you can finalize the PDF file using the command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dev</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This closes the PDF and enables other software to read it. Please note that
+it will be considered a &#8220;broken&#8221; PDF until the <tt class="docutils literal"><span class="pre">dev.off()</span></tt> command is run!</p>
+</div>
 <div class="section" id="comparing-normalizations">
 <h2>Comparing normalizations<a class="headerlink" href="#comparing-normalizations" title="Permalink to this headline">¶</a></h2>
 <p>Let us now quickly compare the three normalization methods. As a quick
@@ -158,12 +184,12 @@ this sum is exactly four:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">norm1</span><span class="p">[</span><span class="n">rowSums</span><span class="p">(</span><span class="n">norm1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">,]</span>
 </pre></div>
 </div>
-<p>That shoudn&#8217;t have given you much luck. Let&#8217;s see if we can find any genes
+<p>If that didn&#8217;t give you much luck, you can try if you can find any genes
 that occur in at least three samples:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">norm1</span><span class="p">[</span><span class="n">rowSums</span><span class="p">(</span><span class="n">norm1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">,]</span>
 </pre></div>
 </div>
-<p>Better! Select one of those and find out its row number in the count table.
+<p>Select one of those and find out its row number in the count table.
 Hint: <tt class="docutils literal"><span class="pre">row.names(norm1)</span></tt> will help you here! Now lets make boxplots for
 that row only:</p>
 <div class="highlight-python"><div class="highlight"><pre>x = &lt;insert your selected row number here&gt;
@@ -189,7 +215,11 @@ this by typing the following command:</p>
 </pre></div>
 </div>
 <p>Just answer &#8220;yes&#8221; to the questions, and the package will be installed locally for your
-user. After this, you will be able to use the more powerful <tt class="docutils literal"><span class="pre">heatmap.2</span></tt> command. Try,
+user. After installation you load the package by typing:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">library</span><span class="p">(</span><span class="n">gplots</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After this, you will be able to use the more powerful <tt class="docutils literal"><span class="pre">heatmap.2</span></tt> command. Try,
 for example, this command on the data:</p>
 <div class="highlight-python"><div class="highlight"><pre>heatmap.2(norm1, trace = &quot;none&quot;, col = colorpanel(255,&quot;black&quot;,&quot;red&quot;,&quot;yellow&quot;), margin = c(5,10), cexCol = 1, cexRow = 0.7)
 </pre></div>
@@ -272,6 +302,7 @@ to understand which bacterial species that are present in the samples.</p>
 <li><a class="reference internal" href="#">Estimating differentially abundant protein families in the metagenomes</a><ul>
 <li><a class="reference internal" href="#loading-the-the-count-tables">Loading the the count tables</a></li>
 <li><a class="reference internal" href="#apply-normalizations">Apply normalizations</a></li>
+<li><a class="reference internal" href="#a-note-on-saving-plots">A note on saving plots</a></li>
 <li><a class="reference internal" href="#comparing-normalizations">Comparing normalizations</a></li>
 <li><a class="reference internal" href="#visualizing-differences-in-gene-abundance">Visualizing differences in gene abundance</a></li>
 </ul>
@@ -281,6 +312,9 @@ to understand which bacterial species that are present in the samples.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="normalization.html"
                         title="previous chapter">Normalization of count data from the metagenomic data sets</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="metaxa2.html"
+                        title="next chapter">Bonus exercise: Using Metaxa2 to investigate the taxonomic content</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/annotation/differential.txt"
@@ -309,6 +343,9 @@ to understand which bacterial species that are present in the samples.</p>
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="metaxa2.html" title="Bonus exercise: Using Metaxa2 to investigate the taxonomic content"
+             >next</a> |</li>
         <li class="right" >
           <a href="normalization.html" title="Normalization of count data from the metagenomic data sets"
              >previous</a> |</li>
