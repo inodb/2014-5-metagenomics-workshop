@@ -1,5 +1,5 @@
 ==========================================================
-CONCOCT - Clustering cONtigs with Coverage and ComposiTion
+CONCOCT - Clustering cONtigs with COverage and ComposiTion
 ==========================================================
 In this excercise you will learn how to use a new software for automatic and unsupervised binning of metagenomic contigs, called CONCOCT. 
 CONCOCT uses a statistical model called a Gaussian Mixture Model to cluster sequences based on their tetranucleotide frequencies and their average coverage over multiple samples. 

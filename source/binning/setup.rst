@@ -15,12 +15,12 @@ The following programs are used in this workshop:
 .. _Phylosift: http://phylosift.wordpress.com/ 
 .. _BLAST: http://blast.ncbi.nlm.nih.gov/
 
-All programs are already installed, all you have to do is load the virtual
-environment for this workshop. Once you are logged in to the server run::
+All programs and scripts that you need for this workshop are already installed, all you have to do is load the virtual
+environment. Once you are logged in to the server run::
 
     source /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/activate
 
-You deactivate the virtual environment with::
+If you'd wish to inactivate this virtual environment you could run::
     
     deactivate
 
