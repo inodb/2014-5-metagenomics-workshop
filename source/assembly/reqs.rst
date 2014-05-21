@@ -11,10 +11,7 @@ The following programs are used in this workshop:
 
     - Bowtie2_
     - Velvet_
-    - parallel_
     - samtools_
-    - CD-HIT_
-    - AMOS_
     - sickle_
     - Picard_
     - Ray_

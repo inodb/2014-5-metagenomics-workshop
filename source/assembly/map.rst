@@ -34,7 +34,7 @@ Bowtie2 has some nice documentation: http://bowtie-bio.sourceforge.net/bowtie2/m
 
 Picard's documentation also exists! Two bioinformatics programs in a row with
 decent documentation! Take a moment to celebrate, then have a look here:
-http://sourceforge.net/apps/mediawiki/picard/index.php?title=Main_Pageon 
+http://sourceforge.net/apps/mediawiki/picard/index.php 
 
 **Question: Why not just remove all identitical pairs instead of mapping them
 and then removing them?**
@@ -56,7 +56,7 @@ interactive node again, and remember to change the 'out_21' part to the actual o
     ln -s ../sickle/pair2.fastq pair2.fastq
 
     # Run the everything in one go script. 
-    map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map > map.log
+    map-bowtie2-markduplicates.sh -t 1 -c pair1.fastq pair2.fastq pair contigs.fa contigs map > map.log 2> map.err
 
 Inspect the ``map.log`` output and see if all went well.
 

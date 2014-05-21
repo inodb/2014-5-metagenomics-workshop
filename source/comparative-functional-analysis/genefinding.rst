@@ -32,10 +32,12 @@ reads back per sample we can compare coverages of contigs between samples.
 
 **Question: What could be a possible advantage/disadvantage for the assembly
 process when assembling multiple samples at one time?**
+
 .. Advantage: more coverage. Disadvantage: more related strains/species makes
 .. graph traversal harder
 
 **Question: Can you think of other approaches to get a coassembly?**
+
 .. Maybe map contigs against each other in merge them in that way. Preferably
 .. taking coverages into account
 

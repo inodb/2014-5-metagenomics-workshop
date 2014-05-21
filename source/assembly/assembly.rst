@@ -89,7 +89,7 @@ column names from the doc_. For instance only ``n50_len`` or ``sum *
 n50_len``.
 
 
-Ray
+(Optional exercise) Ray
 =======================
 Try to create an assembly with Ray over the same kmer. Ray is an assembler that
 uses MPI to distribute the assembly over multiple cores and nodes. The latest
