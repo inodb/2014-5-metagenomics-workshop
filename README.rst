@@ -63,6 +63,19 @@ This only changes the ``*.rst`` files in the ``master`` branch, not the actual
 webpage, which is in the ``gh-pages`` branch. How that is set up is explained
 in the section.
 
+Compile the reST files to HTML on milou
+---------------------------------------
+The generated docs can be found on bit.ly/metalove. The HTML files are located in
+``/proj/g2014113/webexport/``. To update those files you first clone the repository
+somewhere on milou. Then load the virtual environment of the workshop::
+    
+    source /proj/g2014113/metagenomics/virt-env/mg-workshop/bin/activate
+
+Then from the root dir of the repository run::
+
+    make milou
+    
+The HTML files will then be updated. Obviously you should be part of the g2014113 project.
 
 Updating the HTML to GitHub Pages
 --------------------------------------
