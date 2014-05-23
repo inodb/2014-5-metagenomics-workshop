@@ -72,6 +72,14 @@ Copy this result file along with two files necessary for the COG counting script
     cp /proj/g2014113/nobackup/concoct-workshop/scg_cogs_min0.97_max1.03_unique_genera.txt ~/binning-workshop/data/
     cp /proj/g2014113/nobackup/concoct-workshop/cdd_to_cog.tsv ~/binning-workshop/data/
 
+Before moving on, we need to install some R packages, please run these commands line by line::
+
+    R
+    install.packages("ggplot2")
+    install.packages("reshape")
+    install.packages("getopt")
+    q()
+
 With the CONCOCT distribution comes scripts for parsing this output and creating a plot where each cog present in the data are grouped accordingly to the clustering results, namely COG_table.py and COGPlot.R. These scripts are added to the virtual environment, try check out their usage::
     
     COG_table.py -h
@@ -81,6 +89,11 @@ Let's first create a plot for the single sample run::
 
     COG_table.py -b ~/binning-workshop/data/Contigs_gt1000_blast.out -c ~/binning-workshop/concoct_output/3000_one_sample/clustering_gt3000.csv -m ~/binning-workshop/data/scg_cogs_min0.97_max1.03_unique_genera.txt --cdd_cog_file ~/binning-workshop/data/cdd_to_cog.tsv > ~/binning-workshop/cog_table_3000_single_sample.tsv
     COGPlot.R -s ~/binning-workshop/cog_table_3000_single_sample.tsv -o ~/binning-workshop/cog_plot_3000_single_sample.pdf
+
+This command might not work for some R related reason. If you've tried getting it to work more than you wish to do, just copy the results from the workshop directory::
+
+    cp /proj/g2014113/nobackup/concoct-workshop/cogplots/* ~/binning-workshop/    
+
 
 This command should have created a pdf file with your plot. In order to look at it, you can download it to your personal computer with scp. OBS! You need to run this in a separate terminal window where you are not logged in to Uppmax::
 

@@ -30,7 +30,11 @@ I've yet to discover how to install phylosift into a common bin, so in order to 
 
     ${commands['move_to_phylosift']}
 
-Running phylosift will take some time (roughly 45 min) so lets start running phylosift on the cluster you choose::
+Running phylosift will take some time (roughly 45 min) and UPPMAX do not want you to run this kind of heavy jobs on the regular login session, so what we'll do is to allocate an interactive node. For this course we have 16 nodes booked and available for our use so you will not need to wait in line. Start your interactive session with 4 cores available::
+
+    ${commands['allocate_interactive']}
+    
+Now we have more computational resources available so lets start running phylosift on the cluster you choose (excange x in x.fa for your cluster number). You could also choose to use the clusters from the binning results using a single sample, but then you need to redo the fasta extraction above.::
 
     ${'\n    '.join(commands['run_phylosift'])}
 
@@ -50,3 +54,13 @@ All of these files are interesting, but the most fun one is the html file, so le
     ${commands['download_phylosift']}
 
 Did the phylosift result correspond to any results in the BLAST output?
+
+As you hopefully see, this phylosift result file is quite neat, but it doesn't show its full potential using a pure cluster, so to display the results for a more diverse input file we have prepared a run for the complete dataset::
+
+    ${commands['browse_all_phylosift']}
+
+And download this (running it on your own terminal again)::
+
+    ${commands['download_phylosift_all']}
+
+Can you "find your bin" within this result file?

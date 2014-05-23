@@ -65,6 +65,14 @@ Copy this result file along with two files necessary for the COG counting script
 
     ${'\n    '.join(commands['copy_blast'])}
 
+Before moving on, we need to install some R packages, please run these commands line by line::
+
+    R
+    install.packages("ggplot2")
+    install.packages("reshape")
+    install.packages("getopt")
+    q()
+
 With the CONCOCT distribution comes scripts for parsing this output and creating a plot where each cog present in the data are grouped accordingly to the clustering results, namely COG_table.py and COGPlot.R. These scripts are added to the virtual environment, try check out their usage::
     
     ${'\n    '.join(commands['check_cog_scripts'])}
@@ -72,6 +80,11 @@ With the CONCOCT distribution comes scripts for parsing this output and creating
 Let's first create a plot for the single sample run::
 
     ${'\n    '.join(commands['cogplot_single'])}
+
+This command might not work for some R related reason. If you've tried getting it to work more than you wish to do, just copy the results from the workshop directory::
+
+    cp /proj/g2014113/nobackup/concoct-workshop/cogplots/* ~/binning-workshop/    
+
 
 This command should have created a pdf file with your plot. In order to look at it, you can download it to your personal computer with scp. OBS! You need to run this in a separate terminal window where you are not logged in to Uppmax::
 

@@ -22,7 +22,7 @@ environment. Once you are logged in to the server run::
 
 If you'd wish to inactivate this virtual environment you could run::
     
-    deactivate
+    deactivate # Don't run this now
 
 NOTE: This is a python virtual environment. The binary folder of the virtual
 environment has symbolic links to all programs used in this workshop so you
