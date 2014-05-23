@@ -33,3 +33,14 @@ Contents:
    annotation/index
 
 Enjoy!
+
+For questions:
+
+* Johannes Alneberg at sclifelab dot se
+* Johan dot Bengtsson-Palme at gu dot se
+* Ino de Bruijn at bils dot se
+* Luisa Hugerth at scilifelab dot se
+
+The code that generates this workshop is available at:
+
+https://github.com/inodb/2014-5-metagenomics-workshop
